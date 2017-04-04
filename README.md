@@ -1,2 +1,2 @@
 # SimpleWebProject
-Simple Web Project.
+Midterm Project for Course  `Database System` in Fudan.
