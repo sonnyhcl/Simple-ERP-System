@@ -15,6 +15,7 @@ Midterm Project for Course  `Database System` `COMP130010.03` in Fudan.
 
 ### Reference Link
 
+-   需求文档 [click](https://github.com/sonnyhcl/SimpleWebProject/blob/master/doc/%E4%BB%A3%E5%8A%A0%E5%B7%A5%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AF%B4%E6%98%8E.md)
 -   Flask中文教程	[http://docs.jinkan.org/docs/flask](http://docs.jinkan.org/docs/flask)
 -   BootStrap中文网  [http://www.bootcss.com/](http://www.bootcss.com/)
 -   Flask Project Demo  [https://github.com/pallets/flask/tree/master/examples/flaskr/flaskr](https://github.com/pallets/flask/tree/master/examples/flaskr/flaskr)
