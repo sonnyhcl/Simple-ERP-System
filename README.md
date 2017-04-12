@@ -12,13 +12,13 @@ Midterm Project for Course  `Database System` `COMP130010.03` in Fudan.
 
 >   **DDL: 5.2**
 >
->   **PRE: 5.9
+>   **PRE: 5.9**
 
 ## Assignment
 
--   [HCl](https://github.com/sonnyhcl) 和[ZBY](https://github.com/zjjzby)负责搭建Flask本地运行环境和服务器运行环境，完成登录与权限管理部分。
--   [tinylic](https://github.com/tinylic)负责数据表字段的设计，并将对数据表的增删改SQL操作封装成python API。
--   [Cjj](Michael0134)负责前端页面设计和前后端交互设计。
+-   [HCl](https://github.com/sonnyhcl)  (感谢[ZBY](https://github.com/zjjzby)协助部分) 搭建了一个可扩展的Flask最小基本框架，测试windows/linux/pycharm的多平台开发环境部署，完成登录与权限管理部分，和[Cjj](https://github.com/Michael0134)共同完成了数据基本表的划分与底层字段的设计。
+-   [tinylic](https://github.com/tinylic)负责从已有的excel源数据整理出一个最基础的mysql源数据包，同时还负责封装底层sql操作到python api接口，供以上层调用。
+-   [Cjj](https://github.com/Michael0134) 作为整个项目的引入人，负责项目整体的产品方向，还负责前端页面的实现以及最终的ppt展示。
 
 
 ## Run Configuration
@@ -31,7 +31,7 @@ Midterm Project for Course  `Database System` `COMP130010.03` in Fudan.
 >
 >   `pycharm`
 
-#### Git Command
+###### Git Command
 
 ```bash
 git pull
@@ -40,7 +40,7 @@ git commit -m "your comment"
 git push
 ```
 
-#### Virtualenv Configuration
+###### Virtualenv Configuration
 
 ```bash
 ~/SimpleWebProject$ virtualenv venv
@@ -48,7 +48,7 @@ git push
 (venv) ~/SimpleWebProject$ pip install -r requirements.txt 
 ```
 
-#### Python Requirement
+###### Python Requirement
 
 ```python
 appdirs==1.4.3
@@ -77,7 +77,7 @@ Werkzeug==0.12.1
 WTForms==2.1
 ```
 
-#### MySQL Configuration
+###### MySQL Configuration
 
 ```python
 host='localhost'
