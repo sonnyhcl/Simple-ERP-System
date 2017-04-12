@@ -1,0 +1,21 @@
+{% block body %}
+    <div align="center">
+        <h1>Login</h1>
+        {% if error %}
+            <p class="error"><strong>Error:</strong>{{ error }}</p>
+        {% endif %}
+
+        <form action="{{ url_for('log_in') }}" method="post">
+            <label>Username:</label>
+            <input type="text" name="username">
+            <br><br>
+            <label>Password:</label>
+            <input type="password" name="password">
+            <br><br>
+        {% if next %}
+            <input type='hidden' name="next" value="{{ next }}">
+        {% endif %}
+            <input type="submit" value="login">
+        </form>
+    </div>
+{% endblock %}

@@ -1,23 +1,26 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 import os
 from flask_bootstrap import Bootstrap
-from flask_login import LoginManager
-from flaskext.mysql import MySQL
+# from flaskext.mysql import MySQL
+from flask_moment import Moment
 from flask import Flask
 app = Flask(__name__)
 
 from webapp import views
 from config import config
+from db import *
+from models import *
 
 __author__ = 'sonnyhcl'
 
 bootstrap = Bootstrap()
 db = MySQL()
-login_manager = LoginManager()
-login_manager.login_view = 'views.login'
+moment = Moment()
 
 db.init_app(app)
 bootstrap.init_app(app)
-login_manager.init_app(app)
+moment.init_app(app)
 
 app.config.from_object(config[os.getenv('FLASK_CONFIG') or 'default'])
 if app.config['DEBUG']:
