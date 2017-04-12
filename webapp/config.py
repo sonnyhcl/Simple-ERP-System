@@ -11,7 +11,7 @@ class Config:
     MYSQL_DATABASE_PASSWORD = 'root'
     MYSQL_DATABASE_DB = 'web'
     CONFIG_PATH = os.path.abspath(os.path.dirname(__file__))
-    PROJ_PATH = CONFIG_PATH[:CONFIG_PATH.rfind('\\')]
+    PROJ_PATH = os.path.split(CONFIG_PATH)[0]
 
     def __init__(self):
         pass
