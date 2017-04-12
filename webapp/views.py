@@ -54,7 +54,8 @@ def error():
 
 @app.route('/test')
 def test():
-    return redirect(url_for('static', filename='images/gold.png'))
+    # return redirect(url_for('static', filename='images/gold.png'))
+    return render_template('sub1.html')
 
 
 @app.errorhandler(404)

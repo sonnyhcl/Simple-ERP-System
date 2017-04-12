@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    {% block head %}
+    <link rel="shortcut icon" href="images/gold.png"/>
+    <title>{% block title %}{% endblock title %} - My Webpage</title>
+    {% endblock head%}
+</head>
+
+<body>
+    <div id="content" align="center">{% block content %}{% endblock %}</div>
+</body>
+
+<footer>
+    <div align="center">
+    {% block footer %}
+    <a href="http://github.com/sonnyhcl/SimpleWebProject">Simple Web Project</a>
+    <br>
+    &copy; Copyright 2017
+    {% endblock %}
+    </div>
+</footer>

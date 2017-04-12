@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 import os
 from flask_bootstrap import Bootstrap
-# from flaskext.mysql import MySQL
 from flask_moment import Moment
 from flask import Flask
 app = Flask(__name__)

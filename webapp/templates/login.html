@@ -1,4 +1,7 @@
-{% block body %}
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
     <div align="center">
         <h1>Login</h1>
         {% if error %}
@@ -18,4 +21,4 @@
             <input type="submit" value="login">
         </form>
     </div>
-{% endblock %}
+{% endblock content %}

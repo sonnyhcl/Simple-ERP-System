@@ -1,27 +1,24 @@
 # Simple Web Project
 Midterm Project for Course  `Database System` `COMP130010.03` in Fudan.
 
+>   课程要求
+>
+>   -   数据库关系设计 30%
+>   -   操作正确性 30%
+>   -   基本功能完善性（增删改查、权限管理）30%
+>   -   应用场景、功能的创新性 10%
+
+>   [需求文档](https://github.com/sonnyhcl/SimpleWebProject/blob/master/doc/%E4%BB%A3%E5%8A%A0%E5%B7%A5%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AF%B4%E6%98%8E.md)
+
 >   **DDL: 5.2**
 >
->   **PRE: 5.9**
-
+>   **PRE: 5.9
 
 ## Assignment
 
 -   [HCl](https://github.com/sonnyhcl) 和[ZBY](https://github.com/zjjzby)负责搭建Flask本地运行环境和服务器运行环境，完成登录与权限管理部分。
 -   [tinylic](https://github.com/tinylic)负责数据表字段的设计，并将对数据表的增删改SQL操作封装成python API。
 -   [Cjj](Michael0134)负责前端页面设计和前后端交互设计。
-
-
-## Reference Link
-
--   需求文档   [需求文档](https://github.com/sonnyhcl/SimpleWebProject/blob/master/doc/%E4%BB%A3%E5%8A%A0%E5%B7%A5%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AF%B4%E6%98%8E.md)
--   Git教程   [Git教程](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/)
--   Flask中文教程  [http://docs.jinkan.org/docs/flask](http://docs.jinkan.org/docs/flask)
--   BootStrap中文网  [http://www.bootcss.com/](http://www.bootcss.com/)
--   Flask Project Demo  [https://github.com/pallets/flask/tree/master/examples/flaskr/flaskr](https://github.com/pallets/flask/tree/master/examples/flaskr/flaskr)
--   ORM编写指南   [http://www.liaoxuefeng.com](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001402228705570c9506d546a3349c6b7d64135127672fe000)
--   `n`NF规范   [http://www.open-open.com/lib/view/open1404791721950.html](http://www.open-open.com/lib/view/open1404791721950.html)  
 
 
 ## Run Configuration
@@ -117,3 +114,12 @@ database='web'
     ├── templates	# 模版文件夹
     ├── views.py
 ```
+
+## Reference Link
+
+-   Git教程   [Git教程](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/)
+-   Flask中文教程  [http://docs.jinkan.org/docs/flask](http://docs.jinkan.org/docs/flask)
+-   BootStrap中文网  [http://www.bootcss.com/](http://www.bootcss.com/)
+-   Flask Project Demo  [https://github.com/pallets/flask/tree/master/examples/flaskr/flaskr](https://github.com/pallets/flask/tree/master/examples/flaskr/flaskr)
+-   ORM编写指南   [http://www.liaoxuefeng.com](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001402228705570c9506d546a3349c6b7d64135127672fe000)
+-   `n`NF规范   [http://www.open-open.com/lib/view/open1404791721950.html](http://www.open-open.com/lib/view/open1404791721950.html)  
