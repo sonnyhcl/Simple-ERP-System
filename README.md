@@ -1,18 +1,14 @@
 # Simple Web Project
-Midterm Project for Course  `Database System` `COMP130010.03` in Fudan.
+Midterm Project for Course  `Database System` `COMP130010.03` in Fudan. 
+
+>   **DDL: 5.2**  **PRE: 5.9**
 
 >   课程要求
 >
 >   -   数据库关系设计 30%
 >   -   操作正确性 30%
 >   -   基本功能完善性（增删改查、权限管理）30%
->   -   应用场景、功能的创新性 10%
-
->   [需求文档](https://github.com/sonnyhcl/SimpleWebProject/blob/master/doc/%E4%BB%A3%E5%8A%A0%E5%B7%A5%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AF%B4%E6%98%8E.md)
-
->   **DDL: 5.2**
->
->   **PRE: 5.9**
+>   -   应用场景、功能的创新性 10%  [我们的代加工系统说明文档](https://github.com/sonnyhcl/SimpleWebProject/blob/master/doc/%E4%BB%A3%E5%8A%A0%E5%B7%A5%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AF%B4%E6%98%8E.md)
 
 ## Assignment
 
@@ -23,13 +19,8 @@ Midterm Project for Course  `Database System` `COMP130010.03` in Fudan.
 
 ## Run Configuration
 
->   `python 2.7` `64bit`
+>   `python2.7 64bit` `mysql 64bit` `virtualenv` `git` 
 >
->   `mysql` `64bit`
->
->   `virtualenv`
->
->   `pycharm`
 
 ###### Git Command
 
@@ -61,6 +52,7 @@ Flask-Migrate==2.0.3
 Flask-MySQL==1.4.0
 Flask-Script==2.0.5
 Flask-SQLAlchemy==2.2
+Flask-Moment==0.5.1
 Flask-WTF==0.14.2
 itsdangerous==0.24
 Jinja2==2.9.6
@@ -85,6 +77,8 @@ port=3306
 user='root'
 passwd='root'
 database='web'
+charset='utf8mb4',
+cursorclass=pymysql.cursors.DictCursor
 ```
 
 ## Repo Organization

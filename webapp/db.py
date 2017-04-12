@@ -14,7 +14,7 @@ db_config = {
           'password': 'root',
           'db': 'web',
           'charset': 'utf8mb4',
-          'cursorclass': pymysql.cursors.DictCursor,
+          'cursorclass': pymysql.cursors.DictCursor
           }
 
 
