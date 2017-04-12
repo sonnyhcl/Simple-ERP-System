@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import os
 from flask_bootstrap import Bootstrap
@@ -25,8 +24,8 @@ moment.init_app(app)
 app.config.from_object(config[os.getenv('FLASK_CONFIG') or 'default'])
 if app.config['DEBUG']:
     import logging
-    log_path = app.config['PROJ_PATH'] + '\logs'
-    log_file = log_path + '\webapp.log'
+    log_path = os.path.join(app.config['PROJ_PATH'], 'logs')
+    log_file = os.path.join(log_path, 'webapp.log')
     if not os.path.exists(log_path):
         os.mkdir(log_path)
     logging.basicConfig(level=logging.DEBUG,

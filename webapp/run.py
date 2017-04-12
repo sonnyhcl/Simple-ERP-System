@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from webapp import app
 __author__ = 'sonnyhcl'

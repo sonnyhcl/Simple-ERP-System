@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from functools import wraps
 from flask import request, redirect, url_for
