@@ -3,6 +3,7 @@ Midterm Project for Course  `Database System` `COMP130010.03` in Fudan.
 
 >   **DDL: 5.2**  **PRE: 5.9**
 
+
 >   课程要求
 >
 >   -   数据库关系设计 30%
@@ -117,3 +118,4 @@ cursorclass=pymysql.cursors.DictCursor
 -   Flask Project Demo  [https://github.com/pallets/flask/tree/master/examples/flaskr/flaskr](https://github.com/pallets/flask/tree/master/examples/flaskr/flaskr)
 -   ORM编写指南   [http://www.liaoxuefeng.com](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001402228705570c9506d546a3349c6b7d64135127672fe000)
 -   `n`NF规范   [http://www.open-open.com/lib/view/open1404791721950.html](http://www.open-open.com/lib/view/open1404791721950.html)  
+-   flask-sqlite [http://docs.pythontab.com/flask/flask0.10/patterns/sqlite3.html](http://docs.pythontab.com/flask/flask0.10/patterns/sqlite3.html)
