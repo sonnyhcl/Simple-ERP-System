@@ -4,7 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-    DEBUG = True
+    DEBUG = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess'
     LOG_FILE_NAME = 'error.log'
     MYSQL_DATABASE_USER = 'root'

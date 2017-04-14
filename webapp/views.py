@@ -42,6 +42,9 @@ def login():
     error_msg = None
     next_url = request.args.get('next', 'index')
     print 'next: ' + next_url
+    # next_url = request.args.get('next') or \
+    #        request.referrer or \
+    #        url_for('index')
 
     return render_template('login.html', error=error_msg, next=next_url)
 
@@ -55,7 +58,7 @@ def error():
 @app.route('/test')
 def test():
     # return redirect(url_for('static', filename='images/gold.png'))
-    return render_template('sub1.html')
+    return render_template('test.html')
 
 
 @app.errorhandler(404)
