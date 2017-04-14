@@ -8,6 +8,10 @@ __author__ = 'sonnyhcl'
 
 
 @app.route('/')
+def index_():
+    return redirect('index')
+
+
 @app.route('/index')
 @login_required
 def index():
