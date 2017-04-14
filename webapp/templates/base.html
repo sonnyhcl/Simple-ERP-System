@@ -4,19 +4,30 @@
     {% block head %}
     <link rel="shortcut icon" href="images/gold.png"/>
     <title>{% block title %}{% endblock title %} - My Webpage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- 引入 Bootstrap -->
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     {% endblock head%}
+
+    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+      <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+      <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
 </head>
 
 <body>
-    <div id="content" align="center">{% block content %}{% endblock %}</div>
+<div id="content" align="center">{% block content %}{% endblock %}</div>
 </body>
 
 <footer>
     <div align="center">
-    {% block footer %}
-    <a href="http://github.com/sonnyhcl/SimpleWebProject">Simple Web Project</a>
-    <br>
-    &copy; Copyright 2017
-    {% endblock %}
+        {% block footer %}
+        <a href="http://github.com/sonnyhcl/SimpleWebProject">Simple Web
+            Project</a>
+        <br>
+        &copy; Copyright 2017
+        {% endblock %}
     </div>
 </footer>
