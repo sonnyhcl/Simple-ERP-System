@@ -20,8 +20,12 @@ Midterm Project for Course  `Database System` `COMP130010.03` in Fudan.
 
 ## Run Configuration
 
->   `python2.7 64bit` `mysql 64bit` `virtualenv` `git` 
->
+>   `python2.7 64bit` `virtualenv` `git`
+
+>   `pycharm` 在
+**File->Settings->Projects->Projects Struct** 里选择`webapp`为`source folder`
+
+> `python wsgi.py`
 
 ###### Git Command
 
