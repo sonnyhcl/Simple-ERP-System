@@ -99,7 +99,9 @@
                             98
                         </td>
                         <td>
-                            <a href="#alterTransaction" data-toggle="modal" onclick="modify()">修改</a>/<a onclick="delete()">删除</a>
+                            <a href="#alterTransaction" data-toggle="modal" onclick="modify_it()">修改</a>
+                            /
+                            <a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>
                         </td>
                     </tr>
                     <tr class="info">
@@ -131,7 +133,9 @@
                             1
                         </td>
                         <td>
-                            <a href="#alterTransaction" data-toggle="modal" onclick="modify()">修改</a>/<a onclick="delete()">删除</a>
+                            <a href="#alterTransaction" data-toggle="modal" onclick="modify_it()">修改</a>
+                            /
+                            <a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>
                         </td>
                     </tr>
                 </tbody>
@@ -152,14 +156,12 @@
 </div>
 
 <script type="text/javascript">
-    function modify(){
+    function modify_it(){
         $("#myModalLabel").text("修改流水")
     }
-</script>
 
-<script type="text/javascript">
-    function delete(){
-
+    function delete_it(){
+        $("#myModalLabel").text("删除流水")
     }
 </script>
 

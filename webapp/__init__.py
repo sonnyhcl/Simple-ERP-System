@@ -1,22 +1,21 @@
 # -*- coding: UTF-8 -*-
 import os
+from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-from flask import Flask
 app = Flask(__name__)
-
 from webapp import views
+from webapp import auth
+from webapp import db
 from config import config
-from db import *
-from models import *
 
 __author__ = 'sonnyhcl'
 
-db = MySQL()
+database = db.MySQL()
 bootstrap = Bootstrap()
 moment = Moment()
 
-db.init_app(app)
+database.init_app(app)
 bootstrap.init_app(app)
 moment.init_app(app)
 
