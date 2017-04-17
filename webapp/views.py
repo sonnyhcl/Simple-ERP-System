@@ -52,6 +52,9 @@ def login():
 
     return render_template('login.html', error=error_msg, next=next_url)
 
+@app.route('/transaction', methods=['GET'])
+def transaction():
+    return render_template('transaction.html')
 
 @app.route('/error')
 @login_required
