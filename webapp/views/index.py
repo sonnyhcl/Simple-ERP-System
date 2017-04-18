@@ -1,8 +1,7 @@
 # -*- coding: UTF-8 -*-
 from flask import render_template, request, session, url_for, redirect
-
-from webapp.auth.login_required import login_required
-from webapp.db.models import *
+from auth.login_required import login_required
+from db.db_user import *
 from webapp import app
 
 __author__ = 'sonnyhcl'
