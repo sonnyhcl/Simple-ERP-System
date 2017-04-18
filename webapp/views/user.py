@@ -22,6 +22,7 @@ def show_user(cid):
 
 @app.route('/user/<int:cid>/add', methods=['POST'])
 def add_user(cid):
+
     return "add_user"
 
 

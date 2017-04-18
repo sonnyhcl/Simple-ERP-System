@@ -98,6 +98,7 @@ conn.execute(
             u_name          char(30)    not null,
             u_role          char(10)    not null,
             u_password      char(30)    not null,
+            u_phone         char(30)    not null,
             c_id            int         not null,
             foreign key     (c_id)      references   community(c_id),
             primary key     (u_id)

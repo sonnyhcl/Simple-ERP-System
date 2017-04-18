@@ -9,8 +9,8 @@
             <h3>
                 人员管理系统
             </h3>
-             <a id="modal-471624" href="#alterTransaction"
-                role="button" class="btn" data-toggle="modal">添加人员</a>
+            <a id="modal-471624" href="#alterTransaction"
+               role="button" class="btn" data-toggle="modal">添加人员</a>
 
             <!--遮罩模板-->
             <div class="modal fade" id="alterTransaction"
@@ -19,7 +19,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close"
-                                     data-dismiss="modal" aria-hidden="true">×</button>
+                                    data-dismiss="modal" aria-hidden="true">×
+                            </button>
                             <h4 class="modal-title" id="myModalLabel">
                                 添加人员
                             </h4>
@@ -37,65 +38,66 @@
 
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>
-                            社区
-                        </th>
-                        <th>
-                            姓名
-                        </th>
-                        <th>
-                            联系方式
-                        </th>
-                        <th>
-                            操作
-                        </th>
-                    </tr>
+                <tr>
+                    <th>
+                        社区
+                    </th>
+                    <th>
+                        姓名
+                    </th>
+                    <th>
+                        联系方式
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            高科苑
-                        </td>
-                        <td>
-                            cjj
-                        </td>
-                        <td>
-                            110
-                        </td>
-                        <td>
-                            <a href="#alterTransaction" data-toggle="modal" onclick="modify_it()">修改</a>
-                            /
-                            <a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>
-                        </td>
-                    </tr>
-                    <tr class="info">
-                        <td>
-                            高科苑
-                        </td>
-                        <td>
-                            hcl
-                        </td>
-                        <td>
-                            120
-                        </td>
-                        <td>
-                            <a href="#alterTransaction" data-toggle="modal" onclick="modify_it()">修改</a>
-                            /
-                            <a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>
-                        </td>
-                    </tr>
+                <!--模版-->
+                <!--<tr>-->
+                    <!--<td>-->
+                        <!--高科苑-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--cjj-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--110-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<a href="#alterTransaction" data-toggle="modal" onclick="modify_it()">修改</a>-->
+                        <!--/-->
+                        <!--<a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <tr>
+                    <td>
+                        高科苑
+                    </td>
+                    <td>
+                        hcl
+                    </td>
+                    <td>
+                        120
+                    </td>
+                    <td>
+                        <a href="#alterTransaction" data-toggle="modal" onclick="modify_it()">修改</a>
+                        /
+                        <a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!--分页-->
             <ul class="pagination">
                 <li>
-                     <a href="#">上一页</a>
+                    <a href="#">上一页</a>
                 </li>
                 <!--TODO: page index-->
                 <li>
-                     <a href="#">下一页</a>
+                    <a href="#">下一页</a>
                 </li>
             </ul>
         </div>
@@ -103,11 +105,11 @@
 </div>
 
 <script type="text/javascript">
-    function modify_it(){
+    function modify_it() {
         $("#myModalLabel").text("修改人员信息")
     }
 
-    function delete_it(){
+    function delete_it() {
         $("#myModalLabel").text("删除人员")
     }
 </script>
