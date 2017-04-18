@@ -28,7 +28,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/index"><font color="orange">首页</font></a></li>
-                <li><a href="/user">流水</a></li>
+                <li><a href="/transaction">流水</a></li>
                 <li><a href="/user">人员</a></li>
                 <li><a href="/product">产品</a></li>
                 <li><a href="/item">工艺</a></li>
@@ -38,11 +38,11 @@
             <ul id="navbar-right" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        此处应有用户名{{ username }}
+                        {{ session['username'] }}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/lou_out">退出</a></li>
+                        <li><a href="/log_out">退出</a></li>
                     </ul>
                 </li>
             </ul>

@@ -7,10 +7,10 @@
     <div class="row clearfix">
         <div class="col-md-12 column">
             <h3>
-                流水管理系统
+                产品管理系统
             </h3>
              <a id="modal-471624" href="#alterTransaction"
-                role="button" class="btn" data-toggle="modal">添加流水</a>
+                role="button" class="btn" data-toggle="modal">添加产品及工艺信息</a>
 
             <!--遮罩模板-->
             <div class="modal fade" id="alterTransaction"
@@ -28,9 +28,10 @@
                             内容...
                         </div>
                         <div class="modal-footer">
-                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
+                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary">保存</button>
                         </div>
-                    </div>
+                    </DIV>
                 </div>
             </div>
 
@@ -38,34 +39,16 @@
                 <thead>
                     <tr>
                         <th>
-                            时间
-                        </th>
-                        <th>
-                            单号
-                        </th>
-                        <th>
-                            社区
-                        </th>
-                        <th>
-                            制作人
+                            <!--TODO: image-->
                         </th>
                         <th>
                             产品名
                         </th>
                         <th>
-                            工艺名
+
                         </th>
                         <th>
-                            单价
-                        </th>
-                        <th>
-                            数量
-                        </th>
-                        <th>
-                            总价
-                        </th>
-                        <th>
-                            操作
+                            社区
                         </th>
                     </tr>
                 </thead>
@@ -157,11 +140,11 @@
 
 <script type="text/javascript">
     function modify_it(){
-        $("#myModalLabel").text("修改流水")
+        $("#myModalLabel").text("修改产品信息")
     }
 
     function delete_it(){
-        $("#myModalLabel").text("删除流水")
+        $("#myModalLabel").text("删除产品")
     }
 </script>
 

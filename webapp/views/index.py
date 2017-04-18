@@ -31,6 +31,7 @@ def log_in():
     next_url = request.form.get('next', url_for('index'))
     if validate_user(user_name, pass_word):
         session['logged_in'] = True
+        session['username'] = user_name
         return redirect(next_url)
 
     error_msg = "wrong username or password"
