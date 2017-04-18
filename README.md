@@ -43,7 +43,7 @@ Midterm Project for Course  `Database System` `COMP130010.03` in Fudan.
 
 >    **File->Settings->Projects->Projects Struct** 里选择`webapp`为`source folder`
 
-![Pycharm设置](https://github.com/sonnyhcl/SimpleWebProject/blob/master/devops/pycharm_config.jpg)
+![Pycharm设置](https://github.com/sonnyhcl/SimpleWebProject/blob/master/devops/pycharm_config.png)
 
 ###### 4. 运行
 
