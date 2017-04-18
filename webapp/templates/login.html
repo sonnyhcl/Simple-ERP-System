@@ -9,8 +9,13 @@
             <img alt="140x140" src="/static/images/logo.jpg"/>
         </div>
     </div>
+    {% if error %}
+    <div align="center">
+        错误：帐户或密码错误（{{ error }}）
+    </div>
+    {% endif %}
     <form class="form-signin" method="POST" action="{{ url_for('log_in') }}">
-        <!-- TODO: action->这个action不是已经做了么， url_for -->
+        <!-- TODO: 输入框的大小布局 -->
         <hr>
         <div align="center">
             <div class="form-group">

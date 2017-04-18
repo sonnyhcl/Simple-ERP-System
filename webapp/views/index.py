@@ -18,10 +18,10 @@ def index():
     return render_template('views/index.html')
 
 
-@app.route('/log_out', methods=['POST'])
+@app.route('/log_out', methods=['GET'])
 def log_out():
     session['logged_in'] = False
-    return "Bye"
+    return redirect('index')
 
 
 @app.route('/log_in', methods=['POST'])
@@ -40,7 +40,7 @@ def log_in():
 @app.route('/login', methods=['GET'])
 def login():
     """
-    http://localhost:5000/login_index?next=http%3A%2F%2Flocalhost%3A5000%2Ferror
+    http://localhost:5000/login?next=http%3A%2F%2Flocalhost%3A5000%2Ferror
     :return: templates
     """
     error_msg = None

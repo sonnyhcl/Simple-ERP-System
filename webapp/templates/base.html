@@ -53,13 +53,12 @@
                                 用户名<strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#">退出</a>
+                                    <a href="{{ url_for('log_out') }}">退出</a>
                                 </li>
                             </ul>
                         </li>
                     </ul>
                 </div>
-
             </nav>
         </div>
     </div>
@@ -70,16 +69,20 @@
     {% endblock %}
 </div>
 
-<footer>
-    <div align="center">
+<div id="foot" class="container" align="center">
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="navbar-inner navbar-content-center">
+        <p class="text-muted credit" style="padding: 10px;">
         {% block footer %}
         <a href="http://github.com/sonnyhcl/SimpleWebProject">Simple Web
             Project</a>
         <br>
         &copy; Copyright 2017
         {% endblock footer %}
+        </p>
     </div>
-</footer>
+</nav>
+
 
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.js"></script>
