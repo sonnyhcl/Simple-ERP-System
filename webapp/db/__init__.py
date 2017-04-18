@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
-from db import models
-from db import db_engine
+from webapp.db import models
+from webapp.db import db_engine
 from .db_engine import MySQL
 
 __author__ = 'sonnyhcl'
