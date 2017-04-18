@@ -1,28 +1,32 @@
 {% extends "base_login.html" %}
-{% block title %}login{% endblock %}
+{% block title %}登录{% endblock %}
 
 {% block content %}
 
 <div class="container">
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<img alt="140x140" src="/static/images/logo.jpg" />
-		</div>
-	</div>
-	<form class="form-signin" method="POST" action="{{ url_for('log_in') }}">
-	<!-- TODO: action -->
-		<hr>
-			<div class="form-group">
-				<input autofocus="autofocus" id="id_login" name="username" placeholder="用户名" type="text" required="" class="form-control">
-			</div>
-			<div class="form-group">
-				<input id="id_password" name="password" placeholder="密码" type="password" required class="form-control">
-			</div>
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary">登录</button>
-			</div>
-		<hr>
-	</form>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <img alt="140x140" src="/static/images/logo.jpg"/>
+        </div>
+    </div>
+    <form class="form-signin" method="POST" action="{{ url_for('log_in') }}">
+        <!-- TODO: action->这个action不是已经做了么， url_for -->
+        <hr>
+        <div align="center">
+            <div class="form-group">
+                <input autofocus id="id_login" name="username" placeholder="用户名" type="text" required="required" class="form-control">
+                <br>
+                <input id="id_password" name="password" placeholder="密码" type="password" required="required" class="form-control">
+                {% if next %}
+                <br>
+                <input type='hidden' name="next" value="{{ next }}">
+                {% endif %}
+                <br>
+                <button type="submit" class="btn btn-primary">登录</button>
+            </div>
+        </div>
+        <hr>
+    </form>
 </div>
 
 {% endblock content %}
