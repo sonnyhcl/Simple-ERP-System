@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import sqlite3
 __author__ = 'sonnyhcl'
 '''
     c_id            int         not null,
@@ -9,26 +10,29 @@ class Community(object):
     """
     社区信息表
     """
-    def add_community(self, conn, _c_id, _c_name = ""):
+
+    def __init__(self) :
+        self.__conn = sqlite3.connect('test.db')
+    def add_community(self, _c_id, _c_name = ""):
         param = (_c_id, _c_name,)
-        conn.execute('insert into community values (?);', param)
+        self.__conn.execute('insert into community values (?, ?)', param)
         return "Success"
 
-    def delete_community(self, conn, _c_id):
+    def delete_community(self, _c_id):
         param = (_c_id,)
-        conn.execute('delete from community where c_id = ?;', param)
+        self.__conn.execute('delete from community where c_id = ?;', param)
         return "Success"
 
-    def update_production(self, conn, _c_id, _new_c_name):
+    def update_community(self, _c_id, _new_c_name):
         param = (_new_c_name, _c_id,)
-        conn.execute('update community set c_name = ? where c_id = ?;', param)
+        self.__conn.execute('update community set c_name = ? where c_id = ?;', param)
         return "Success"
 
-    def get_production(self, conn, _c_id):
+    def get_community(self, _c_id):
         param = (_C_id,)
-        response = conn.execute('select * from community where c_name = ?;', param)
+        response = self.__conn.execute('select * from community where c_name = ?;', param)
         return "Success", response
 
-    def get_all(self):
-        response = conn.execute('select * from community;')
+    def get_all(self, ):
+        response = self.__conn.execute('select * from community;')
         return "Success", response
