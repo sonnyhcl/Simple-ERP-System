@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import sqlite3
 __author__ = 'sonnyhcl'
 '''
         create table item
@@ -17,30 +18,45 @@ __author__ = 'sonnyhcl'
 
 class Item(object):
     """
-    社区信息表
+    Item信息表
     """
-    def add_item(self, conn, _i_id, _i_name, _i_minutes, _i_unitprices, _p_id):
-        param = (_i_id, _i_name, _i_minutes, _i_unitprices, _p_id,)
-        conn.execute('insert into item values (?);', param)
+
+    def __init__(self) :
+        self.__conn = sqlite3.connect('test.db')
+    def add_item(self, _i_id, _i_name, _i_minutes, _i_unitprices, _i_prices, _p_id):
+        param = (_i_id, _i_name, _i_minutes, _i_unitprices, _i_prices, _p_id,)
+        self.__conn.execute('insert into item values (?, ?, ?, ?, ?, ?);', param)
         return "Success"
 
-    def delete_item(self, conn, _i_id):
+    def delete_item(self, _i_id):
         param = (_i_id,)
-        conn.execute('delete from item where i_id = ?;', param)
+        self.__conn.execute('delete from item where i_id = ?;', param)
         return "Success"
 
-    def update_item(self, conn, _i_id, _i_name = None, _i_minutes = None, _i_unitprices = None, _p_id = None):
+    def update_item(self, _i_id, _i_name = None, _i_minutes = None, _i_unitprices = None, _i_prices = None, _p_id = None):
         param = (_i_id,)
-        response = conn.execute('select * from item where i_id = ?', param)
-        param = (_new_c_name, _c_id,)
-        conn.execute('update community set c_name = ? where c_id = ?;', param)
+        response = self.__conn.execute('select * from item where i_id = ?;', param)
+        origin = response.fetchall()[0]
+        origin = list(origin)
+        if _i_name          is not None :
+            origin[1] = _i_name
+        if _i_minutes       is not None :
+            origin[2] = _i_minutes
+        if _i_unitprices    is not None :
+            origin[3] = _i_unitprices
+        if _i_prices        is not None :
+            origin[4] = _i_prices
+        if _p_id            is not None :
+            origin[5] = _p_id
+        param = tuple(origin) + (_i_id,)
+        self.__conn.execute('update item set i_id = ?, i_name = ?, i_minutes = ?, i_unitprices = ?, i_prices = ?, p_id = ? where i_id = ?;', param)
         return "Success"
 
-    def get_production(self, conn, _c_id):
-        param = (_C_id,)
-        response = conn.execute('select * from community where c_name = ?;', param)
+    def get_item(self, _i_id):
+        param = (_i_id,)
+        response = self.__conn.execute('select * from item where i_id = ?;', param)
         return "Success", response
 
-    def get_all(self):
-        response = conn.execute('select * from community;')
+    def get_all(self, ):
+        response = self.__conn.execute('select * from item;')
         return "Success", response

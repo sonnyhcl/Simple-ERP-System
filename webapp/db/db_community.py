@@ -29,8 +29,8 @@ class Community(object):
         return "Success"
 
     def get_community(self, _c_id):
-        param = (_C_id,)
-        response = self.__conn.execute('select * from community where c_name = ?;', param)
+        param = (_c_id,)
+        response = self.__conn.execute('select * from community where c_id = ?;', param)
         return "Success", response
 
     def get_all(self, ):
