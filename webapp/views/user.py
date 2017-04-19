@@ -21,30 +21,48 @@ def show_user(cid):
         page:<int>
     }
     :param cid:
-    :return:
+    :return: json.dumps(info)
     """
     page = 1
     info = db_user.db_show_user(cid, page)
-    # print json.dumps(info)
     return json.dumps(info)
 
 
 @app.route('/user/<int:cid>/add', methods=['POST'])
 def add_user(cid):
+    """
 
+    :param cid:
+    :return:
+    """
     return "add_user"
 
 
 @app.route('/user/<int:cid>/modify', methods=['POST'])
 def modify_user(cid):
+    """
+
+    :param cid:
+    :return: json.dumps(info)
+    """
     return "modify_user"
 
 
 @app.route('/user/<int:cid>/delete', methods=['POST'])
 def delete_user(cid):
+    """
+
+    :param cid:
+    :return: json.dumps(info)
+    """
     return "add_user"
 
 
 @app.route('/user/filter', methods=['POST'])
-def filter_user():
+def filter_user(cid):
+    """
+
+    :param cid:
+    :return: json.dumps(info)
+    """
     return "filter_user"

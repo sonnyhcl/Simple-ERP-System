@@ -6,7 +6,7 @@ __author__ = 'sonnyhcl'
 
 if __name__ == '__main__':
     run_simple(hostname='0.0.0.0',
-               port=5000,
+               port=80,
                application=app,
                use_reloader=True,
                use_debugger=True,
