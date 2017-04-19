@@ -8,7 +8,7 @@ class Config:
     SECRET_KEY = 'hard to guess'
     LOG_FILE_NAME = 'error.log'
     CONFIG_PATH = os.path.abspath(os.path.dirname(__file__))
-    PROJ_PATH = os.path.split(CONFIG_PATH)[0]
+    PROJECT_PATH = os.path.split(CONFIG_PATH)[0]
 
     def __init__(self):
         pass
@@ -17,7 +17,6 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     SECRET_KEY = os.environ.get('SECRET_KEY') or 't0p s3cr3t'
-    MAIL_FLUSH_INTERVAL = 60
 
 
 class TestingConfig(Config):

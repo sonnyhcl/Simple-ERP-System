@@ -4,33 +4,23 @@ from flask import Flask
 import logging
 from logging.handlers import SysLogHandler
 app = Flask(__name__)
-
+from mylog import log
+from config import config
 from webapp import views
 from webapp import auth
 from webapp import db
-from config import config
 
 __author__ = 'sonnyhcl'
 
-database = db.MySQL()
-database.init_app(app)
-
 app.config.from_object(config[os.getenv('FLASK_CONFIG') or 'default'])
-log_path = os.path.join(app.config['PROJ_PATH'], 'logs')
-log_file = os.path.join(log_path, 'webapp.log')
+log_path = os.path.join(app.config['PROJECT_PATH'], 'logs')
 if not os.path.exists(log_path):
     os.mkdir(log_path)
-logging.basicConfig(level=logging.WARNING,
-                    format='[%(asctime)s]\t' +
-                           '%(levelname)s\t %(message)s',
-                    datefmt='%Y.%m.%d %H:%M:%S',
+log_file = os.path.join(log_path, 'webapp.log')
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(message)s',
                     filename=log_file,
                     filemode='a')
 syslog_handler = SysLogHandler()
-syslog_handler.setLevel(logging.WARNING)
+syslog_handler.setLevel(logging.DEBUG)
 app.logger.addHandler(syslog_handler)
-
-
-def log_msg(msg):
-    if app.config['DEBUG']:
-        app.logger.warning(msg)
