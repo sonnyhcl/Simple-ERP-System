@@ -2,7 +2,6 @@
 {% block title %}用户{% endblock %}
 
 {% block content %}
-
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
@@ -12,7 +11,7 @@
             <a id="modal-471624" href="#alterTransaction"
                role="button" class="btn" data-toggle="modal">添加人员</a>
 
-            <!--遮罩模板-->
+            <!-- 弹窗模板 -->
             <div class="modal fade" id="alterTransaction"
                  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -36,7 +35,7 @@
                 </div>
             </div>
 
-            <table class="table">
+            <table class="table"  id="user_table">
                 <thead>
                 <tr>
                     <th>
@@ -54,7 +53,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!--模版-->
+                <!-- 表格模版 -->
                 <!--<tr>-->
                     <!--<td>-->
                         <!--高科苑-->
@@ -71,22 +70,7 @@
                         <!--<a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>-->
                     <!--</td>-->
                 <!--</tr>-->
-                <tr>
-                    <td>
-                        高科苑
-                    </td>
-                    <td>
-                        hcl
-                    </td>
-                    <td>
-                        120
-                    </td>
-                    <td>
-                        <a href="#alterTransaction" data-toggle="modal" onclick="modify_it()">修改</a>
-                        /
-                        <a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>
-                    </td>
-                </tr>
+                <th id="just4test"></th>
                 </tbody>
             </table>
 
@@ -95,7 +79,11 @@
                 <li>
                     <a href="#">上一页</a>
                 </li>
-                <!--TODO: page index-->
+                <!--TODO:Current page index-->
+                <li>
+                    <input placeholder="Current Page" type="text">
+                </li>
+                <!--TODO: jump to any page index-->
                 <li>
                     <a href="#">下一页</a>
                 </li>
@@ -103,16 +91,40 @@
         </div>
     </div>
 </div>
+{% endblock content %}
 
+{% block script %}
+{{ super() }}
 <script type="text/javascript">
+    $(document).ready(
+            function() {
+                console.log('document ready');
+                $.post('/user/1/page/',{curr:1, page:1},
+                        function (ret) {
+                            console.log(ret)
+                            refresh_table(ret);
+                        }
+                )
+            }
+    );
+
+    function refresh_table(ret) {
+        console.log("refresh user table");
+        $('#just4test').text(ret)
+    }
+
+    function add_it() {
+        console.log("add it");
+    }
+
     function modify_it() {
+        console.log("modify it");
         $("#myModalLabel").text("修改人员信息")
     }
 
     function delete_it() {
+        console.log("delete it");
         $("#myModalLabel").text("删除人员")
     }
 </script>
-
-{% endblock content %}
-
+{% endblock script %}

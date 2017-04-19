@@ -1,23 +1,32 @@
 # -*- coding: UTF-8 -*-
 from flask import render_template
+import json
 from webapp import app
-
+from db import db_user
 __author__ = 'sonnyhcl'
 
 
 @app.route('/user', methods=['GET'])
 def user():
-    return render_template('views/user.html', role='root')
+    return render_template('views/user.html')
 
 
 @app.route('/user/<int:cid>/page/', methods=['POST'])
 def show_user(cid):
     """
-    next=1 or prev=1 or page=?
+    {
+        curr:<int>,
+        next:<bool>,
+        prev:<bool>,
+        page:<int>
+    }
     :param cid:
     :return:
     """
-    return "show_user"
+    page = 1
+    info = db_user.db_show_user(cid, page)
+    # print json.dumps(info)
+    return json.dumps(info)
 
 
 @app.route('/user/<int:cid>/add', methods=['POST'])
