@@ -25,8 +25,8 @@ class Transactions(object):
     流水信息表
     """
 
-    def __init__(self) :
-        self.__conn = sqlite3.connect('test.db')
+    def __init__(self, conn) :
+        self.__conn = conn
     def add_transactions(self, _t_id, _u_id, _c_id, _p_id, _i_id):
         param = (_t_id, _u_id, _c_id, _p_id, _i_id,)
         self.__conn.execute('insert into transactions values (?, ?, ?, ?, ?);', param)

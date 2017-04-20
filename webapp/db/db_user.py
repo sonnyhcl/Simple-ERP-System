@@ -21,8 +21,8 @@ class User(object):
     用户信息表
     """
 
-    def __init__(self) :
-        self.__conn = sqlite3.connect('test.db')
+    def __init__(self, conn) :
+        self.__conn = conn
     def add_user(self, _u_id, _u_name, _u_role, _u_password, _u_phone, _c_id):
         param = (_u_id, _u_name, _u_role, _u_password, _u_phone, _c_id,)
         self.__conn.execute('insert into user values (?, ?, ?, ?, ?, ?);', param)
