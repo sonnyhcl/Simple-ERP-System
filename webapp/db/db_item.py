@@ -21,8 +21,8 @@ class Item(object):
     Item信息表
     """
 
-    def __init__(self) :
-        self.__conn = sqlite3.connect('test.db')
+    def __init__(self, conn) :
+        self.__conn = conn
     def add_item(self, _i_id, _i_name, _i_minutes, _i_unitprices, _i_prices, _p_id):
         param = (_i_id, _i_name, _i_minutes, _i_unitprices, _i_prices, _p_id,)
         self.__conn.execute('insert into item values (?, ?, ?, ?, ?, ?);', param)

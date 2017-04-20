@@ -17,8 +17,8 @@ class Product(object):
     产品信息表
     """
 
-    def __init__(self) :
-        self.__conn = sqlite3.connect('test.db')
+    def __init__(self, conn) :
+        self.__conn = conn
     def add_product(self, _p_id, _p_name, _author_name = ""):
         param = (_p_id, _p_name, _author_name,)
         self.__conn.execute('insert into product values (?, ?, ?);', param)

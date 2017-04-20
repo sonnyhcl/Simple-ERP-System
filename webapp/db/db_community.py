@@ -11,8 +11,8 @@ class Community(object):
     社区信息表
     """
 
-    def __init__(self) :
-        self.__conn = sqlite3.connect('test.db')
+    def __init__(self, conn) :
+        self.__conn = conn
     def add_community(self, _c_id, _c_name = ""):
         param = (_c_id, _c_name,)
         self.__conn.execute('insert into community values (?, ?)', param)
