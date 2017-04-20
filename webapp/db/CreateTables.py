@@ -2,7 +2,7 @@ import sqlite3
 
 conn = sqlite3.connect('test.db')
 
-print "Open Database Successfully!"
+#print "Open Database Successfully!"
 
 """
 product info table
@@ -21,7 +21,7 @@ conn.execute(
     '''
 )
 
-print "product info table created Successfully!"
+#print "product info table created Successfully!"
 
 """
 item info table
@@ -44,7 +44,7 @@ conn.execute(
     '''
 )
 
-print "item info table created Successfully!"
+#print "item info table created Successfully!"
 
 """
 product / item info table
@@ -64,7 +64,7 @@ conn.execute(
     '''
 )
 
-print "product / item info table created Successfully!"
+#print "product / item info table created Successfully!"
 
 """
 community info table
@@ -82,7 +82,7 @@ conn.execute(
     '''
 )
 
-print "community info table created Successfully!"
+#print "community info table created Successfully!"
 
 
 """
@@ -107,7 +107,7 @@ conn.execute(
     '''
     )
 
-print "user info table created Successfully!"
+#print "user info table created Successfully!"
 
 """
 transactions info table
@@ -133,7 +133,7 @@ conn.execute(
     '''
     )
 
-print "transactions info table created Successfully!"
+#print "transactions info table created Successfully!"
 
 
 """
@@ -154,7 +154,7 @@ conn.execute(
     '''
 )
 
-print "admin info table created Successfully!"
+#print "admin info table created Successfully!"
 
 conn.execute(
     '''
