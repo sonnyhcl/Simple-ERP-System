@@ -3,7 +3,7 @@
 <head>
     {% block head %}
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/gold.png') }}"/>
-    <title>{% block title %}{% endblock title %} - 彩虹桥</title>
+    <title>{% block title %}{% endblock title %} - 彩虹桥</TITLE>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入 Bootstrap -->
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -18,6 +18,18 @@
     {% endblock %}
 </div>
 </body>
+
+<footer class="site-footer" style="margin-top: AUTO">
+    <div class="container" align="center">
+    <hr>
+    <p class="text-muted credit">
+        <br>
+        <a href="http://github.com/sonnyhcl/SimpleWebProject">Simple Web Project</a>
+        <br>
+        &copy; Copyright 2017
+    </p>
+    </div>
+</footer>
 
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.js"></script>

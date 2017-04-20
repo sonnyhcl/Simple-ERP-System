@@ -8,11 +8,11 @@
             <h3>
                 人员管理系统
             </h3>
-            <a id="modal-471624" href="#alterTransaction"
+            <a id="modal-471624" href="#alterUser"
                role="button" class="btn" data-toggle="modal">添加人员</a>
 
             <!-- 弹窗模板 -->
-            <div class="modal fade" id="alterTransaction"
+            <div class="modal fade" id="alterUser"
                  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -24,7 +24,7 @@
                                 添加人员
                             </h4>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" id="myModalBody">
                             内容...
                         </div>
                         <div class="modal-footer">
@@ -47,6 +47,7 @@
 
                 <tbody id="t_body">
                 </tbody>
+
             </table>
 
             <!--TODO: 分页-->
@@ -73,7 +74,7 @@
     function refresh_table(ret) {
         console.log("refresh user table");
         var ret_json = eval('(' + ret +')');
-
+        $("table tbody").html("");
         var i_key;
         for(i_key in ret_json){
             var t_body = document.getElementById('t_body');
@@ -96,13 +97,13 @@
             var a1 = document.createElement('a');
             var a2 = document.createElement('a');
             var text = document.createTextNode('/');
-            a1.setAttribute('href', '#alterTransaction');
+            a1.setAttribute('href', '#alterUser');
             a1.setAttribute('data-toggle', 'modal');
             a1.setAttribute('onclick', 'modify_it()');
             a1.innerHTML = '修改';
-            a2.setAttribute('href', '#alterTransaction');
+            a2.setAttribute('href', '#alterUser');
             a2.setAttribute('data-toggle', 'modal');
-            a2.setAttribute('onclick', 'delete_it(' + user_id + ')');
+            a2.setAttribute('onclick', 'delete_it()');
             a2.innerHTML = '删除';
 
             td_operation.appendChild(a1);
@@ -123,12 +124,14 @@
 
     function modify_it() {
         console.log("modify it");
-        $("#myModalLabel").text("修改人员信息")
+        $("#myModalLabel").text("修改人员信息");
+
     }
 
     function delete_it() {
         console.log("delete it");
-        $("#myModalLabel").text("删除人员")
+        $("#myModalLabel").text("删除人员");
+        $("#myModalBody").text("Sure?");
     }
 </script>
 {% endblock script %}
