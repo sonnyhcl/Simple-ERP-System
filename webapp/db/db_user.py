@@ -94,7 +94,8 @@ def db_show_user(cid, page):
     :param page: 第几页
     :return: 'Success', array(tuple(info)) or 'Fail', 'error_msg'
     """
-    info = [(u'高科苑', u'hcl', u'hclphone'), (u'高科苑', u'admin', u'adminphone')]
+    info = [(0, u'高科苑', u'hcl', u'hclphone'),
+            (1, u'高科苑', u'admin', u'adminphone')]
     return info
 
 

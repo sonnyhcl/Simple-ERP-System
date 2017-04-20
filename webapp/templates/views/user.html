@@ -45,7 +45,7 @@
                 </tr>
                 </thead>
 
-                <tbody id="tbody">
+                <tbody id="t_body">
                 </tbody>
             </table>
 
@@ -63,7 +63,7 @@
                 console.log('document ready');
                 $.post('/user/1/page/',{curr:1, page:1},
                         function (ret) {
-                            console.log(ret)
+                            console.log(ret);
                             refresh_table(ret);
                         }
                 )
@@ -72,42 +72,48 @@
 
     function refresh_table(ret) {
         console.log("refresh user table");
-        retJson = eval('(' + ret +')');
+        var ret_json = eval('(' + ret +')');
 
-        for(key in retJson){
-            var tbody = document.getElementById('tbody');
+        var i_key;
+        for(i_key in ret_json){
+            var t_body = document.getElementById('t_body');
 
-            var tr = document.createElement('tr')
-            var tdcommunity = document.createElement('td')
-            var tdusername = document.createElement('td')
-            var tdcontact = document.createElement('td')
+            var tr = document.createElement('tr');
+            if (i_key % 2)
+                tr.setAttribute('class', 'info');
+            else
+                tr.setAttribute('class', 'error');
+            var td_community = document.createElement('td');
+            var td_username = document.createElement('td');
+            var td_contact = document.createElement('td');
 
-            tdcommunity.innerHTML = retJson[key][0];
-            tdusername.innerHTML = retJson[key][1];
-            tdcontact.innerHTML = retJson[key][2];
+            var user_id = ret_json[i_key][0];
+            td_community.innerHTML = ret_json[i_key][1];
+            td_username.innerHTML = ret_json[i_key][2];
+            td_contact.innerHTML = ret_json[i_key][3];
 
-            var tdoperation = document.createElement('td')
-            var a1 = document.createElement('a')
-            var a2 = document.createElement('a')
-            var text = document.createTextNode('/')
-            a1.setAttribute('href', '#alterTransaction')
-            a1.setAttribute('data-toggle', 'modal')
-            a1.setAttribute('onclick', 'modify_it()')
-            a1.innerHTML = '修改'
-            a2.setAttribute('href', '#alterTransaction')
-            a2.setAttribute('data-toggle', 'modal')
-            a2.setAttribute('onclick', 'delete_it()')
-            a2.innerHTML = '删除'
+            var td_operation = document.createElement('td');
+            var a1 = document.createElement('a');
+            var a2 = document.createElement('a');
+            var text = document.createTextNode('/');
+            a1.setAttribute('href', '#alterTransaction');
+            a1.setAttribute('data-toggle', 'modal');
+            a1.setAttribute('onclick', 'modify_it()');
+            a1.innerHTML = '修改';
+            a2.setAttribute('href', '#alterTransaction');
+            a2.setAttribute('data-toggle', 'modal');
+            a2.setAttribute('onclick', 'delete_it(' + user_id + ')');
+            a2.innerHTML = '删除';
 
-            tdoperation.appendChild(a1);
-            tdoperation.appendChild(text);
-            tdoperation.appendChild(a2);
+            td_operation.appendChild(a1);
+            td_operation.appendChild(text);
+            td_operation.appendChild(a2);
 
-            tr.appendChild(tdcommunity);
-            tr.appendChild(tdusername);
-            tr.appendChild(tdcontact);
-            tr.appendChild(tdoperation);
-            tbody.appendChild(tr);
+            tr.appendChild(td_community);
+            tr.appendChild(td_username);
+            tr.appendChild(td_contact);
+            tr.appendChild(td_operation);
+            t_body.appendChild(tr);
         }
     }
 
