@@ -25,8 +25,8 @@ def show_user(cid):
     """
     page = 1
     info = db_user.db_show_user(cid, page)
-    # print json.dumps(info)
-    return json.dumps(info)
+    # print json.dumps(info,ensure_ascii=False)
+    return json.dumps(info,ensure_ascii=False)
 
 
 @app.route('/user/<int:cid>/add', methods=['POST'])
