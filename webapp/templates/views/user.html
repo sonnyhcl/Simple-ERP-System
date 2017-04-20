@@ -35,42 +35,17 @@
                 </div>
             </div>
 
-            <table class="table"  id="user_table">
+            <table class="table" id="user_table">
                 <thead>
                 <tr>
-                    <th>
-                        社区
-                    </th>
-                    <th>
-                        姓名
-                    </th>
-                    <th>
-                        联系方式
-                    </th>
-                    <th>
-                        操作
-                    </th>
+                    <th>社区</th>
+                    <th>姓名</th>
+                    <th>联系方式</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
-                <tbody>
-                <!-- 表格模版 -->
-                <!--<tr>-->
-                    <!--<td>-->
-                        <!--高科苑-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--cjj-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--110-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<a href="#alterTransaction" data-toggle="modal" onclick="modify_it()">修改</a>-->
-                        <!--/-->
-                        <!--<a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <th id="just4test"></th>
+
+                <tbody id="tbody">
                 </tbody>
             </table>
 
@@ -97,8 +72,43 @@
 
     function refresh_table(ret) {
         console.log("refresh user table");
-        $('#just4test').text(ret)
+        retJson = eval('(' + ret +')');
 
+        for(key in retJson){
+            var tbody = document.getElementById('tbody');
+
+            var tr = document.createElement('tr')
+            var tdcommunity = document.createElement('td')
+            var tdusername = document.createElement('td')
+            var tdcontact = document.createElement('td')
+
+            tdcommunity.innerHTML = retJson[key][0];
+            tdusername.innerHTML = retJson[key][1];
+            tdcontact.innerHTML = retJson[key][2];
+
+            var tdoperation = document.createElement('td')
+            var a1 = document.createElement('a')
+            var a2 = document.createElement('a')
+            var text = document.createTextNode('/')
+            a1.setAttribute('href', '#alterTransaction')
+            a1.setAttribute('data-toggle', 'modal')
+            a1.setAttribute('onclick', 'modify_it()')
+            a1.innerHTML = '修改'
+            a2.setAttribute('href', '#alterTransaction')
+            a2.setAttribute('data-toggle', 'modal')
+            a2.setAttribute('onclick', 'delete_it()')
+            a2.innerHTML = '删除'
+
+            tdoperation.appendChild(a1);
+            tdoperation.appendChild(text);
+            tdoperation.appendChild(a2);
+
+            tr.appendChild(tdcommunity);
+            tr.appendChild(tdusername);
+            tr.appendChild(tdcontact);
+            tr.appendChild(tdoperation);
+            tbody.appendChild(tr);
+        }
     }
 
     function add_it() {
