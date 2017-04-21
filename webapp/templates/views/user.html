@@ -48,51 +48,51 @@
 {{ super() }}
 <script type="text/javascript">
     $(document).ready(
-        function () {
-            console.log('document ready');
-            $.post('/user/1/page/', {curr: 1, page: 1},
-                function (ret) {
-                    console.log(ret);
-                    $("#t_body").html("");
-                    var ret_json = eval('(' + ret + ')');
+            function () {
+                console.log('document ready');
+                $.post('/user/1/page/', {curr: 1, page: 1},
+                        function (ret) {
+                            console.log(ret);
+                            $("#t_body").html("");
+                            var ret_json = eval('(' + ret + ')');
 
-                    var table = $('#user_table').dataTable({
-                        data: ret_json,
-                        columns: [
-                            {title: "社区"},
-                            {title: "姓名"},
-                            {title: "联系方式"},
-                            {title: "操作", "width": "10%"}
-                        ],
-                        "aoColumnDefs": [//设置列的属性，此处设置第一列不排序
-                            {"bSortable": false, "aTargets": [0]}, {"class": "tn", "targets": [0]},
-                            {
-                                "targets": -1,
-                                "class": "but_xq",
-                                "data": null,
-                                "bSortable": false,
-                                "defaultContent": "<p><a id='edit_user' href='#alterUser' data-toggle='modal' onclick='modify_it()'>修改</a>" +
-                                " / <a id='del_user' href='#alterUser' data-toggle='modal' onclick='delete_it()'>删除</a></p>"
-                            }
-                        ],
-                        language: {
-                            paginate: {
-                                previous: "上一页",
-                                next: "下一页",
-                                first: "第一页",
-                                last: "最后"
-                            },
-                            zeroRecords: "似乎来到了一块没有数据的荒原...",
-                            info: "共 _PAGES_ 页，从第 _START_ 到第 _END_ 页，共 _TOTAL_ 条 ",
-                            infoEmpty: "0 条记录",
-                            infoFiltered: ""
-                        },
-                        paging: true,
-                        pagingType: "full_numbers"
-                    });
-                }
-            )
-        }
+                            var table = $('#user_table').dataTable({
+                                data: ret_json,
+                                columns: [
+                                    {title: "社区"},
+                                    {title: "姓名"},
+                                    {title: "联系方式"},
+                                    {title: "操作", "width": "10%"}
+                                ],
+                                "aoColumnDefs": [//设置列的属性，此处设置第一列不排序
+                                    {"bSortable": false, "aTargets": [0]}, {"class": "tn", "targets": [0]},
+                                    {
+                                        "targets": -1,
+                                        "class": "but_xq",
+                                        "data": null,
+                                        "bSortable": false,
+                                        "defaultContent": "<p><a id='edit_user' href='#alterUser' data-toggle='modal' onclick='modify_it()'>修改</a>" +
+                                        " / <a id='del_user' href='#alterUser' data-toggle='modal' onclick='delete_it()'>删除</a></p>"
+                                    }
+                                ],
+                                language: {
+                                    paginate: {
+                                        previous: "上一页",
+                                        next: "下一页",
+                                        first: "第一页",
+                                        last: "最后"
+                                    },
+                                    zeroRecords: "似乎来到了一块没有数据的荒原...",
+                                    info: "共 _PAGES_ 页，从第 _START_ 到第 _END_ 页，共 _TOTAL_ 条 ",
+                                    infoEmpty: "0 条记录",
+                                    infoFiltered: ""
+                                },
+                                paging: true,
+                                pagingType: "full_numbers"
+                            });
+                        }
+                )
+            }
     );
 
     // useless, for now
