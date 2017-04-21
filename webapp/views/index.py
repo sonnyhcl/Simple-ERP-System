@@ -16,13 +16,15 @@ def index_():
 @app.route('/index')
 @login_required
 def index():
-    log("test")
     return render_template('views/index.html')
 
 
 @app.route('/log_out', methods=['GET'])
 def log_out():
     session['logged_in'] = False
+    session['username'] = 'guest'
+    session['role'] = 'guest'
+    session['c_id'] = -1
     return redirect('index')
 
 
@@ -31,9 +33,14 @@ def log_in():
     user_name = request.form.get('username', None)
     pass_word = request.form.get('password', None)
     next_url = request.form.get('next', url_for('index'))
+    if next_url in ('log_out', '/log_out', url_for('log_out')):
+        next_url = url_for('index')
     if validate_user(user_name, pass_word):
+        # TODO 下一步把跟前端交互cid的参数都删除了
         session['logged_in'] = True
         session['username'] = user_name
+        session['c_id'] = 1
+        session['role'] = 'root'
         return redirect(next_url)
 
     error_msg = "wrong username or password"
@@ -48,7 +55,7 @@ def login():
     """
     error_msg = None
     next_url = request.args.get('next', 'index')
-    print 'next: ' + next_url
+    log('next: ' + next_url)
     return render_template('login.html', error=error_msg, next=next_url)
 
 
