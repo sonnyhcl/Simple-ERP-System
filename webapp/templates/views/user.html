@@ -35,24 +35,12 @@
                 </div>
             </div>
 
-            <table class="table" id="user_table">
-                <thead>
-                <tr>
-                    <th>社区</th>
-                    <th>姓名</th>
-                    <th>联系方式</th>
-                    <th width="10%">操作</th>
-                </tr>
-                </thead>
 
-                <tbody id="t_body">
-                </tbody>
+            <table id="user_table" class="table table-bordered table-striped table-hover" cellspacing="0"
+                   width="100%"></table>
 
-            </table>
-
-            <!--TODO: 分页-->
         </div>
-    </div>
+    </DIV>
 </div>
 {% endblock content %}
 
@@ -60,23 +48,60 @@
 {{ super() }}
 <script type="text/javascript">
     $(document).ready(
-            function() {
-                console.log('document ready');
-                $.post('/user/1/page/',{curr:1, page:1},
-                        function (ret) {
-                            console.log(ret);
-                            refresh_table(ret);
-                        }
-                )
-            }
+        function () {
+            console.log('document ready');
+            $.post('/user/1/page/', {curr: 1, page: 1},
+                function (ret) {
+                    console.log(ret);
+                    $("#t_body").html("");
+                    var ret_json = eval('(' + ret + ')');
+
+                    var table = $('#user_table').dataTable({
+                        data: ret_json,
+                        columns: [
+                            {title: "社区"},
+                            {title: "姓名"},
+                            {title: "联系方式"},
+                            {title: "操作", "width": "10%"}
+                        ],
+                        "aoColumnDefs": [//设置列的属性，此处设置第一列不排序
+                            {"bSortable": false, "aTargets": [0]}, {"class": "tn", "targets": [0]},
+                            {
+                                "targets": -1,
+                                "class": "but_xq",
+                                "data": null,
+                                "bSortable": false,
+                                "defaultContent": "<p><a id='edit_user' href='#alterUser' data-toggle='modal' onclick='modify_it()'>修改</a>" +
+                                " / <a id='del_user' href='#alterUser' data-toggle='modal' onclick='delete_it()'>删除</a></p>"
+                            }
+                        ],
+                        language: {
+                            paginate: {
+                                previous: "上一页",
+                                next: "下一页",
+                                first: "第一页",
+                                last: "最后"
+                            },
+                            zeroRecords: "似乎来到了一块没有数据的荒原...",
+                            info: "共 _PAGES_ 页，从第 _START_ 到第 _END_ 页，共 _TOTAL_ 条 ",
+                            infoEmpty: "0 条记录",
+                            infoFiltered: ""
+                        },
+                        paging: true,
+                        pagingType: "full_numbers"
+                    });
+                }
+            )
+        }
     );
 
+    // useless, for now
     function refresh_table(ret) {
         console.log("refresh user table");
-        var ret_json = eval('(' + ret +')');
+        var ret_json = eval('(' + ret + ')');
         $("table tbody").html("");
         var i_key;
-        for(i_key in ret_json){
+        for (i_key in ret_json) {
             var t_body = document.getElementById('t_body');
 
             var tr = document.createElement('tr');
@@ -96,7 +121,7 @@
             var td_operation = document.createElement('td');
             var a1 = document.createElement('a');
             var a2 = document.createElement('a');
-            var text = document.createTextNode('/');
+            var text = document.createTextNode(' / ');
             a1.setAttribute('href', '#alterUser');
             a1.setAttribute('data-toggle', 'modal');
             a1.setAttribute('onclick', 'modify_it()');
@@ -132,6 +157,12 @@
         console.log("delete it");
         $("#myModalLabel").text("删除人员");
         $("#myModalBody").text("Sure?");
+//        TODO: 传入当前行数据
+//        var data = $('#user_table').DataTable().row($(this).parents('tr')).data();
+//        $("#myModalBody").text("Sure?"+data[0]+","+data[1]+",");
+
     }
+
 </script>
+
 {% endblock script %}

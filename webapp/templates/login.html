@@ -14,11 +14,14 @@
         border-radius: 5px;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
+
 </style>
+
+
 {% endblock head %}
 
 {% block content %}
-
+{{ super() }}
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
@@ -31,6 +34,12 @@
     </div>
     {% endif %}
     <form class="form-signin" method="POST" action="{{ url_for('log_in') }}">
+        <div align="center">
+            <h1>
+                彩虹桥
+            </h1>
+            <br>
+        </div>
         <hr>
         <div align="center">
             <div class="form-group">
@@ -49,6 +58,10 @@
         </div>
         <hr>
     </form>
+
+
 </div>
 
 {% endblock content %}
+
+

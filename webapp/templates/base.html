@@ -7,9 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <!-- 引入 Bootstrap -->
-    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"
-          rel="stylesheet">
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--datatables-->
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+
 
     <style type="text/css">
         .site-footer {
@@ -66,10 +72,11 @@
     {% endblock %}
 </div>
 
-<footer class="site-footer" style="background-color: black">
+<!--Footer-->
+<footer class="site-footer">
     <div class="container" align="center">
+        <hr>
         <p class="text-muted credit">
-            <br>
             <a href="http://github.com/sonnyhcl/SimpleWebProject">Simple Web Project</a>
             <br>
             &copy; Copyright 2017
@@ -77,13 +84,26 @@
     </div>
 </footer>
 
+
 {% block script %}
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
 <!--动态线条-->
 <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 <script type="text/javascript" src="/static/js/dynamicbg.js"></script>
+
+<!--datatables-->
+<script type="text/javascript" language="JavaScript" src="http://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" language="JavaScript"
+        src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript"
+        src="http://cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript"
+        src="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
 {% endblock script %}
 

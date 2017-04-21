@@ -29,7 +29,7 @@ function init(showStats) {
     function playNextTransition() {
         tesselation.next(transitionDuration);
         gradients.next(transitionDuration);
-    };
+    }
 
     function tick(time) {
         if (!lastTransitionAt || time - lastTransitionAt > transitionDelay) {
