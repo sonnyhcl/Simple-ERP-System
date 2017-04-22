@@ -34,17 +34,22 @@ def validate_user(u_name, u_password):
     验证(u_name, u_password)
     :param u_name:
     :param u_password:
-    :return: bool
+    :return: True, [user_info] or False, ""
     """
     if not u_name or not u_password:
-        return False
+        return False, ""
+
     user = User()
-    status, response = user.get_validate_info()
+    status, response = user.get_all_user()
     if not status:
-        return False
-    if (u_name, u_password) in response.fetchall():
-        return True
-    return False
+        return False, "guest"
+
+    info = response.fetchall()
+    for i in info:
+        if (u_name, u_password) == (i[1], i[3]):
+            return True, i
+
+    return False, "guest"
 
 
 @app.route('/log_in', methods=['POST'])
@@ -54,12 +59,13 @@ def log_in():
     next_url = request.form.get('next', url_for('index'))
     if next_url in ('log_out', '/log_out', url_for('log_out')):
         next_url = url_for('index')
-    if validate_user(u_name, u_password):
+    status, info = validate_user(u_name, u_password)
+    if status:
         # TODO 下一步把跟前端交互cid的参数都删除了
         session['logged_in'] = True
-        session['username'] = u_name
-        session['c_id'] = 1
-        session['role'] = 'root'
+        session['username'] = info[1]
+        session['role'] = info[2]
+        session['c_id'] = info[5]
         return redirect(next_url)
 
     error_msg = "wrong username or password"

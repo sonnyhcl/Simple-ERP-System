@@ -91,15 +91,6 @@ class User(object):
         conn.close()
         return "Success"
 
-    def get_user_role(self, _u_id):
-        """
-
-        :param _u_id:
-        :return: 'Success', <role> or 'Fail', 'error_msg'
-        """
-        log("get_user_role")
-        return 'user'
-
     def get_user_by_uid(self, _u_id):
         """
 
@@ -112,6 +103,15 @@ class User(object):
         response = conn.execute('select * from user where u_id = ?;', param)
 
         return "Success", response
+
+    def get_user_by_cid(self, _c_id):
+        """
+        get_user_by_cid
+        :param _c_id:
+        :return: 'Success', <cursor> or 'Fail', 'error_msg'
+        """
+        log("get_user_by_cid")
+        pass
 
     def get_all_user(self):
         """
