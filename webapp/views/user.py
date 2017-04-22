@@ -1,13 +1,20 @@
 # -*- coding: UTF-8 -*-
-from flask import render_template
+"""
+用户管理页面相关操作
+"""
 import json
+from flask import render_template
 from webapp import app
-from db import db_user
+from db.db_user import *
 __author__ = 'sonnyhcl'
 
 
 @app.route('/user', methods=['GET'])
-def user():
+def user_index():
+    """
+    返回用户管理页面
+    :return: templates
+    """
     return render_template('views/user.html')
 
 
@@ -23,7 +30,12 @@ def show_user(cid):
     :param cid:
     :return: json.dumps(info)
     """
-    info = db_user.db_show_user(cid)
+    # info = db_user.db_show_user(cid)
+    if cid < 0:
+        return "Fail", "没有权限"
+    status, cur = user.get_user_by_cid(cid)
+    if status == "Success":
+        info = cur.fetchall()
     return json.dumps(info, ensure_ascii=False)
 
 

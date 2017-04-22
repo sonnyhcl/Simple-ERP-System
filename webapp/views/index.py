@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+"""
+首页、登录相关操作以及其它杂七杂八的操作
+"""
 import os
 from flask import render_template, request, session, \
     url_for, redirect, make_response
@@ -17,11 +20,20 @@ def index_():
 @app.route('/index')
 @login_required
 def index():
+    """
+    返回首页
+    :return:
+    """
     return render_template('views/index.html')
 
 
 @app.route('/log_out', methods=['GET'])
 def log_out():
+    """
+    登出，立刻跳转到首页(此时会被重定向到登录页面)
+    :return:
+    """
+    log(session['username'] + "log_out")
     session['logged_in'] = False
     session['username'] = 'guest'
     session['role'] = 'guest'
@@ -36,16 +48,14 @@ def validate_user(u_name, u_password):
     :param u_password:
     :return: True, [user_info] or False, ""
     """
+    log("validate_user" + str(u_name))
     if not u_name or not u_password:
         return False, ""
-
-    user = User()
     status, response = user.get_all_user()
     if not status:
         return False, "guest"
 
-    info = response.fetchall()
-    for i in info:
+    for i in response.fetchall():
         if (u_name, u_password) == (i[1], i[3]):
             return True, i
 
@@ -75,6 +85,7 @@ def log_in():
 @app.route('/login', methods=['GET'])
 def login():
     """
+    返回登录页面
     http://localhost:5000/login?next=http%3A%2F%2Flocalhost%3A5000%2Ferror
     :return: templates
     """
@@ -87,16 +98,29 @@ def login():
 @app.route('/error')
 @login_required
 def error():
+    """
+    默认的error界面
+    :return: templates
+    """
     return render_template('error.html')
 
 
 @app.errorhandler(404)
 def not_found(e):
+    """
+    默认的404 not found页面
+    :param e:
+    :return: templates
+    """
     return render_template('404.html'), 404
 
 
 @app.route('/show_web_log', methods=['GET'])
-def show_flask_log():
+def show_web_log():
+    """
+    给运维预留的日志接口
+    :return: txt
+    """
     log_dir = os.path.join(app.config['PROJECT_PATH'], "logs")
     log_file = os.path.join(log_dir, "webapp.log")
     resp = make_response(open(log_file).read())
@@ -105,7 +129,11 @@ def show_flask_log():
 
 
 @app.route('/show_db_log', methods=['GET'])
-def show_log():
+def show_db_log():
+    """
+    给超管预留的数据库操作流水接口
+    :return: txt
+    """
     log_dir = os.path.join(app.config['PROJECT_PATH'], "logs")
     log_file = os.path.join(log_dir, "db_operator.log")
     resp = make_response(open(log_file).read())

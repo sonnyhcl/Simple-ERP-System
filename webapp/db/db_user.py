@@ -22,7 +22,8 @@ class User(object):
     )
     ;
     """
-    def add_user(self, _u_name, _u_role, _u_password, _u_phone, _c_id):
+    @staticmethod
+    def add_user(_u_name, _u_role, _u_password, _u_phone, _c_id):
         """
         add_user
         :param _u_name:
@@ -40,7 +41,8 @@ class User(object):
         conn.close()
         return "Success"
 
-    def delete_user(self, _u_id):
+    @staticmethod
+    def delete_user(_u_id):
         """
         delete_user
         :param _u_id:
@@ -54,7 +56,8 @@ class User(object):
         conn.close()
         return "Success"
 
-    def update_user(self, _u_id, _u_name=None, _u_role=None,
+    @staticmethod
+    def update_user(_u_id, _u_name=None, _u_role=None,
                     _u_password=None, _u_phone=None, _c_id=None):
         """
         update_user
@@ -85,13 +88,17 @@ class User(object):
 
         param = tuple(origin) + (_u_id,)
         conn.execute(
-            'update user set u_id = ?, u_name = ?, u_role = ?, u_password = ?, u_phone = ?, c_id = ? where u_id = ?;',
+            'update user '
+            'set u_id = ?, u_name = ?, u_role = ?, '
+            'u_password = ?, u_phone = ?, c_id = ? '
+            'where u_id = ?;',
             param)
         conn.commit()
         conn.close()
         return "Success"
 
-    def get_user_by_uid(self, _u_id):
+    @staticmethod
+    def get_user_by_uid(_u_id):
         """
 
         :param _u_id:
@@ -104,18 +111,27 @@ class User(object):
 
         return "Success", response
 
-    def get_user_by_cid(self, _c_id):
+    @staticmethod
+    def get_user_by_cid(_c_id):
         """
         get_user_by_cid
         :param _c_id:
         :return: 'Success', <cursor> or 'Fail', 'error_msg'
         """
         log("get_user_by_cid")
-        pass
+        conn = sqlite3.connect("test.db")
+        param = (_c_id,)
+        if _c_id == 0:
+            response = conn.execute('select * from user;')
+        else:
+            response = conn.execute('select * from user where c_id = ?;', param)
 
-    def get_all_user(self):
+        return "Success", response
+
+    @staticmethod
+    def get_all_user():
         """
-
+        get_all_user
         :return: 'Success', <cursor> or 'Fail', 'error_msg'
         """
         log("get_all_user")
@@ -123,16 +139,7 @@ class User(object):
         response = conn.execute('select * from user;')
         return "Success", response
 
-    def get_validate_info(self):
-        """
-
-        :return: 'Success', <cursor> or 'Fail', 'error_msg'
-        """
-        log("get_validate_info")
-        conn = sqlite3.connect("test.db")
-        response = conn.execute('select u_name, u_password from user;')
-        return "Success", response
-
+user = User()
 # def validate_user(username, password):
 #     """
 #     验证数据库中是否存在(username, password)
