@@ -21,31 +21,37 @@ class Item(object):
     Item信息表
     """
 
-    #def __init__(self, conn) :
-    #    conn = conn
-    def add_item(self, _i_id, _i_name, _i_minutes, _i_unitprices, _i_prices, _p_id):
+    def __init__(self) :
+        self.__counter = 0
+    def add_item(self, i_name, i_minutes, i_unitprices, i_prices, p_id):
         conn = sqlite3.connect("test.db");
-
-        param = (_i_id, _i_name, _i_minutes, _i_unitprices, _i_prices, _p_id,)
+        response = conn.execute("select max(i_id) from item;")
+        response = response.fetchall()[0][0]
+        print response
+        if response is not None :
+            self.__counter = response
+        self.__counter += 1
+        i_id = self.__counter
+        param = (i_id, i_name, i_minutes, i_unitprices, i_prices, p_id,)
         conn.execute('insert into item values (?, ?, ?, ?, ?, ?);', param)
         conn.commit()
         conn.close()
         return "Success"
 
-    def delete_item(self, _i_id):
+    def delete_item(self, i_id):
         conn = sqlite3.connect("test.db");
 
-        param = (_i_id,)
+        param = (i_id,)
         conn.execute('delete from item where i_id = ?;', param)
         conn.commit()
         conn.close()
         return "Success"
 
-    def update_item(self, _i_id, _i_name = None, _i_minutes = None, _i_unitprices = None, _i_prices = None, _p_id = None):
+    def update_item(self, i_id, _i_name = None, _i_minutes = None, _i_unitprices = None, _i_prices = None, _p_id = None):
 
         conn = sqlite3.connect("test.db");
 
-        param = (_i_id,)
+        param = (i_id,)
         response = conn.execute('select * from item where i_id = ?;', param)
         origin = response.fetchall()[0]
         origin = list(origin)
@@ -59,21 +65,24 @@ class Item(object):
             origin[4] = _i_prices
         if _p_id            is not None :
             origin[5] = _p_id
-        param = tuple(origin) + (_i_id,)
+        param = tuple(origin) + (i_id,)
         conn.execute('update item set i_id = ?, i_name = ?, i_minutes = ?, i_unitprices = ?, i_prices = ?, p_id = ? where i_id = ?;', param)
         conn.commit()
         conn.close()
         return "Success"
 
-    def get_item(self, _i_id):
+    def get_item(self, i_id):
         conn = sqlite3.connect("test.db");
 
-        param = (_i_id,)
+        param = (i_id,)
         response = conn.execute('select * from item where i_id = ?;', param)
+        response = response.fetchall()
+        conn.close()
         return "Success", response
 
     def get_all(self, ):
         conn = sqlite3.connect("test.db");
-
         response = conn.execute('select * from item;')
+        response = response.fetchall()
+        conn.close()
         return "Success", response

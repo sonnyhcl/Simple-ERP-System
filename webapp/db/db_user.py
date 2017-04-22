@@ -22,68 +22,77 @@ class User(object):
     )
     ;
     """
-    def add_user(self, _u_name, _u_role, _u_password, _u_phone, _c_id):
+    def __init__(self) :
+        self.__counter = 0
+    def add_user(self, u_name, u_role, u_password, u_phone, c_id):
         """
         add_user
-        :param _u_name:
-        :param _u_role:
-        :param _u_password:
-        :param _u_phone:
-        :param _c_id:
+        :param u_name:
+        :param u_role:
+        :param u_password:
+        :param u_phone:
+        :param c_id:
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
         log("add user")
         conn = sqlite3.connect("test.db")
-        param = (_u_name, _u_role, _u_password, _u_phone, _c_id,)
+        response = conn.execute("select max(u_id) from user;")
+        response = response.fetchall()[0][0]
+        print response
+        if response is not None :
+            self.__counter = response
+        self.__counter += 1
+        u_id = self.__counter
+        param = (u_id, u_name, u_role, u_password, u_phone, c_id,)
         conn.execute('insert into user values (?, ?, ?, ?, ?, ?);', param)
         conn.commit()
         conn.close()
         return "Success"
 
-    def delete_user(self, _u_id):
+    def delete_user(self, u_id):
         """
         delete_user
-        :param _u_id:
+        :param u_id:
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
         log("delete_user")
         conn = sqlite3.connect("test.db")
-        param = (_u_id,)
+        param = (u_id,)
         conn.execute('delete from user where u_id = ?;', param)
         conn.commit()
         conn.close()
         return "Success"
 
-    def update_user(self, _u_id, _u_name=None, _u_role=None,
-                    _u_password=None, _u_phone=None, _c_id=None):
+    def update_user(self, u_id, u_name=None, u_role=None,
+                    u_password=None, u_phone=None, c_id=None):
         """
         update_user
-        :param _u_id:
-        :param _u_name:
-        :param _u_role:
-        :param _u_password:
-        :param _u_phone:
-        :param _c_id:
+        :param u_id:
+        :param u_name:
+        :param u_role:
+        :param u_password:
+        :param u_phone:
+        :param c_id:
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
         log("update_user")
         conn = sqlite3.connect("test.db")
-        param = (_u_id,)
+        param = (u_id,)
         response = conn.execute('select * from user where u_id = ?;', param)
         origin = response.fetchall()[0]
         origin = list(origin)
-        if _u_name is not None:
-            origin[1] = _u_name
-        if _u_role is not None:
-            origin[2] = _u_role
-        if _u_password is not None:
-            origin[3] = _u_password
-        if _u_phone is not None:
-            origin[4] = _u_phone
-        if _c_id is not None:
-            origin[5] = _c_id
+        if u_name is not None:
+            origin[1] = u_name
+        if u_role is not None:
+            origin[2] = u_role
+        if u_password is not None:
+            origin[3] = u_password
+        if u_phone is not None:
+            origin[4] = u_phone
+        if c_id is not None:
+            origin[5] = c_id
 
-        param = tuple(origin) + (_u_id,)
+        param = tuple(origin) + (u_id,)
         conn.execute(
             'update user set u_id = ?, u_name = ?, u_role = ?, u_password = ?, u_phone = ?, c_id = ? where u_id = ?;',
             param)
@@ -91,27 +100,33 @@ class User(object):
         conn.close()
         return "Success"
 
-    def get_user_by_uid(self, _u_id):
+    def get_user_by_uid(self, u_id):
         """
 
-        :param _u_id:
+        :param u_id:
         :return: 'Success', <cursor> or 'Fail', 'error_msg'
         """
         log("get_user_by_uid")
         conn = sqlite3.connect("test.db")
-        param = (_u_id,)
+        param = (u_id,)
         response = conn.execute('select * from user where u_id = ?;', param)
-
+        response = response.fetchall()
+        conn.close()
         return "Success", response
 
-    def get_user_by_cid(self, _c_id):
+    def get_user_by_cid(self, c_id):
         """
         get_user_by_cid
-        :param _c_id:
+        :param c_id:
         :return: 'Success', <cursor> or 'Fail', 'error_msg'
         """
         log("get_user_by_cid")
-        pass
+        conn = sqlite3.connect("test.db")
+        param = (c_id,)
+        response = conn.execute('select * from user where c_id = ?;', param)
+        response = response.fetchall()
+        conn.close()
+        return "Success", response
 
     def get_all_user(self):
         """
@@ -121,6 +136,8 @@ class User(object):
         log("get_all_user")
         conn = sqlite3.connect("test.db")
         response = conn.execute('select * from user;')
+        response = response.fetchall()
+        conn.close()
         return "Success", response
 
     def get_validate_info(self):
@@ -131,6 +148,7 @@ class User(object):
         log("get_validate_info")
         conn = sqlite3.connect("test.db")
         response = conn.execute('select u_name, u_password from user;')
+        response = response.fetchall()
         return "Success", response
 
 # def validate_user(username, password):

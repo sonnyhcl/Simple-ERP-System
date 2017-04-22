@@ -17,52 +17,62 @@ class Product(object):
     产品信息表
     """
 
-    #def __init__(self, conn) :
-    #    conn = conn
-    def add_product(self, _p_id, _p_name, _author_name = ""):
+    def __init__(self) :
+        self.__counter = 0
+    def add_product(self, p_name, author_name = ""):
         conn = sqlite3.connect("test.db");
-
-        param = (_p_id, _p_name, _author_name,)
+        response = conn.execute("select max(p_id) from product;")
+        response = response.fetchall()[0][0]
+        print response
+        if response is not None :
+            self.__counter = response
+        self.__counter += 1
+        p_id = self.__counter
+        param = (p_id, p_name, author_name,)
         conn.execute('insert into product values (?, ?, ?);', param)
         conn.commit()
         conn.close()
         return "Success"
 
-    def delete_product(self, _p_id):
+    def delete_product(self, p_id):
         conn = sqlite3.connect("test.db");
 
-        param = (_p_id,)
+        param = (p_id,)
         conn.execute('delete from product where p_id = ?;', param)
         conn.commit()
         conn.close()
         return "Success"
 
-    def update_product(self, _p_id, _p_name = None, _author_name = None):
+    def update_product(self, p_id, p_name = None, author_name = None):
         conn = sqlite3.connect("test.db");
 
-        param = (_p_id,)
+        param = (p_id,)
         response = conn.execute('select * from product where p_id = ?;', param)
         origin = response.fetchall()[0]
         origin = list(origin)
-        if _p_name          is not None :
-            origin[1] = _p_name
-        if _author_name     is not None :
-            origin[2] = _author_name
-        param = tuple(origin) + (_p_id,)
+        if p_name          is not None :
+            origin[1] = p_name
+        if author_name     is not None :
+            origin[2] = author_name
+        param = tuple(origin) + (p_id,)
         conn.execute('update product set p_id = ?, p_name = ?, author_name = ? where p_id = ?;', param)
         conn.commit()
         conn.close()
         return "Success"
 
-    def get_product(self, _p_id):
+    def get_product(self, p_id):
         conn = sqlite3.connect("test.db");
 
-        param = (_p_id,)
+        param = (p_id,)
         response = conn.execute('select * from product where p_id = ?;', param)
+        response = response.fetchall()
+        conn.close()
         return "Success", response
 
     def get_all(self, ):
         conn = sqlite3.connect("test.db");
 
         response = conn.execute('select * from product;')
+        response = response.fetchall()
+        conn.close()
         return "Success", response
