@@ -73,7 +73,7 @@ def not_found(e):
 @app.route('/test')
 def test():
     """
-    TODO: to be deleted
+    TODO: test url
     :return:
     """
     return render_template('test.html')
