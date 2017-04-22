@@ -5,9 +5,8 @@
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <h3>
-                人员管理系统
-            </h3>
+            <h3>人员管理系统</h3>
+
             <a id="modal-471624" href="#alterUser"
                role="button" class="btn" data-toggle="modal">添加人员</a>
 
@@ -35,12 +34,13 @@
                 </div>
             </div>
 
-
-            <table id="user_table" class="table table-bordered table-striped table-hover" cellspacing="0"
-                   width="100%"></table>
+            <!-- 表格 -->
+            <table class="table table-bordered table-striped table-hover" cellspacing="0"
+                   id="user_table" width="100%">
+            </table>
 
         </div>
-    </DIV>
+    </div>
 </div>
 {% endblock content %}
 
@@ -50,10 +50,11 @@
     $(document).ready(
             function () {
                 console.log('document ready');
+//                page_url = "/user/" + cid +"/page/";
                 $.post('/user/1/page/', {curr: 1, page: 1},
                         function (ret) {
                             console.log(ret);
-                            $("#t_body").html("");
+//                            $("#t_body").html("");
                             var ret_json = eval('(' + ret + ')');
 
                             var table = $('#user_table').dataTable({
@@ -71,8 +72,13 @@
                                         "class": "but_xq",
                                         "data": null,
                                         "bSortable": false,
-                                        "defaultContent": "<p><a id='edit_user' href='#alterUser' data-toggle='modal' onclick='modify_it()'>修改</a>" +
-                                        " / <a id='del_user' href='#alterUser' data-toggle='modal' onclick='delete_it()'>删除</a></p>"
+                                        "defaultContent": "<p>" +
+                                        "<a id='edit_user' href='#alterUser' " +
+                                        "data-toggle='modal' onclick='modify_it()'>修改</a>" +
+                                        " / " +
+                                        "<a id='del_user' href='#alterUser' " +
+                                        "data-toggle='modal' onclick='delete_it()'>删除</a>" +
+                                        "</p>"
                                     }
                                 ],
                                 language: {
