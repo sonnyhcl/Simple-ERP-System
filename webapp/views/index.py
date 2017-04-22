@@ -76,12 +76,13 @@ def test():
     TODO: test url
     :return:
     """
-    user = User();
-    flag, response = user.get_all()
-    print flag
-    user.add_user(_u_id=1, _u_name='a', _u_password='b', _u_phone='c', _u_role='d', _c_id=1)
-    flag, response = user.get_all()
-    print response
+    # user = User()
+    # flag, response = user.get_all()
+    # print flag
+    # user.add_user(_u_id=100, _u_name='a', _u_password='b', _u_phone='c',
+    #               _u_role='d', _c_id=1)
+    # flag, response = user.get_all()
+    # print response
     return render_template('test.html')
 
 
