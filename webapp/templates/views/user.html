@@ -101,10 +101,12 @@
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
                    id="user_table" width="100%">
             </table>
-
         </div>
     </div>
 </div>
+
+<input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">
+
 {% endblock content %}
 
 {% block script %}
@@ -113,7 +115,7 @@
     $(document).ready(function () {
         var doc_table;
         console.log('document ready');
-        $.post('/user/1/page/',
+        $.post('/user/page/',
             function (ret) {
                 var ret_list = eval('(' + ret + ')');
                 doc_table = $('#user_table').dataTable({
@@ -189,7 +191,11 @@
 
     function confirm_del_member(id) {
         console.log(id);
-        $.post('user/1/delete', {
+//        var cid = $("#get_c_id").attr("value");
+//        post_url = "/user/" + cid + "/delete";
+        post_url = "/user/delete";
+        console.log(post_url);
+        $.post(post_url, {
             'id': id
         }, function (ret) {
             console.log(ret);
