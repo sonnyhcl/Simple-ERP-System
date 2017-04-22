@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block title %}用户{% endblock %}
 
 {% block content %}
@@ -8,8 +9,9 @@
             <h3>
                 人员管理系统
             </h3>
+            <br>
             <a id="modal-471624" href="#alterUser"
-               role="button" class="btn" data-toggle="modal">添加人员</a>
+               role="button" data-toggle="modal" onclick="add_it()" class="btn btn-default">添加人员</a>
 
             <!-- 弹窗模板 -->
             <div class="modal fade" id="alterUser"
@@ -40,7 +42,7 @@
                    width="100%"></table>
 
         </div>
-    </DIV>
+    </div>
 </div>
 {% endblock content %}
 
@@ -53,20 +55,46 @@
             $.post('/user/1/page/', {curr: 1, page: 1},
                 function (ret) {
                     console.log(ret);
-                    $("#t_body").html("");
                     var ret_json = eval('(' + ret + ')');
 
-                    var table = $('#user_table').dataTable({
+                    var doc_table = $('#user_table').dataTable({
                         data: ret_json,
-                        columns: [
-                            {title: "社区"},
-                            {title: "姓名"},
-                            {title: "联系方式"},
-                            {title: "操作", "width": "10%"}
-                        ],
-                        "aoColumnDefs": [//设置列的属性，此处设置第一列不排序
-                            {"bSortable": false, "aTargets": [0]}, {"class": "tn", "targets": [0]},
+                        "aoColumns": [
                             {
+                                "sTitle": "id",
+                                "bVisible": false,
+                                "bSearchable": false,
+                                "sDefaultContent": "",
+                                "sClass": "center"
+                            },
+                            {
+                                "sTitle": "社区",
+                                "sDefaultContent": "",
+                                "sClass": "center"
+                            },
+                            {
+                                "sTitle": "姓名",
+                                "sDefaultContent": "",
+                                "sClass": "center"
+                            },
+                            {
+                                "sTitle": "身份",
+                                "sDefaultContent": "",
+                                "sClass": "center"
+                            },
+                            {
+                                "sTitle": "联系方式",
+                                "sDefaultContent": "",
+                                "sClass": "center"
+                            },
+                            {
+                                "sTitle": "操作",
+                                "width": "10%",
+                                "sClass": "center"
+                            }
+                        ],
+                        "aoColumnDefs": [
+                            {   // 操作栏
                                 "targets": -1,
                                 "class": "but_xq",
                                 "data": null,
@@ -75,23 +103,47 @@
                                 " / <a id='del_user' href='#alterUser' data-toggle='modal' onclick='delete_it()'>删除</a></p>"
                             }
                         ],
-                        language: {
-                            paginate: {
-                                previous: "上一页",
-                                next: "下一页",
-                                first: "第一页",
-                                last: "最后"
+                        "oLanguage": {
+                            "oPaginate": {
+                                "sPrevious": "上一页",
+                                "sNext": "下一页",
+                                "sFirst": "第一页",
+                                "sLast": "最后一页"
                             },
-                            zeroRecords: "似乎来到了一块没有数据的荒原...",
-                            info: "共 _PAGES_ 页，从第 _START_ 到第 _END_ 页，共 _TOTAL_ 条 ",
-                            infoEmpty: "0 条记录",
-                            infoFiltered: ""
+                            "sZeroRecords": "似乎来到了一块没有数据的荒原...",
+                            "sInfo": "共 _PAGES_ 页，从第 _START_ 到第 _END_ 页，共 _TOTAL_ 条 ",
+                            "sInfoEmpty": "0 条记录",
+                            "sInfoFiltered": "",
+                            "sLengthMenu": "显示 _MENU_ 条",
+                            "sSearch": "搜索",
+                            "sProcessing": "正在获取数据，请稍等..."
                         },
-                        paging: true,
-                        pagingType: "full_numbers"
+                        "bSort": true,
+                        "bPaginate": true,
+                        "sPaginationType": "full",
+                        "sPageButton": "",
+                        "bAutoWidth": true,
+                        "bScrollCollapse": true,
+                        "bStateSave": true,
+//                        buttons: [
+//                            {
+//                                extend: 'edit',
+//                                editor: myEditor,
+//                                formMessage: function(editor, dt){
+//
+//                                }
+//                            },
+//                            {extend: 'remove', editor: myEditor}
+//                        ]
                     });
+
                 }
-            )
+            );
+
+//            $('tbody').on('click', 'a#del_user', function () {
+//                var data = $('#user_table').DataTable().row($(this).parents('tr')).data();
+//                alert('delete: ' + ',' + data[1] + ',' + data[2]);
+//            });
         }
     );
 
@@ -145,6 +197,7 @@
 
     function add_it() {
         console.log("add it");
+        $("#myModalLabel").text("添加人员信息");
     }
 
     function modify_it() {
@@ -153,14 +206,11 @@
 
     }
 
+
     function delete_it() {
         console.log("delete it");
-        $("#myModalLabel").text("删除人员");
-        $("#myModalBody").text("Sure?");
-//        TODO: 传入当前行数据
-//        var data = $('#user_table').DataTable().row($(this).parents('tr')).data();
-//        $("#myModalBody").text("Sure?"+data[0]+","+data[1]+",");
-
+        $('#myModalLabel').text("删除人员信息");
+        $("#myModalBody").text("Sure?")
     }
 
 </script>
