@@ -35,9 +35,20 @@ def show_user(cid):
         return "Fail", "没有权限"
     status, info = user.get_user_by_cid(cid)
     if status == "Success":
-        return json.dumps(info, ensure_ascii=False)
+        ret = dict()
+        ret['data'] = []
+        for i in info:
+            tmp = dict()
+            tmp['u_id'] = i[0]
+            tmp['u_name'] = i[1]
+            tmp['u_role'] = i[2]
+            tmp['u_phone'] = i[4]
+            tmp['c_id'] = i[5]
+            ret['data'].append(tmp)
+        print ret
+        return json.dumps(ret, ensure_ascii=False)
     else:
-        return json.dumps(["error"], ensure_ascii=False)
+        return json.dumps({"data": []}, ensure_ascii=False)
 
 
 @app.route('/user/<int:cid>/add', methods=['POST'])
