@@ -6,7 +6,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     DEBUG = True
     SECRET_KEY = 'hard to guess'
-    LOG_FILE_NAME = 'error.log'
+    LOG_FILE_NAME = 'webapp.log'
     CONFIG_PATH = os.path.abspath(os.path.dirname(__file__))
     PROJECT_PATH = os.path.split(CONFIG_PATH)[0]
 

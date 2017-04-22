@@ -1,7 +1,14 @@
 # -*- coding: UTF-8 -*-
 import sqlite3
-
+from webapp.mylog import log
 """
+数据库表中的所有操作都要通过log保存一份记录
+"""
+
+
+class User(object):
+    """
+    封装了与用户信息表相关的所有操作：增删改 + 查
     create table user
     (
         u_id            int         not null,
@@ -14,26 +21,32 @@ import sqlite3
         primary key     (u_id)
     )
     ;
-"""
-
-
-class User(object):
     """
-    用户信息表
-    """
-
-    #def __init__(self, conn):
-    #    self.__conn = conn
-
-    def add_user(self, _u_id, _u_name, _u_role, _u_password, _u_phone, _c_id):
+    def add_user(self, _u_name, _u_role, _u_password, _u_phone, _c_id):
+        """
+        add_user
+        :param _u_name:
+        :param _u_role:
+        :param _u_password:
+        :param _u_phone:
+        :param _c_id:
+        :return: 'Success', '' or 'Fail', 'error_msg'
+        """
+        log("add user")
         conn = sqlite3.connect("test.db")
-        param = (_u_id, _u_name, _u_role, _u_password, _u_phone, _c_id,)
+        param = (_u_name, _u_role, _u_password, _u_phone, _c_id,)
         conn.execute('insert into user values (?, ?, ?, ?, ?, ?);', param)
         conn.commit()
         conn.close()
         return "Success"
 
     def delete_user(self, _u_id):
+        """
+        delete_user
+        :param _u_id:
+        :return: 'Success', '' or 'Fail', 'error_msg'
+        """
+        log("delete_user")
         conn = sqlite3.connect("test.db")
         param = (_u_id,)
         conn.execute('delete from user where u_id = ?;', param)
@@ -41,10 +54,22 @@ class User(object):
         conn.close()
         return "Success"
 
-    def update_user(self, _u_id, _u_name=None, _u_role=None, _u_password=None, _u_phone=None, _c_id=None):
+    def update_user(self, _u_id, _u_name=None, _u_role=None,
+                    _u_password=None, _u_phone=None, _c_id=None):
+        """
+        update_user
+        :param _u_id:
+        :param _u_name:
+        :param _u_role:
+        :param _u_password:
+        :param _u_phone:
+        :param _c_id:
+        :return: 'Success', '' or 'Fail', 'error_msg'
+        """
+        log("update_user")
         conn = sqlite3.connect("test.db")
         param = (_u_id,)
-        response = self.__conn.execute('select * from user where u_id = ?;', param)
+        response = conn.execute('select * from user where u_id = ?;', param)
         origin = response.fetchall()[0]
         origin = list(origin)
         if _u_name is not None:
@@ -66,59 +91,85 @@ class User(object):
         conn.close()
         return "Success"
 
-    def get_user(self, _u_id):
+    def get_user_role(self, _u_id):
+        """
+
+        :param _u_id:
+        :return: 'Success', <role> or 'Fail', 'error_msg'
+        """
+        log("get_user_role")
+        return 'user'
+
+    def get_user_by_uid(self, _u_id):
+        """
+
+        :param _u_id:
+        :return: 'Success', <cursor> or 'Fail', 'error_msg'
+        """
+        log("get_user_by_uid")
         conn = sqlite3.connect("test.db")
         param = (_u_id,)
         response = conn.execute('select * from user where u_id = ?;', param)
 
         return "Success", response
 
-    def get_all(self, ):
+    def get_all_user(self):
+        """
+
+        :return: 'Success', <cursor> or 'Fail', 'error_msg'
+        """
+        log("get_all_user")
         conn = sqlite3.connect("test.db")
         response = conn.execute('select * from user;')
         return "Success", response
 
     def get_validate_info(self):
+        """
+
+        :return: 'Success', <cursor> or 'Fail', 'error_msg'
+        """
+        log("get_validate_info")
         conn = sqlite3.connect("test.db")
         response = conn.execute('select u_name, u_password from user;')
         return "Success", response
 
-def validate_user(username, password):
-    """
-    验证数据库中是否存在(username, password)
-    :param username:
-    :param password:
-    :return:
-    """
-    if not username or not password:
-        return False
-    # cur = {('hcl', 'hcl'), ('root', 'root'), ('admin', 'admin')}
-    user = User()
-    flag, response = user.get_validate_info()
-    if not flag:
-        return False
-    curr = response.fetchall()
-    if (username, password) in curr:
-        return True
-    return False
+# def validate_user(username, password):
+#     """
+#     验证数据库中是否存在(username, password)
+#     :param username:
+#     :param password:
+#     :return:
+#     """
+#     if not username or not password:
+#         return False
+#     # cur = {('hcl', 'hcl'), ('root', 'root'), ('admin', 'admin')}
+#     user = User()
+#     flag, response = user.get_validate_info()
+#     if not flag:
+#         return False
+#     curr = response.fetchall()
+#     if (username, password) in curr:
+#         return True
+#     return False
 
 
-def db_get_user_role(u_id):
-    """
-    根据u_id返回user role,从而控制权限
-    :param u_id:
-    :return: 'root' or 'admin' or 'user'
-    """
-    pass
+# def db_get_user_role(u_id):
+#     """
+#     根据u_id返回user role,从而控制权限
+#     :param u_id:
+#     :return: 'root' or 'admin' or 'user'
+#     """
+#     pass
 
 
-def db_show_user(cid, page):
+# TODO: just4test
+def db_show_user(cid):
     """
-    显示社区id为cid的社区人员信息,二十个人/页
+    显示社区id为cid的社区人员信息
     :param cid: 社区id
-    :param page: 第几页
     :return: 'Success', array(tuple(info)) or 'Fail', 'error_msg'
     """
+    log("db_show_user")
     info = [(0, u'邯郸校区', u'hcl', u'admin', u'hclphone'),
             (1, u'江湾校区', u'cjj', u'user', u'cjjphone'),
             (2, u'枫林校区', u'lb ', u'user', u'l bphone'),
@@ -222,39 +273,39 @@ def db_show_user(cid, page):
             ]
 
     return info
-
-
-def db_add_user(user_info):
-    """
-    根据传进来的user_info在数据库中增加一个user
-    :param user_info: { u_name, u_role, u_password, u_phone, c_id }
-    :return: 'Success', '' or 'Fail', 'error_msg'
-    """
-    pass
-
-
-def db_delete_user(u_id):
-    """
-    删除一个user
-    :param u_id:
-    :return: 'Success', '' or 'Fail', 'error_msg'
-    """
-    pass
-
-
-def db_modify_user(user_info):
-    """
-    修改一个user信息
-    :param user_info: { u_name, u_role, u_password, u_phone, c_id }
-    :return: 'Success', '' or 'Fail', 'error_msg'
-    """
-    pass
-
-
-def db_filter_user(cid):
-    """
-    根据社区id返回该社区所有人信息
-    :param cid:
-    :return: 'Success', array(tuple(info)) or 'Fail', 'error_msg'
-    """
-    pass
+#
+#
+# def db_add_user(user_info):
+#     """
+#     根据传进来的user_info在数据库中增加一个user
+#     :param user_info: { u_name, u_role, u_password, u_phone, c_id }
+#     :return: 'Success', '' or 'Fail', 'error_msg'
+#     """
+#     pass
+#
+#
+# def db_delete_user(u_id):
+#     """
+#     删除一个user
+#     :param u_id:
+#     :return: 'Success', '' or 'Fail', 'error_msg'
+#     """
+#     pass
+#
+#
+# def db_modify_user(user_info):
+#     """
+#     修改一个user信息
+#     :param user_info: { u_name, u_role, u_password, u_phone, c_id }
+#     :return: 'Success', '' or 'Fail', 'error_msg'
+#     """
+#     pass
+#
+#
+# def db_filter_user(cid):
+#     """
+#     根据社区id返回该社区所有人信息
+#     :param cid:
+#     :return: 'Success', array(tuple(info)) or 'Fail', 'error_msg'
+#     """
+#     pass

@@ -23,9 +23,8 @@ def show_user(cid):
     :param cid:
     :return: json.dumps(info)
     """
-    page = 1
-    info = db_user.db_show_user(cid, page)
-    return json.dumps(info,ensure_ascii=False)
+    info = db_user.db_show_user(cid)
+    return json.dumps(info, ensure_ascii=False)
 
 
 @app.route('/user/<int:cid>/add', methods=['POST'])
