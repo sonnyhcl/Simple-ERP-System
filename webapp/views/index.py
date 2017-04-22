@@ -51,11 +51,11 @@ def validate_user(u_name, u_password):
     log("validate_user" + u_name)
     if not u_name or not u_password:
         return False, ""
-    status, response = user.get_all_user()
+    status, info = user.get_all_user()
     if not status:
         return False, "guest"
 
-    for i in response.fetchall():
+    for i in info:
         if (u_name, u_password) == (i[1], i[3]):
             return True, i
 
