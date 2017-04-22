@@ -23,8 +23,8 @@ class User(object):
     ;
     """
 
-    def __init__(self) :
-        self.__counter = 0
+    # def __init__(self) :
+    #     self.__counter = 0
     #@staticmethod
     def add_user(self, u_name, u_role, u_password, u_phone, c_id):
         """
@@ -38,15 +38,9 @@ class User(object):
         """
         log("add user")
         conn = sqlite3.connect("test.db")
-        response = conn.execute("select max(u_id) from user;")
-        response = response.fetchall()[0][0]
-        print response
-        if response is not None :
-            self.__counter = response
-        self.__counter += 1
-        u_id = self.__counter
-        param = (u_id, u_name, u_role, u_password, u_phone, c_id,)
-        conn.execute('insert into user values (?, ?, ?, ?, ?, ?);', param)
+
+        param = (u_name, u_role, u_password, u_phone, c_id,)
+        conn.execute('insert into user(u_name, u_role, u_password, u_phone, c_id) values (?, ?, ?, ?, ?);', param)
         conn.commit()
         conn.close()
         return "Success"

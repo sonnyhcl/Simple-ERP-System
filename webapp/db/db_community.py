@@ -15,14 +15,7 @@ class Community(object):
         self.__counter = 0
     def add_community(self, c_name = ""):
         conn = sqlite3.connect("test.db");
-        response = conn.execute("select max(c_id) from community;")
-        response = response.fetchall()[0][0]
-        print response
-        if response is not None :
-            self.__counter = response
-        self.__counter += 1
-        c_id = self.__counter
-        param = (c_id, c_name,)
+        param = (None, c_name,)
         conn.execute('insert into community values (?, ?)', param)
         conn.commit()
         conn.close()

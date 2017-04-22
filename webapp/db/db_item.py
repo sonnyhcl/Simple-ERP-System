@@ -25,14 +25,7 @@ class Item(object):
         self.__counter = 0
     def add_item(self, i_name, i_minutes, i_unitprices, i_prices, p_id):
         conn = sqlite3.connect("test.db");
-        response = conn.execute("select max(i_id) from item;")
-        response = response.fetchall()[0][0]
-        print response
-        if response is not None :
-            self.__counter = response
-        self.__counter += 1
-        i_id = self.__counter
-        param = (i_id, i_name, i_minutes, i_unitprices, i_prices, p_id,)
+        param = (None, i_name, i_minutes, i_unitprices, i_prices, p_id,)
         conn.execute('insert into item values (?, ?, ?, ?, ?, ?);', param)
         conn.commit()
         conn.close()

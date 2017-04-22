@@ -4,16 +4,17 @@ import sqlite3
 '''
         create table transactions
         (
-            t_id            int         not null,
+            t_id            integer         primary key autoincrement,
             u_id            int         not null,
             c_id            int         not null,
             p_id            int         not null,
             i_id            int         not null,
+            amount          int,
+            timestamp       datetime    default('now', 'localtime'),
             foreign key     (u_id)      references   user(u_id),
             foreign key     (c_id)      references   community(c_id),
             foreign key     (p_id)      references   product(p_id),
-            foreign key     (i_id)      references   item(i_id),
-            primary key     (t_id)
+            foreign key     (i_id)      references   item(i_id)
         )
         ;
 '''
@@ -25,19 +26,12 @@ class Transactions(object):
     流水信息表
     """
 
-    def __init__(self) :
-        self.__counter = 0
-    def add_transactions(self, u_id, c_id, p_id, i_id):
+    # def __init__(self) :
+    #     self.__counter = 0
+    def add_transactions(self, u_id, c_id, p_id, i_id, amount = 0):
         conn = sqlite3.connect("test.db");
-        response = conn.execute("select max(t_id) from transactions;")
-        response = response.fetchall()[0][0]
-        print response
-        if response is not None :
-            self.__counter = response
-        self.__counter += 1
-        t_id = self.__counter
-        param = (t_id, u_id, c_id, p_id, i_id,)
-        conn.execute('insert into transactions values (?, ?, ?, ?, ?);', param)
+        param = (None, u_id, c_id, p_id, i_id, amount, )
+        conn.execute('insert into transactions(t_id, u_id, c_id, p_id, i_id, amount) values (?, ?, ?, ?, ?, ?);', param)
         conn.commit()
         conn.close()
         return "Success"

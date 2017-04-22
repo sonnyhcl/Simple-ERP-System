@@ -21,14 +21,7 @@ class Product(object):
         self.__counter = 0
     def add_product(self, p_name, author_name = ""):
         conn = sqlite3.connect("test.db");
-        response = conn.execute("select max(p_id) from product;")
-        response = response.fetchall()[0][0]
-        print response
-        if response is not None :
-            self.__counter = response
-        self.__counter += 1
-        p_id = self.__counter
-        param = (p_id, p_name, author_name,)
+        param = (None, p_name, author_name,)
         conn.execute('insert into product values (?, ?, ?);', param)
         conn.commit()
         conn.close()
