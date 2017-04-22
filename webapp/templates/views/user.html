@@ -6,10 +6,10 @@
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <h3>
-                人员管理系统
-            </h3>
+            
+            <h3>人员管理系统</h3>
             <br>
+
             <a id="modal-471624" href="#alterUser"
                role="button" data-toggle="modal" onclick="add_it()" class="btn btn-default">添加人员</a>
 
@@ -37,9 +37,10 @@
                 </div>
             </div>
 
-
-            <table id="user_table" class="table table-bordered table-striped table-hover" cellspacing="0"
-                   width="100%"></table>
+            <!-- 表格 -->
+            <table class="table table-bordered table-striped table-hover" cellspacing="0"
+                   id="user_table" width="100%">
+            </table>
 
         </div>
     </div>
@@ -145,6 +146,7 @@
 //                alert('delete: ' + ',' + data[1] + ',' + data[2]);
 //            });
         }
+
     );
 
     // useless, for now
