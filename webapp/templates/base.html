@@ -10,20 +10,10 @@
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
-    <!--datatables-->
-    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css"
-          href="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
-
-
-    <style type="text/css">
-        .site-footer {
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-    </style>
+    <!-- datatables -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 
     {% endblock head%}
 
@@ -54,7 +44,7 @@
             <ul id="navbar-right" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        {{ session['username'] }}
+                        {{ session['username'] | e }}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -73,16 +63,14 @@
 </div>
 
 <!--Footer-->
-<footer class="site-footer">
-    <div class="container" align="center">
-        <hr>
-        <p class="text-muted credit">
-            <a href="http://github.com/sonnyhcl/SimpleWebProject">Simple Web Project</a>
-            <br>
-            &copy; Copyright 2017
-        </p>
-    </div>
-</footer>
+<div class="container" align="center" style="bottom: 0;left: 0; right: 0;">
+    <hr>
+    <p class="text-muted credit">
+        <a href="http://github.com/sonnyhcl/SimpleWebProject">Simple Web Project</a>
+        <br>
+        &copy; Copyright 2017
+    </p>
+</div>
 
 
 {% block script %}
@@ -96,7 +84,7 @@
 
 <!-- 动态线条 -->
 <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
-<script type="text/javascript" src="/static/js/dynamicbg.js"></script>
+<script src="/static/js/dynamicbg.js"></script>
 
 <!-- jquery.dataables -->
 <script src="http://cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
