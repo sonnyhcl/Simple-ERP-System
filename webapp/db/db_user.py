@@ -26,7 +26,7 @@ class User(object):
     #    self.__conn = conn
 
     def add_user(self, _u_id, _u_name, _u_role, _u_password, _u_phone, _c_id):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("test.db")
         param = (_u_id, _u_name, _u_role, _u_password, _u_phone, _c_id,)
         conn.execute('insert into user values (?, ?, ?, ?, ?, ?);', param)
         conn.commit()
@@ -34,7 +34,7 @@ class User(object):
         return "Success"
 
     def delete_user(self, _u_id):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("test.db")
         param = (_u_id,)
         conn.execute('delete from user where u_id = ?;', param)
         conn.commit()
@@ -42,7 +42,7 @@ class User(object):
         return "Success"
 
     def update_user(self, _u_id, _u_name=None, _u_role=None, _u_password=None, _u_phone=None, _c_id=None):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("test.db")
         param = (_u_id,)
         response = self.__conn.execute('select * from user where u_id = ?;', param)
         origin = response.fetchall()[0]
@@ -67,17 +67,21 @@ class User(object):
         return "Success"
 
     def get_user(self, _u_id):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("test.db")
         param = (_u_id,)
         response = conn.execute('select * from user where u_id = ?;', param)
 
         return "Success", response
 
     def get_all(self, ):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("test.db")
         response = conn.execute('select * from user;')
         return "Success", response
 
+    def get_validate_info(self):
+        conn = sqlite3.connect("test.db")
+        response = conn.execute('select u_name, u_password from user;')
+        return "Success", response
 
 def validate_user(username, password):
     """
@@ -88,9 +92,13 @@ def validate_user(username, password):
     """
     if not username or not password:
         return False
-    cur = {('hcl', 'hcl'), ('root', 'root'), ('admin', 'admin'), ('user',
-                                                                  'user')}
-    if (username, password) in cur:
+    # cur = {('hcl', 'hcl'), ('root', 'root'), ('admin', 'admin')}
+    user = User()
+    flag, response = user.get_validate_info()
+    if not flag:
+        return False
+    curr = response.fetchall()
+    if (username, password) in curr:
         return True
     return False
 

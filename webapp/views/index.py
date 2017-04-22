@@ -70,22 +70,6 @@ def not_found(e):
     return render_template('404.html'), 404
 
 
-@app.route('/test')
-def test():
-    """
-    TODO: test url
-    :return:
-    """
-    # user = User()
-    # flag, response = user.get_all()
-    # print flag
-    # user.add_user(_u_id=100, _u_name='a', _u_password='b', _u_phone='c',
-    #               _u_role='d', _c_id=1)
-    # flag, response = user.get_all()
-    # print response
-    return render_template('test.html')
-
-
 @app.route('/show_flask_log', methods=['GET'])
 def show_flask_log():
     log_dir = os.path.join(app.config['PROJECT_PATH'], "logs")
