@@ -1,67 +1,113 @@
-{% extends "base_login.html" %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% block head %}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/gold.png') }}"/>
+    <title>{% block title %}登录{% endblock title %} - 彩虹桥</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 bootstrap -->
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
-{% block title %}登录{% endblock %}
+    <!--dynamic-poly-->
+    <link href="/static/css/dynamicpoly.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        .form-signin {
+            max-width: 300px;
+            padding: 19px 29px 29px;
+            margin: 0 auto 20px;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 5px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
 
-{% block head %}
-{{ super() }}
-<style type="text/css">
-    .form-signin {
-        max-width: 300px;
-        padding: 19px 29px 29px;
-        margin: 0 auto 20px;
-        background-color: #fff;
-        border: 1px solid #e5e5e5;
-        border-radius: 5px;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    }
+    </style>
 
-</style>
+    {% endblock head%}
 
+</head>
 
-{% endblock head %}
+<body>
+<!--body-->
 
-{% block content %}
-{{ super() }}
-<div class="container">
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <img alt="140x140" src="/static/images/logo.jpg"/>
-        </div>
-    </div>
-    {% if error %}
-    <div align="center">
-        错误：帐户或密码错误（{{ ERROR }}）
-    </div>
-    {% endif %}
-    <form class="form-signin" method="POST" action="{{ url_for('log_in') }}">
-        <div align="center">
-            <h1>
-                彩虹桥
-            </h1>
-            <br>
-        </div>
-        <hr>
-        <div align="center">
-            <div class="form-group">
-                <input autofocus id="id_login" name="username" placeholder="用户名" type="text" required="required"
-                       class="form-control">
-                <br>
-                <input id="id_password" name="password" placeholder="密码" type="password" required="required"
-                       class="form-control">
-                {% if next %}
-                <br>
-                <input type='hidden' name="next" value="{{ next }}">
-                {% endif %}
-                <br>
-                <button type="submit" class="btn btn-primary">登录</button>
+<!--<svg id="demo" viewbox="0 0 1600 600" preserveAspectRatio="xmidymid slice" style="height: 100%">-->
+<!--<defs>-->
+<!--<linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0" color-interpolation="srgb">-->
+<!--<stop id="stop1a" offset="0%" stop-color="#12a3b4"></stop>-->
+<!--<stop id="stop1b" offset="100%" stop-color="#ff509e"></stop>-->
+<!--</linearGradient>-->
+<!--<linearGradient id="grad2" x1="0" y1="0" x2="1" y2="0" color-interpolation="srgb">-->
+<!--<stop id="stop2a" offset="0%" stop-color="#e3bc13"></stop>-->
+<!--<stop id="stop2b" offset="100%" stop-color="#00a78f"></stop>-->
+<!--</linearGradient>-->
+<!--</defs>-->
+<!--<rect id="rect1" x="0" y="0" width="1600" height="600" stroke="none" fill="url(#grad1)"></rect>-->
+<!--<rect id="rect2" x="0" y="0" width="1600" height="600" stroke="none" fill="url(#grad2)"></rect>-->
+<!--</svg>-->
+
+<div id="content" align="center">
+    {% block content %}
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <img alt="140x140" src="/static/images/logo.jpg"/>
             </div>
         </div>
-        <hr>
-    </form>
+        {% if error %}
+        <div align="center">
+            错误：帐户或密码错误（{{ ERROR }}）
+        </div>
+        {% endif %}
+        <form class="form-signin" method="POST" action="{{ url_for('log_in') }}">
+            <div align="center">
+                <h1>
+                    彩虹桥
+                </h1>
+                <br>
+            </div>
+            <hr>
+            <div align="center">
+                <div class="form-group">
+                    <input autofocus id="id_login" name="username" placeholder="用户名" type="text" required="required"
+                           class="form-control">
+                    <br>
+                    <input id="id_password" name="password" placeholder="密码" type="password" required="required"
+                           class="form-control">
+                    {% if next %}
+                    <br>
+                    <input type='hidden' name="next" value="{{ next }}">
+                    {% endif %}
+                    <br>
+                    <button type="submit" class="btn btn-primary">登录</button>
+                </div>
+            </div>
+            <hr>
+        </form>
 
-
+    </div>
+    {% endblock %}
 </div>
+</body>
 
-{% endblock content %}
+<footer class="site-footer" style="margin-top: auto">
+    <div class="container" align="center">
+
+        <p class="text-muted credit">
+            <br>
+            <a href="http://github.com/sonnyhcl/simplewebproject">simple web project</a>
+            <br>
+            &copy; copyright 2017
+        </p>
+    </div>
+</footer>
 
 
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!--dynamic-poly-->
+<script src="https://cdn.bootcss.com/gsap/latest/TweenMax.min.js"></script>
+<script src="http://cdn.bootcss.com/stats.js/r17/Stats.min.js"></script>
+<script src="/static/js/dynamicpoly.js"></script>
