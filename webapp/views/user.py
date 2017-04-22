@@ -45,7 +45,7 @@ def show_user(cid):
             tmp['u_phone'] = i[4]
             tmp['c_id'] = i[5]
             ret['data'].append(tmp)
-        print ret
+        # print ret
         return json.dumps(ret, ensure_ascii=False)
     else:
         return json.dumps({"data": []}, ensure_ascii=False)
@@ -58,6 +58,7 @@ def add_user(cid):
     :param cid:
     :return:
     """
+    print "dad"
     return "add_user"
 
 
@@ -68,6 +69,7 @@ def modify_user(cid):
     :param cid:
     :return: json.dumps(info)
     """
+    print "modify"
     return "modify_user"
 
 
@@ -78,6 +80,7 @@ def delete_user(cid):
     :param cid:
     :return: json.dumps(info)
     """
+    print "dadddd"
     return "add_user"
 
 
