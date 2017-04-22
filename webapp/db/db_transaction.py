@@ -25,21 +25,31 @@ class Transactions(object):
     流水信息表
     """
 
-    def __init__(self, conn) :
-        self.__conn = conn
+#    def __init__(self, conn) :
+#        conn = conn
     def add_transactions(self, _t_id, _u_id, _c_id, _p_id, _i_id):
+        conn = sqlite3.connect("test.db");
+
         param = (_t_id, _u_id, _c_id, _p_id, _i_id,)
-        self.__conn.execute('insert into transactions values (?, ?, ?, ?, ?);', param)
+        conn.execute('insert into transactions values (?, ?, ?, ?, ?);', param)
+        conn.commit()
+        conn.close()
         return "Success"
 
     def delete_transactions(self, _t_id):
+        conn = sqlite3.connect("test.db");
+
         param = (_t_id,)
-        self.__conn.execute('delete from transactions where t_id = ?;', param)
+        conn.execute('delete from transactions where t_id = ?;', param)
+        conn.commit()
+        conn.close()
         return "Success"
 
     def update_transactions(self, _t_id, _u_id = None, _c_id = None, _p_id = None, _i_id = None):
+        conn = sqlite3.connect("test.db");
+
         param = (_t_id,)
-        response = self.__conn.execute('select * from transactions where t_id = ?;', param)
+        response = conn.execute('select * from transactions where t_id = ?;', param)
         origin = response.fetchall()[0]
         origin = list(origin)
         if _u_id          is not None :
@@ -52,14 +62,20 @@ class Transactions(object):
             origin[4] = _i_id
 
         param = tuple(origin) + (_t_id,)
-        self.__conn.execute('update transactions set t_id = ?, u_id =  ?, c_id =  ?, p_id =  ?, i_id = ? where t_id = ?;', param)
+        conn.execute('update transactions set t_id = ?, u_id =  ?, c_id =  ?, p_id =  ?, i_id = ? where t_id = ?;', param)
+        conn.commit()
+        conn.close()
         return "Success"
 
     def get_transactions(self, _t_id):
+        conn = sqlite3.connect("test.db");
+
         param = (_t_id,)
-        response = self.__conn.execute('select * from transactions where t_id = ?;', param)
+        response = conn.execute('select * from transactions where t_id = ?;', param)
         return "Success", response
 
     def get_all(self, ):
-        response = self.__conn.execute('select * from transactions;')
+        conn = sqlite3.connect("test.db");
+
+        response = conn.execute('select * from transactions;')
         return "Success", response

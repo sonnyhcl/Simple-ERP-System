@@ -22,20 +22,27 @@ class User(object):
     用户信息表
     """
 
-    def __init__(self, conn):
-        self.__conn = conn
+    #def __init__(self, conn):
+    #    self.__conn = conn
 
     def add_user(self, _u_id, _u_name, _u_role, _u_password, _u_phone, _c_id):
+        conn = sqlite3.connect("test.db");
         param = (_u_id, _u_name, _u_role, _u_password, _u_phone, _c_id,)
-        self.__conn.execute('insert into user values (?, ?, ?, ?, ?, ?);', param)
+        conn.execute('insert into user values (?, ?, ?, ?, ?, ?);', param)
+        conn.commit()
+        conn.close()
         return "Success"
 
     def delete_user(self, _u_id):
+        conn = sqlite3.connect("test.db");
         param = (_u_id,)
-        self.__conn.execute('delete from user where u_id = ?;', param)
+        conn.execute('delete from user where u_id = ?;', param)
+        conn.commit()
+        conn.close()
         return "Success"
 
     def update_user(self, _u_id, _u_name=None, _u_role=None, _u_password=None, _u_phone=None, _c_id=None):
+        conn = sqlite3.connect("test.db");
         param = (_u_id,)
         response = self.__conn.execute('select * from user where u_id = ?;', param)
         origin = response.fetchall()[0]
@@ -52,18 +59,23 @@ class User(object):
             origin[5] = _c_id
 
         param = tuple(origin) + (_u_id,)
-        self.__conn.execute(
+        conn.execute(
             'update user set u_id = ?, u_name = ?, u_role = ?, u_password = ?, u_phone = ?, c_id = ? where u_id = ?;',
             param)
+        conn.commit()
+        conn.close()
         return "Success"
 
     def get_user(self, _u_id):
+        conn = sqlite3.connect("test.db");
         param = (_u_id,)
-        response = self.__conn.execute('select * from user where u_id = ?;', param)
+        response = conn.execute('select * from user where u_id = ?;', param)
+
         return "Success", response
 
     def get_all(self, ):
-        response = self.__conn.execute('select * from user;')
+        conn = sqlite3.connect("test.db");
+        response = conn.execute('select * from user;')
         return "Success", response
 
 
