@@ -140,34 +140,6 @@ class User(object):
         return "Success", response
 
 user = User()
-# def validate_user(username, password):
-#     """
-#     验证数据库中是否存在(username, password)
-#     :param username:
-#     :param password:
-#     :return:
-#     """
-#     if not username or not password:
-#         return False
-#     # cur = {('hcl', 'hcl'), ('root', 'root'), ('admin', 'admin')}
-#     user = User()
-#     flag, response = user.get_validate_info()
-#     if not flag:
-#         return False
-#     curr = response.fetchall()
-#     if (username, password) in curr:
-#         return True
-#     return False
-
-
-# def db_get_user_role(u_id):
-#     """
-#     根据u_id返回user role,从而控制权限
-#     :param u_id:
-#     :return: 'root' or 'admin' or 'user'
-#     """
-#     pass
-
 
 # TODO: just4test
 def db_show_user(cid):
@@ -278,41 +250,4 @@ def db_show_user(cid):
             (98, u'枫林校区', u'lb ', u'user', u'l bphone'),
             (99, u'张江校区', u'cjm', u'root', u'cjmphone'),
             ]
-
     return info
-#
-#
-# def db_add_user(user_info):
-#     """
-#     根据传进来的user_info在数据库中增加一个user
-#     :param user_info: { u_name, u_role, u_password, u_phone, c_id }
-#     :return: 'Success', '' or 'Fail', 'error_msg'
-#     """
-#     pass
-#
-#
-# def db_delete_user(u_id):
-#     """
-#     删除一个user
-#     :param u_id:
-#     :return: 'Success', '' or 'Fail', 'error_msg'
-#     """
-#     pass
-#
-#
-# def db_modify_user(user_info):
-#     """
-#     修改一个user信息
-#     :param user_info: { u_name, u_role, u_password, u_phone, c_id }
-#     :return: 'Success', '' or 'Fail', 'error_msg'
-#     """
-#     pass
-#
-#
-# def db_filter_user(cid):
-#     """
-#     根据社区id返回该社区所有人信息
-#     :param cid:
-#     :return: 'Success', array(tuple(info)) or 'Fail', 'error_msg'
-#     """
-#     pass

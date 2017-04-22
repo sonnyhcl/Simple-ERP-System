@@ -3,6 +3,5 @@ from webapp import app
 
 
 def log(msg):
-    if not type(msg) == str:
-        msg = str(msg)
-    app.logger.info("[db Operations] " + msg)
+    if type(msg) == str or type(msg) == unicode:
+        app.logger.info("[db Operations] " + msg)
