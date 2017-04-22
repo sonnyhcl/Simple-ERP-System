@@ -33,10 +33,11 @@ def show_user(cid):
     # info = db_user.db_show_user(cid)
     if cid < 0:
         return "Fail", "没有权限"
-    status, cur = user.get_user_by_cid(cid)
+    status, info = user.get_user_by_cid(cid)
     if status == "Success":
-        info = cur.fetchall()
-    return json.dumps(info, ensure_ascii=False)
+        return json.dumps(info, ensure_ascii=False)
+    else:
+        return json.dumps(["error"], ensure_ascii=False)
 
 
 @app.route('/user/<int:cid>/add', methods=['POST'])
