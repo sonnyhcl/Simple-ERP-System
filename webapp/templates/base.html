@@ -34,11 +34,14 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/index"><font color="{% if selected_menu == 'index' %}orange{% endif %}">首页</font></a></li>
-                <li><a href="/transaction"><font color="{% if selected_menu == 'transaction' %}orange{% endif %}">流水</font></a></li>
                 <li><a href="/product"><font color="{% if selected_menu == 'product' %}orange{% endif %}">产品</font></a></li>
+                {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
+                <li><a href="/transaction"><font color="{% if selected_menu == 'transaction' %}orange{% endif %}">流水</font></a></li>
                 <li><a href="/user"><font color="{% if selected_menu == 'user' %}orange{% endif %}">人员</font></a></li>
+                {% endif %}
+                {% if session['u_role'] == 'root' %}
                 <li><a href="/community"><font color="{% if selected_menu == 'community' %}orange{% endif %}">社区</font></a></li>
-                <!--<li><a href="/item"><font color="{% if selected_menu == 'index' %}orange{% endif %}">首页</font>工艺</a></li>-->
+                {% endif %}
             </ul>
 
             <ul id="navbar-right" class="nav navbar-nav navbar-right">
