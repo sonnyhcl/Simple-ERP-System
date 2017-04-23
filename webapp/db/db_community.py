@@ -13,10 +13,10 @@ class Community(object):
 
     def __init__(self) :
         self.__counter = 0
-    def add_community(self, c_name = ""):
+    def add_community(self, c_name):
         conn = sqlite3.connect("test.db")
-        param = (None, c_name,)
-        conn.execute('insert into community values (?, ?)', param)
+        param = (c_name,)
+        conn.execute('insert into community(c_name) values (?);', param)
         conn.commit()
         conn.close()
         return "Success"

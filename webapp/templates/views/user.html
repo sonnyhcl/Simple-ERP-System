@@ -223,6 +223,9 @@
 
     function confirm_modify_member(id) {
         console.log("confirm_modify_member:" + id);
+        if (!check_value($("#t_name").val(), $("#t_phone").val())){
+            return;
+        }
         $.post("/user/modify", {
             'u_id': id,
             'u_name': $("#t_name").val(),
