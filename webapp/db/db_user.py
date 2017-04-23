@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-import sqlite3
-from webapp.mylog import log
 """
 数据库表中的所有操作都要通过log保存一份记录
 """
+import sqlite3
+from webapp.mylog import log
 
 
 class User(object):
@@ -23,9 +23,6 @@ class User(object):
     ;
     """
 
-    # def __init__(self) :
-    #     self.__counter = 0
-    #@staticmethod
     def add_user(self, u_name, u_role, u_password, u_phone, c_id):
         """
         add_user
@@ -40,12 +37,13 @@ class User(object):
         conn = sqlite3.connect("test.db")
 
         param = (u_name, u_role, u_password, u_phone, c_id,)
-        conn.execute('insert into user(u_name, u_role, u_password, u_phone, c_id) values (?, ?, ?, ?, ?);', param)
+        conn.execute(
+            'INSERT INTO user(u_name, u_role, u_password, u_phone, c_id) VALUES (?, ?, ?, ?, ?);',
+            param)
         conn.commit()
         conn.close()
         return "Success"
 
-    #@staticmethod
     def delete_user(self, u_id):
         """
         delete_user
@@ -55,12 +53,11 @@ class User(object):
         log("delete_user")
         conn = sqlite3.connect("test.db")
         param = (u_id,)
-        conn.execute('delete from user where u_id = ?;', param)
+        conn.execute('DELETE FROM user WHERE u_id = ?;', param)
         conn.commit()
         conn.close()
         return "Success"
 
-    #@staticmethod
     def update_user(self, u_id, u_name=None, u_role=None,
                     u_password=None, u_phone=None, c_id=None):
         """
@@ -76,7 +73,7 @@ class User(object):
         log("update_user")
         conn = sqlite3.connect("test.db")
         param = (u_id,)
-        response = conn.execute('select * from user where u_id = ?;', param)
+        response = conn.execute('SELECT * FROM user WHERE u_id = ?;', param)
         origin = response.fetchall()[0]
         origin = list(origin)
         if u_name is not None:
@@ -92,13 +89,12 @@ class User(object):
 
         param = tuple(origin) + (u_id,)
         conn.execute(
-            'update user set u_id = ?, u_name = ?, u_role = ?, u_password = ?, u_phone = ?, c_id = ? where u_id = ?;',
+            'UPDATE user SET u_id = ?, u_name = ?, u_role = ?, u_password = ?, u_phone = ?, c_id = ? WHERE u_id = ?;',
             param)
         conn.commit()
         conn.close()
         return "Success"
 
-    #@staticmethod
     def get_user_by_uid(self, u_id):
         """
 
@@ -108,12 +104,11 @@ class User(object):
         log("get_user_by_uid")
         conn = sqlite3.connect("test.db")
         param = (u_id,)
-        response = conn.execute('select * from user where u_id = ?;', param)
+        response = conn.execute('SELECT * FROM user WHERE u_id = ?;', param)
         response = response.fetchall()
         conn.close()
         return "Success", response
 
-    #@staticmethod
     def get_user_by_cid(self, c_id):
         """
         get_user_by_cid
@@ -124,14 +119,13 @@ class User(object):
         conn = sqlite3.connect("test.db")
         param = (c_id,)
         if c_id == 0:
-            response = conn.execute('select * from user')
+            response = conn.execute('SELECT * FROM user')
         else:
-            response = conn.execute('select * from user where c_id = ?;', param)
+            response = conn.execute('SELECT * FROM user WHERE c_id = ?;', param)
         response = response.fetchall()
         conn.close()
         return "Success", response
 
-    #@staticmethod
     def get_all_user(self):
         """
 
@@ -139,9 +133,10 @@ class User(object):
         """
         log("get_all_user")
         conn = sqlite3.connect("test.db")
-        response = conn.execute('select * from user;')
+        response = conn.execute('SELECT * FROM user;')
         response = response.fetchall()
         conn.close()
         return "Success", response
+
 
 user = User()
