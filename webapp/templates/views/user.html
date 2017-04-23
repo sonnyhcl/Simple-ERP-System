@@ -47,8 +47,8 @@
                             <div class="col-lg-6">
                                 <select id="t_role" class="form-control input-sm" style="color:#666666">
                                     {% if session['u_role'] == 'root' %}
-                                    <option value="root">超级管理员</option>
-                                    <option value="admin">管理员</option>
+                                    <option value="root">主管理员</option>
+                                    <option value="admin">社区管理员</option>
                                     {% endif %}
                                     <option value="user">普通用户</option>
                                 </select>
@@ -65,6 +65,7 @@
     </div>
 
     <!-- 删除弹窗模版 -->
+    {% if session['u_role'] == 'root' %}
     <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -80,6 +81,8 @@
             </div>
         </div>
     </div>
+    {% endif %}
+
     <!-- body -->
     <div class="row clearfix">
         <div class="col-md-12 column">
@@ -88,7 +91,7 @@
             <br>
             <!-- 添加按钮 -->
             <a id="modal-471624" href="#alterUser" role="button" data-toggle="modal"
-               onclick="add_it()" class="btn btn-warning">添加人员</a>
+               onclick="add_it()" class="btn btn-primary">添加人员</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
                    id="user_table" width="100%">
@@ -145,7 +148,6 @@
                     "bScrollCollapse": true,
                     "bStateSave": true
                 });
-
                 var members = ret.data;
                 for (var ij in members) {
                     doc_table.fnAddData([
@@ -160,7 +162,6 @@
                     ])
                 }
             }, 'json');
-
         var cid = $("#get_c_id").attr("value");
         $.post('/community/' + cid, function (ret) {
             console.log(ret);
@@ -173,11 +174,11 @@
     });
 
     function check_value(name, phone) {
-        if (name == "") {
+        if (name === "") {
             $('#t_name').popover('show');
             return (false);
         }
-        if (phone == "") {
+        if (phone === "") {
             $('#t_phone').popover('show');
             return (false);
         }
@@ -189,7 +190,6 @@
         $("#myModalLabel").text("添加人员信息");
         $("#yes_btn").attr('onclick', 'confirm_add_member()');
     }
-
     function confirm_add_member() {
         console.log('confirm_add_member');
         if (!check_value($("#t_name").val(), $("#t_phone").val())) {
@@ -205,7 +205,6 @@
             location.href = '/user';
         });
     }
-
     function modify_it(id) {
         console.log("modify it");
         $.post("/user/" + id, function (ret) {
@@ -215,12 +214,10 @@
             $("#t_phone").val(data.u_phone);
             $("#t_role").val(data.u_role);
             $("#t_community").val(data.c_id);
-
             $("#myModalLabel").text("修改人员信息");
             $("#yes_btn").attr('onclick', 'confirm_modify_member(' + id + ')');
         }, 'json');
     }
-
     function confirm_modify_member(id) {
         console.log("confirm_modify_member:" + id);
         if (!check_value($("#t_name").val(), $("#t_phone").val())) {
@@ -237,12 +234,10 @@
             location.href = '/user';
         });
     }
-
     function delete_it(id) {
         console.log("delete it");
         $('#confirm-del-button').attr('onclick', 'confirm_del_member(' + id + ')');
     }
-
     function confirm_del_member(id) {
         console.log("confirm_del_member:" + id);
         $.post("/user/delete", {

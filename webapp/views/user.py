@@ -70,7 +70,8 @@ def add_user():
     u_phone = request.form.get("u_phone")
     u_role = request.form.get("u_role")
     c_id = request.form.get("c_id")
-    status = user.add_user(u_name, u_role, u_name, u_phone, c_id)
+    u_password = '123456'
+    status = user.add_user(u_name, u_role, u_password, u_phone, c_id)
     return status
 
 
