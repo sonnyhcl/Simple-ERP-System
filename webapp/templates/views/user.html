@@ -172,6 +172,17 @@
         }, 'json')
     });
 
+    function check_value(name, phone) {
+        if (name == "") {
+            $('#t_name').popover('show');
+            return (false);
+        }
+        if (phone == "") {
+            $('#t_phone').popover('show');
+            return (false);
+        }
+        return (true);
+    }
 
     function add_it() {
         console.log("add it");
@@ -181,6 +192,9 @@
 
     function confirm_add_member() {
         console.log('confirm_add_member');
+        if (!check_value($("#t_name").val(), $("#t_phone").val())){
+            return;
+        }
         $.post("/user/add", {
             'u_name': $("#t_name").val(),
             'u_phone': $("#t_phone").val(),
