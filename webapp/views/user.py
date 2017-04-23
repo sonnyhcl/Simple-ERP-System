@@ -62,8 +62,8 @@ def add_user():
     u_phone = request.form.get("u_phone")
     u_role = request.form.get("u_role")
     c_id = request.form.get("c_id")
-    print request.form
-    return "Success"
+    status = user.add_user(u_name, u_role, u_name, u_phone, c_id)
+    return status
 
 
 @app.route('/user/modify', methods=['POST'])
@@ -73,8 +73,13 @@ def modify_user():
     :param cid:
     :return: json.dumps(info)
     """
-    print "modify"
-    return "Success"
+    u_name = request.form.get("u_name")
+    u_phone = request.form.get("u_phone")
+    u_role = request.form.get("u_role")
+    c_id = request.form.get("c_id")
+    u_id = request.form.get("u_id")
+    status = user.update_user(u_id, u_name, u_role, u_phone=u_phone, c_id=c_id)
+    return status
 
 
 @app.route('/user/delete', methods=['POST'])
