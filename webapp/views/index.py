@@ -33,11 +33,12 @@ def log_out():
     登出，立刻跳转到首页(此时会被重定向到登录页面)
     :return:
     """
-    log(session['username'] + "log_out")
+    log(session['u_name'] + "log_out")
     session['logged_in'] = False
-    session['username'] = 'guest'
-    session['role'] = 'guest'
+    session['u_name'] = 'guest'
+    session['u_role'] = 'guest'
     session['c_id'] = -1
+    session['u_id'] = -1
     return redirect('index')
 
 
@@ -73,8 +74,9 @@ def log_in():
     if status:
         # TODO 下一步把跟前端交互cid的参数都删除了
         session['logged_in'] = True
-        session['username'] = info[1]
-        session['role'] = info[2]
+        session['u_id'] = info[0]
+        session['u_name'] = info[1]
+        session['u_role'] = info[2]
         session['c_id'] = info[5]
         return redirect(next_url)
 

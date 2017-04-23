@@ -11,7 +11,7 @@
             <br>
 
             <a id="modal-471624" href="#alterUser"
-               role="button" data-toggle="modal" onclick="add_it()" class="btn btn-default">添加人员</a>
+               role="button" data-toggle="modal" onclick="add_it()" class="btn btn-warning">添加人员</a>
 
             <!-- 弹窗模板 -->
             <div class="modal fade" id="alterUser"
@@ -19,74 +19,112 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close"
-                                    data-dismiss="modal" aria-hidden="true">×
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">
-                                添加人员
-                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">标题</h4>
                         </div>
+
                         <div class="modal-body" id="myModalBody">
-                            内容...
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">名字</label>
+                                    <div class="col-lg-6">
+                                        <input size="16" id="t_name" type="text" value="" placeholder="名字"
+                                               class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                               role="button" data-toggle="popover" data-trigger="focus"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">手机</label>
+                                    <div class="col-lg-6">
+                                        <input size="16" id="t_phone" type="text" value="" placeholder="手机号码"
+                                               class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                               role="button" data-toggle="popover" data-trigger="focus"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">社区</label>
+                                    <div class="col-lg-6">
+                                        <select id="t_community" class="form-control input-sm" style="color:#666666">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">身份</label>
+                                    <div class="col-lg-6">
+                                        <select id="t_role" class="form-control input-sm" style="color:#666666">
+                                            {% if session['u_role'] == 'root' %}
+                                            <option value="root">超级管理员</option>
+                                            <option value="admin">管理员</option>
+                                            {% endif %}
+                                            <option value="user">普通用户</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary">保存</button>
+                            <button type="button" id="no_btn" class="btn btn-primary" data-dismiss="modal">取消</button>
+                            <button type="button" id="yes_btn" class="btn btn-danger" onclick="">确定</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- 增加弹窗模版 -->
-            <div class="modal fade">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">名字</label>
-                        <div class="col-lg-9">
-                            <input size="16" id="t_name" type="text" value="" placeholder="名字" class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0" role="button"
-                                   data-toggle="popover" data-trigger="focus"/>
-                        </div>
-                    </div>
+            <!--&lt;!&ndash; 增加弹窗模版 &ndash;&gt;-->
+            <!--<div class="modal fade">-->
+            <!--<form class="form-horizontal" role="form">-->
+            <!--<div class="form-group">-->
+            <!--<label class="col-lg-3 control-label">名字</label>-->
+            <!--<div class="col-lg-9">-->
+            <!--<input size="16" id="t_name" type="text" value="" placeholder="名字" class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0" role="button"-->
+            <!--data-toggle="popover" data-trigger="focus"/>-->
+            <!--</div>-->
+            <!--</div>-->
 
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">手机号码</label>
-                        <div class="col-lg-9">
-                            <input size="16" id="t_popo" type="text" value="" placeholder="POPO" class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0" role="button"
-                                   data-toggle="popover" data-trigger="focus"/>
-                        </div>
-                    </div>
+            <!--<div class="form-group">-->
+            <!--<label class="col-lg-3 control-label">手机号码</label>-->
+            <!--<div class="col-lg-9">-->
+            <!--<input size="16" id="t_popo" type="text" value="" placeholder="POPO" class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0" role="button"-->
+            <!--data-toggle="popover" data-trigger="focus"/>-->
+            <!--</div>-->
+            <!--</div>-->
 
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">社区</label>
-                        <div class="col-lg-9">
-                            <select id="t_studio" class="form-control input-sm" style="color:#666666">
-                            </select>
-                        </div>
-                    </div>
+            <!--<div class="form-group">-->
+            <!--<label class="col-lg-3 control-label">社区</label>-->
+            <!--<div class="col-lg-9">-->
+            <!--<select id="t_studio" class="form-control input-sm" style="color:#666666">-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
 
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">身份</label>
-                        <div class="col-lg-9">
-                            <select id="t_post" class="form-control input-sm" style="color:#666666">
-                                <option value="root">超级管理员</option>
-                                <option value="admin">管理员</option>
-                                <option value="user">普通用户</option>
-                            </select>
-                        </div>
-                    </div>
+            <!--<div class="form-group">-->
+            <!--<label class="col-lg-3 control-label">身份</label>-->
+            <!--<div class="col-lg-9">-->
+            <!--<select id="t_post" class="form-control input-sm" style="color:#666666">-->
+            <!--<option value="root">超级管理员</option>-->
+            <!--<option value="admin">管理员</option>-->
+            <!--<option value="user">普通用户</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
 
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-10">
-                            <button type="button" id="submit_team_btn" class="btn btn-warning" onclick="submit_member();">确认添加</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <!--<div class="form-group">-->
+            <!--<div class="col-lg-offset-2 col-lg-10">-->
+            <!--<button type="button" id="submit_team_btn" class="btn btn-warning" onclick="submit_member();">确认添加</button>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</form>-->
+            <!--</div>-->
+
             <!-- 删除弹窗模版 -->
             <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal" tabindex="-1" role="dialog"
                  aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             <h4 class="modal-title">确认删除该人员信息？</h4>
                         </div>
                         <div class="modal-body">
@@ -105,7 +143,10 @@
     </div>
 </div>
 
-<input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">
+<!--TODO cid 搭配权限使用-->
+<!--<input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">-->
+<!--//        var cid = $("#get_c_id").attr("value");-->
+<!--//        post_url = "/user/" + cid + "/delete";-->
 
 {% endblock content %}
 
@@ -161,9 +202,9 @@
                         members[i].u_name,
                         members[i].u_role,
                         members[i].u_phone,
-                        "<button id='editrow' href='#alterUser' data-toggle='modal' onclick='modify_it(" +
+                        "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
                         members[i].u_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
-                        "<button id='delrow' href='#confirmDeleteModal' data-toggle='modal' onclick='delete_it( " +
+                        "<button href='#confirmDeleteModal' data-toggle='modal' onclick='delete_it( " +
                         members[i].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
                     ])
                 }
@@ -173,15 +214,38 @@
 
     function add_it() {
         console.log("add it");
-        $("#member_title").text("添加人员");
-        $("#submit_team_btn").text("确认添加");
-//        $("#myModalLabel").text("添加人员信息");
+//        $("#member_title").text("添加人员");
+//        $("#submit_team_btn").text("确认添加");
+        $("#myModalLabel").text("添加人员信息");
+        $("#yes_btn").attr('onclick', 'confirm_add_member()');
+    }
+
+    function confirm_add_member() {
+        console.log('confirm_add_member');
+        console.log();
+        $.post("/user/add", {
+            'u_name': $("#t_name").val(),
+            'u_phone': $("#t_phone").val(),
+////            'c_id': TODO
+            'u_role': $("#t_role").val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/user';
+        })
     }
 
     function modify_it(id) {
         console.log("modify it");
-        $("#myModalLabel").text("修改人员信息");
+        $.post("/user/" + id, function (ret) {
+            data = ret.data;
+            $("#t_name").val(data.u_name);
+//            $("#t_name").attr('value', data.u_name);
+            $("#t_phone").val(data.u_phone);
+            $("#t_role").val(data.u_role);
+            $("#t_community").val(data.c_id);
 
+            $("#myModalLabel").text("修改人员信息");
+        }, 'json');
     }
 
     function delete_it(id) {
@@ -191,12 +255,8 @@
 
     function confirm_del_member(id) {
         console.log(id);
-//        var cid = $("#get_c_id").attr("value");
-//        post_url = "/user/" + cid + "/delete";
-        post_url = "/user/delete";
-        console.log(post_url);
-        $.post(post_url, {
-            'id': id
+        $.post("/user/delete", {
+            'u_id': id
         }, function (ret) {
             console.log(ret);
             location.href = '/user';
