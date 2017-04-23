@@ -156,3 +156,10 @@ conn.execute(
         SELECT * FROM item;
     '''
 )
+
+conn.execute(
+    """
+    INSERT INTO user(u_name, u_role, u_password, u_phone)
+    VALUES ('hcl', 'root', 'hcl', 'hclphone')
+    """
+)

@@ -93,8 +93,22 @@ def login():
     """
     error_msg = None
     next_url = request.args.get('next', 'index')
-    log('next: ' + next_url)
     return render_template('login.html', error=error_msg, next=next_url)
+
+
+@app.route('/reset_password', methods=["POST"])
+def reset_password():
+    old_passwd = request.form.get('old_password')
+    new_passwd = request.form.get('new_password')
+    u_name = request.form.get('username')
+    print u_name
+    status, info = validate_user(u_name, old_passwd)
+    u_id = info[0]
+    if status:
+        status = user.update_user(u_id, u_name=u_name, u_password=new_passwd)
+        return status
+
+    return "Failll"
 
 
 @app.route('/error')

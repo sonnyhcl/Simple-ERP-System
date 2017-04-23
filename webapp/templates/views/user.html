@@ -190,6 +190,7 @@
         $("#myModalLabel").text("添加人员信息");
         $("#yes_btn").attr('onclick', 'confirm_add_member()');
     }
+
     function confirm_add_member() {
         console.log('confirm_add_member');
         if (!check_value($("#t_name").val(), $("#t_phone").val())) {
@@ -205,6 +206,7 @@
             location.href = '/user';
         });
     }
+
     function modify_it(id) {
         console.log("modify it");
         $.post("/user/" + id, function (ret) {
@@ -218,6 +220,7 @@
             $("#yes_btn").attr('onclick', 'confirm_modify_member(' + id + ')');
         }, 'json');
     }
+
     function confirm_modify_member(id) {
         console.log("confirm_modify_member:" + id);
         if (!check_value($("#t_name").val(), $("#t_phone").val())) {
@@ -234,10 +237,12 @@
             location.href = '/user';
         });
     }
+
     function delete_it(id) {
         console.log("delete it");
         $('#confirm-del-button').attr('onclick', 'confirm_del_member(' + id + ')');
     }
+
     function confirm_del_member(id) {
         console.log("confirm_del_member:" + id);
         $.post("/user/delete", {

@@ -75,7 +75,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="no_btn" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="yes_btn" class="btn btn-danger" onclick="reset_password()">确定</button>
+                    <button type="button" id="yes_btn" class="btn btn-danger" onclick="confirm_reset_pwd()">确定</button>
                 </div>
             </div>
         </div>
@@ -157,24 +157,25 @@
         }
         return (true);
     }
+
     function reset_password() {
         console.log('reset password');
         $('#yes_btn').attr('onclick', 'confirm_reset_pwd()');
     }
+
     function confirm_reset_pwd() {
         console.log('confirm reset password');
         if (!check_password($('#username').val(), $('#old_password').val(),
-                $('#new_password').val(), $('#confirm_new_password').val())){
+                $('#new_password').val(), $('#confirm_new_password').val())) {
             return;
         }
-        $.post("url", {
+        $.post("/reset_password", {
             'username': $('#username').val(),
-            'password': $('#old_password').val(),
+            'old_password': $('#old_password').val(),
             'new_password': $('#new_password').val()
         }, function (ret) {
             console.log(ret);
-            location.href('/login');
+            location.href = '/login';
         })
-
     }
 </script>
