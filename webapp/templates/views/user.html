@@ -144,9 +144,7 @@
 </div>
 
 <!--TODO cid 搭配权限使用-->
-<!--<input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">-->
-<!--//        var cid = $("#get_c_id").attr("value");-->
-<!--//        post_url = "/user/" + cid + "/delete";-->
+<input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">
 
 {% endblock content %}
 
@@ -209,13 +207,21 @@
                     ])
                 }
             });
+
+        var cid = $("#get_c_id").attr("value");
+        $.post('/community/' + cid, function (ret) {
+            console.log(ret);
+            var communities = ret.data;
+            for (var i in communities) {
+                console.log(communities[i]);
+                $('#t_community').append('<option value="' + communities[i].c_id + '">' + communities[i].c_name + '</option>');
+            }
+        }, 'json')
     });
 
 
     function add_it() {
         console.log("add it");
-//        $("#member_title").text("添加人员");
-//        $("#submit_team_btn").text("确认添加");
         $("#myModalLabel").text("添加人员信息");
         $("#yes_btn").attr('onclick', 'confirm_add_member()');
     }
@@ -226,7 +232,7 @@
         $.post("/user/add", {
             'u_name': $("#t_name").val(),
             'u_phone': $("#t_phone").val(),
-////            'c_id': TODO
+            'c_id': $("#t_community").val(),
             'u_role': $("#t_role").val()
         }, function (ret) {
             console.log(ret);
@@ -237,9 +243,9 @@
     function modify_it(id) {
         console.log("modify it");
         $.post("/user/" + id, function (ret) {
+            console.log(ret);
             data = ret.data;
             $("#t_name").val(data.u_name);
-//            $("#t_name").attr('value', data.u_name);
             $("#t_phone").val(data.u_phone);
             $("#t_role").val(data.u_role);
             $("#t_community").val(data.c_id);
@@ -261,54 +267,6 @@
             console.log(ret);
             location.href = '/user';
         })
-    }
-
-    // TODO useless, for now
-    function refresh_table(ret) {
-        console.log("refresh user table");
-        var ret_json = eval('(' + ret + ')');
-        $("table tbody").html("");
-        var i_key;
-        for (i_key in ret_json) {
-            var t_body = document.getElementById('t_body');
-
-            var tr = document.createElement('tr');
-            if (i_key % 2)
-                tr.setAttribute('class', 'info');
-            else
-                tr.setAttribute('class', 'error');
-            var td_community = document.createElement('td');
-            var td_username = document.createElement('td');
-            var td_contact = document.createElement('td');
-
-            var user_id = ret_json[i_key][0];
-            td_community.innerHTML = ret_json[i_key][1];
-            td_username.innerHTML = ret_json[i_key][2];
-            td_contact.innerHTML = ret_json[i_key][3];
-
-            var td_operation = document.createElement('td');
-            var a1 = document.createElement('a');
-            var a2 = document.createElement('a');
-            var text = document.createTextNode(' / ');
-            a1.setAttribute('href', '#alterUser');
-            a1.setAttribute('data-toggle', 'modal');
-            a1.setAttribute('onclick', 'modify_it()');
-            a1.innerHTML = '修改';
-            a2.setAttribute('href', '#alterUser');
-            a2.setAttribute('data-toggle', 'modal');
-            a2.setAttribute('onclick', 'delete_it()');
-            a2.innerHTML = '删除';
-
-            td_operation.appendChild(a1);
-            td_operation.appendChild(text);
-            td_operation.appendChild(a2);
-
-            tr.appendChild(td_community);
-            tr.appendChild(td_username);
-            tr.appendChild(td_contact);
-            tr.appendChild(td_operation);
-            t_body.appendChild(tr);
-        }
     }
 </script>
 
