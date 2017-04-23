@@ -24,7 +24,7 @@ def index():
     返回首页
     :return:
     """
-    return render_template('views/index.html')
+    return render_template('/index.html')
 
 
 @app.route('/log_out', methods=['GET'])
@@ -108,7 +108,7 @@ def reset_password():
         status = user.update_user(u_id, u_name=u_name, u_password=new_passwd)
         return status
 
-    return "Failll"
+    return "Fail"
 
 
 @app.route('/error')

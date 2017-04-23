@@ -12,7 +12,8 @@
 
     <!-- datatables -->
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.css"
+          rel="stylesheet">
     <link href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 
     {% endblock head%}
@@ -20,7 +21,71 @@
 </head>
 
 <body>
+
+<!--修改密码-->
+<div class="container">
+    <div class="modal fade" id="resetPassword"
+         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+                </div>
+
+                <div class="modal-body" id="myModalBody">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">用户名</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="username" type="text" value="" placeholder="用户名"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0" data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">原密码</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="old_password" type="password" value="" placeholder="原密码"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0" data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">新密码</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="new_password" type="password" value="" placeholder="新密码"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0" data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">再次输入</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="confirm_new_password" type="password" value=""
+                                       placeholder="确认新密码"
+                                       class="form-control input-sm c6" data-content="输入不一致" data-placement="bottom"
+                                       tabindex="0" data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="no_btn" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" id="yes_btn" class="btn btn-danger" onclick="confirm_reset_pwd()">确定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 模仿leetcode导航栏 -->
+{% if session['logged_in'] == True %}
 <div class="navbar navbar-inverse navbar-extra">
     <div class="container">
         <div class="navbar-header">
@@ -34,13 +99,16 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/index"><font color="{% if selected_menu == 'index' %}orange{% endif %}">首页</font></a></li>
-                <li><a href="/product"><font color="{% if selected_menu == 'product' %}orange{% endif %}">产品</font></a></li>
+                <li><a href="/product"><font color="{% if selected_menu == 'product' %}orange{% endif %}">产品</font></a>
+                </li>
                 {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
-                <li><a href="/transaction"><font color="{% if selected_menu == 'transaction' %}orange{% endif %}">流水</font></a></li>
+                <li><a href="/transaction"><font
+                        color="{% if selected_menu == 'transaction' %}orange{% endif %}">流水</font></a></li>
                 <li><a href="/user"><font color="{% if selected_menu == 'user' %}orange{% endif %}">人员</font></a></li>
                 {% endif %}
                 {% if session['u_role'] == 'root' %}
-                <li><a href="/community"><font color="{% if selected_menu == 'community' %}orange{% endif %}">社区</font></a></li>
+                <li><a href="/community"><font color="{% if selected_menu == 'community' %}orange{% endif %}">社区</font></a>
+                </li>
                 {% endif %}
             </ul>
 
@@ -51,6 +119,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li><a href="#resetPassword" data-toggle="modal">修改密码</a></li>
                         <li><a href="/log_out">退出</a></li>
                     </ul>
                 </li>
@@ -58,6 +127,8 @@
         </div>
     </div>
 </div>
+{% endif %}
+
 
 <!--Body-->
 <div id="content" align="center">
@@ -66,6 +137,7 @@
 </div>
 
 <!--Footer-->
+{% if session['logged_in'] == True %}
 <div class="container" align="center" style="bottom: 0;left: 0; right: 0;">
     <hr>
     <p class="text-muted credit">
@@ -74,6 +146,7 @@
         &copy; Copyright 2017
     </p>
 </div>
+{% endif %}
 
 
 {% block script %}
@@ -91,6 +164,50 @@
 
 <!-- jquery.datatables -->
 <script src="http://cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
+
+<!--修改密码-->
+<script type="text/javascript">
+    function check_password(name, old_password, new_password, confirm_new_password) {
+        if (name === "") {
+            $('#username').popover('show');
+            return (false);
+        }
+        if (old_password === "") {
+            $('#old_password').popover('show');
+            return (false);
+        }
+        if (new_password === "") {
+            $('#new_password').popover('show');
+            return (false);
+        }
+        if (confirm_new_password === "" || confirm_new_password !== new_password) {
+            $('#confirm_new_password').popover('show');
+            return (false);
+        }
+        return (true);
+    }
+
+    function reset_password() {
+        console.log('reset password');
+        $('#yes_btn').attr('onclick', 'confirm_reset_pwd()');
+    }
+
+    function confirm_reset_pwd() {
+        console.log('confirm reset password');
+        if (!check_password($('#username').val(), $('#old_password').val(),
+                $('#new_password').val(), $('#confirm_new_password').val())) {
+            return;
+        }
+        $.post("/reset_password", {
+            'username': $('#username').val(),
+            'old_password': $('#old_password').val(),
+            'new_password': $('#new_password').val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/log_out';
+        })
+    }
+</script>
 {% endblock script %}
 
 </body>
