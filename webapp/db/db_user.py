@@ -123,7 +123,10 @@ class User(object):
         log("get_user_by_cid")
         conn = sqlite3.connect("test.db")
         param = (c_id,)
-        response = conn.execute('select * from user where c_id = ?;', param)
+        if c_id == 0:
+            response = conn.execute('select * from user')
+        else:
+            response = conn.execute('select * from user where c_id = ?;', param)
         response = response.fetchall()
         conn.close()
         return "Success", response
@@ -142,19 +145,3 @@ class User(object):
         return "Success", response
 
 user = User()
-
-# -*- coding: UTF-8 -*-
-import sqlite3
-from webapp.mylog import log
-"""
-数据库表中的所有操作都要通过log保存一份记录
-"""
-
-
-
-
-
-
-
-
-

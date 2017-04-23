@@ -3,9 +3,10 @@
 用户管理页面相关操作
 """
 import json
-from flask import render_template
+from flask import render_template, session, request
 from webapp import app
 from db.db_user import *
+from db.db_community import *
 __author__ = 'sonnyhcl'
 
 
@@ -17,75 +18,86 @@ def user_index():
     """
     return render_template('views/user.html')
 
-
-@app.route('/user/<int:cid>/page/', methods=['POST'])
-def show_user(cid):
+@app.route('/user/<int:u_id>', methods=['POST'])
+def get_user(u_id):
     """
-    {
-        curr:<int>,
-        next:<bool>,
-        prev:<bool>,
-        page:<int>
-    }
+    
+    :param u_id: 
+    :return: 
+    """
+    status, info = user.get_user_by_uid(u_id)
+    ret = {"data": [], "status": status, "msg":""}
+    if status == "Success":
+        ret['data'] = {'u_id':info[0][0], 'u_name':info[0][1], "u_role":info[0][2],
+                            "u_phone": info[0][4], 'c_id': info[0][5] }
+    else:
+        ret['msg'] = info
+    return json.dumps(ret, ensure_ascii=False)
+
+
+@app.route('/user/page/', methods=['POST'])
+def show_users():
+    """
     :param cid:
     :return: json.dumps(info)
     """
-    # info = db_user.db_show_user(cid)
-    if cid < 0:
-        return "Fail", "没有权限"
+    cid = session['c_id']
     status, info = user.get_user_by_cid(cid)
+    ret = {"data": [], "status": status, "msg":""}
+    d = {'root': u"超级管理员", 'admin': u"管理员", 'user': u"普通用户"}
     if status == "Success":
-        ret = dict()
-        ret['data'] = []
-        for i in info:
-            tmp = dict()
-            tmp['u_id'] = i[0]
-            tmp['u_name'] = i[1]
-            tmp['u_role'] = i[2]
-            tmp['u_phone'] = i[4]
-            tmp['c_id'] = i[5]
-            ret['data'].append(tmp)
-        print ret
-        return json.dumps(ret, ensure_ascii=False)
+        _ = [ret['data'].append({'u_id':i[0], 'u_name':i[1], "u_role":i[2],
+                            "u_phone": i[4], 'c_id': i[5] })  for i in info]
+        for r in ret['data']:
+            r['c_name'] = community.get_community(r['c_id'])[1][0][1]
+            r['u_role'] = d[r['u_role']]
     else:
-        return json.dumps({"data": []}, ensure_ascii=False)
+        ret['msg'] = info
+    return json.dumps(ret, ensure_ascii=False)
 
 
-@app.route('/user/<int:cid>/add', methods=['POST'])
-def add_user(cid):
+@app.route('/user/add', methods=['POST'])
+def add_user():
     """
 
     :param cid:
     :return:
     """
-    return "add_user"
+    u_name = request.form.get("u_name")
+    u_phone = request.form.get("u_phone")
+    u_role = request.form.get("u_role")
+    c_id = request.form.get("c_id")
+    status = user.add_user(u_name, u_role, u_name, u_phone, c_id)
+    return status
 
 
-@app.route('/user/<int:cid>/modify', methods=['POST'])
-def modify_user(cid):
+@app.route('/user/modify', methods=['POST'])
+def modify_user():
     """
 
     :param cid:
     :return: json.dumps(info)
     """
-    return "modify_user"
+    u_name = request.form.get("u_name")
+    u_phone = request.form.get("u_phone")
+    u_role = request.form.get("u_role")
+    c_id = request.form.get("c_id")
+    u_id = request.form.get("u_id")
+    status = user.update_user(u_id=u_id, u_name=u_name, u_role=u_role,
+                              u_phone=u_phone,
+                              c_id=c_id)
+    return status
 
 
-@app.route('/user/<int:cid>/delete', methods=['POST'])
-def delete_user(cid):
+@app.route('/user/delete', methods=['POST'])
+def delete_user():
     """
 
     :param cid:
     :return: json.dumps(info)
     """
-    return "add_user"
-
-
-@app.route('/user/filter', methods=['POST'])
-def filter_user(cid):
-    """
-
-    :param cid:
-    :return: json.dumps(info)
-    """
-    return "filter_user"
+    u_id = request.form.get('u_id')
+    if u_id == session['u_id']:
+        return "Fail"
+    status = user.delete_user(u_id)
+    return status

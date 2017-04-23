@@ -4,62 +4,102 @@
 
 {% block content %}
 <div class="container">
+    <!-- 增改弹窗模板 -->
+    <div class="modal fade" id="alterUser"
+         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">标题</h4>
+                </div>
+
+                <div class="modal-body" id="myModalBody">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">名字</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="t_name" type="text" value="" placeholder="名字"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                       role="button" data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">手机</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="t_phone" type="text" value="" placeholder="手机号码"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                       role="button" data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">社区</label>
+                            <div class="col-lg-6">
+                                <select id="t_community" class="form-control input-sm" style="color:#666666">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">身份</label>
+                            <div class="col-lg-6">
+                                <select id="t_role" class="form-control input-sm" style="color:#666666">
+                                    {% if session['u_role'] == 'root' %}
+                                    <option value="root">超级管理员</option>
+                                    <option value="admin">管理员</option>
+                                    {% endif %}
+                                    <option value="user">普通用户</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="no_btn" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" id="yes_btn" class="btn btn-danger" onclick="">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除弹窗模版 -->
+    <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">确认删除该人员信息？</h4>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button id='confirm-del-button' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- body -->
     <div class="row clearfix">
         <div class="col-md-12 column">
-
-            <h3>人员管理系统</h3>
+            <!-- 标题 -->
+            <h3 id="user_manage_title">人员管理系统</h3>
             <br>
-
-            <a id="modal-471624" href="#alterUser"
-               role="button" data-toggle="modal" onclick="add_it()" class="btn btn-default">添加人员</a>
-
-            <!-- 弹窗模板 -->
-            <div class="modal fade" id="alterUser"
-                 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close"
-                                    data-dismiss="modal" aria-hidden="true">×
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">
-                                添加人员
-                            </h4>
-                        </div>
-                        <div class="modal-body" id="myModalBody">
-                            内容...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary">保存</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal" tabindex="-1" role="dialog"
-                 aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">确认删除该人员信息？</h4>
-                        </div>
-                        <div class="modal-body">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                            <button id='confirm-del-button' type="button" class="btn btn-danger" onclick="">确认</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <!-- 添加按钮 -->
+            <a id="modal-471624" href="#alterUser" role="button" data-toggle="modal"
+               onclick="add_it()" class="btn btn-warning">添加人员</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
                    id="user_table" width="100%">
             </table>
-
         </div>
     </div>
 </div>
+
+<!-- cid -->
+<input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">
+
 {% endblock content %}
 
 {% block script %}
@@ -68,36 +108,18 @@
     $(document).ready(function () {
         var doc_table;
         console.log('document ready');
-        $.post('/user/1/page/', {curr: 1, page: 1},
+        $.post('/user/page/',
             function (ret) {
-                console.log(ret);
-                var ret_list = eval('(' + ret + ')');
                 doc_table = $('#user_table').dataTable({
                     "aoColumns": [
-                        {
-                            "sTitle": "社区",
-                            "sDefaultContent": "",
-                            "sClass": "center"
-                        },
-                        {
-                            "sTitle": "姓名",
-                            "sDefaultContent": "",
-                            "sClass": "center"
-                        },
-                        {
-                            "sTitle": "身份",
-                            "sDefaultContent": "",
-                            "sClass": "center"
-                        },
-                        {
-                            "sTitle": "联系方式",
-                            "sDefaultContent": "",
-                            "sClass": "center"
-                        },
+                        {"sTitle": "社区"},
+                        {"sTitle": "姓名"},
+                        {"sTitle": "身份"},
+                        {"sTitle": "联系方式"},
                         {
                             "width": "12%",
                             "sTitle": "操作",
-                            "sClass": "center"
+                            "bSortable": false
                         }
                     ],
                     "oLanguage": {
@@ -123,100 +145,86 @@
                     "bScrollCollapse": true,
                     "bStateSave": true
                 });
-
-                var members = ret_list.data;
-                for (var i in members) {
-                    console.log(members[i]);
+                var members = ret.data;
+                for (var ij in members) {
                     doc_table.fnAddData([
-                        members[i].c_id,
-                        members[i].u_name,
-                        members[i].u_role,
-                        members[i].u_phone,
-                        "<button id='editrow' href='#alterUser' data-toggle='modal' onclick='modify_it(" +
-                        members[i].u_id + ")' class='btn btn-default' type='button'>修改</button>" +
-                        "<button id='delrow' href='#confirmDeleteModal' data-toggle='modal' onclick='delete_it( " +
-                        members[i].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
+                        members[ij].c_name,
+                        members[ij].u_name,
+                        members[ij].u_role,
+                        members[ij].u_phone,
+                        "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
+                        members[ij].u_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
+                        "<button href='#confirmDeleteModal' data-toggle='modal' onclick='delete_it( " +
+                        members[ij].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
                     ])
                 }
-            });
+            }, 'json');
+        var cid = $("#get_c_id").attr("value");
+        $.post('/community/' + cid, function (ret) {
+            console.log(ret);
+            var communities = ret.data;
+            for (var ij in communities) {
+                console.log(communities[ij]);
+                $('#t_community').append('<option value="' + communities[ij].c_id + '">' + communities[ij].c_name + '</option>');
+            }
+        }, 'json')
     });
-
-
-    // useless, for now
-    function refresh_table(ret) {
-        console.log("refresh user table");
-        var ret_json = eval('(' + ret + ')');
-        $("table tbody").html("");
-        var i_key;
-        for (i_key in ret_json) {
-            var t_body = document.getElementById('t_body');
-
-            var tr = document.createElement('tr');
-            if (i_key % 2)
-                tr.setAttribute('class', 'info');
-            else
-                tr.setAttribute('class', 'error');
-            var td_community = document.createElement('td');
-            var td_username = document.createElement('td');
-            var td_contact = document.createElement('td');
-
-            var user_id = ret_json[i_key][0];
-            td_community.innerHTML = ret_json[i_key][1];
-            td_username.innerHTML = ret_json[i_key][2];
-            td_contact.innerHTML = ret_json[i_key][3];
-
-            var td_operation = document.createElement('td');
-            var a1 = document.createElement('a');
-            var a2 = document.createElement('a');
-            var text = document.createTextNode(' / ');
-            a1.setAttribute('href', '#alterUser');
-            a1.setAttribute('data-toggle', 'modal');
-            a1.setAttribute('onclick', 'modify_it()');
-            a1.innerHTML = '修改';
-            a2.setAttribute('href', '#alterUser');
-            a2.setAttribute('data-toggle', 'modal');
-            a2.setAttribute('onclick', 'delete_it()');
-            a2.innerHTML = '删除';
-
-            td_operation.appendChild(a1);
-            td_operation.appendChild(text);
-            td_operation.appendChild(a2);
-
-            tr.appendChild(td_community);
-            tr.appendChild(td_username);
-            tr.appendChild(td_contact);
-            tr.appendChild(td_operation);
-            t_body.appendChild(tr);
-        }
-    }
-
     function add_it() {
         console.log("add it");
         $("#myModalLabel").text("添加人员信息");
+        $("#yes_btn").attr('onclick', 'confirm_add_member()');
     }
-
+    function confirm_add_member() {
+        console.log('confirm_add_member');
+        $.post("/user/add", {
+            'u_name': $("#t_name").val(),
+            'u_phone': $("#t_phone").val(),
+            'c_id': $("#t_community").val(),
+            'u_role': $("#t_role").val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/user';
+        });
+    }
     function modify_it(id) {
         console.log("modify it");
-        $("#myModalLabel").text("修改人员信息");
-
+        $.post("/user/" + id, function (ret) {
+            console.log(ret);
+            data = ret.data;
+            $("#t_name").val(data.u_name);
+            $("#t_phone").val(data.u_phone);
+            $("#t_role").val(data.u_role);
+            $("#t_community").val(data.c_id);
+            $("#myModalLabel").text("修改人员信息");
+            $("#yes_btn").attr('onclick', 'confirm_modify_member(' + id + ')');
+        }, 'json');
     }
-
+    function confirm_modify_member(id) {
+        console.log("confirm_modify_member:" + id);
+        $.post("/user/modify", {
+            'u_id': id,
+            'u_name': $("#t_name").val(),
+            'u_phone': $("#t_phone").val(),
+            'c_id': $("#t_community").val(),
+            'u_role': $("#t_role").val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/user';
+        });
+    }
     function delete_it(id) {
         console.log("delete it");
-        $('#confirm-del-button').attr('onclick', 'confirm_del_member('+id+')');
-
+        $('#confirm-del-button').attr('onclick', 'confirm_del_member(' + id + ')');
     }
-
     function confirm_del_member(id) {
-        console.log(id);
-        $.post('user/1/delete', {
-            'id': id
+        console.log("confirm_del_member:" + id);
+        $.post("/user/delete", {
+            'u_id': id
         }, function (ret) {
             console.log(ret);
             location.href = '/user';
         })
     }
-
 </script>
 
 {% endblock script %}
