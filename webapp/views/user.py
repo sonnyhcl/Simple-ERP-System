@@ -6,6 +6,7 @@ import json
 from flask import render_template, session, request
 from webapp import app
 from db.db_user import *
+from db.db_community import *
 __author__ = 'sonnyhcl'
 
 
@@ -46,6 +47,14 @@ def show_users():
     if status == "Success":
         _ = [ret['data'].append({'u_id':i[0], 'u_name':i[1], "u_role":i[2],
                             "u_phone": i[4], 'c_id': i[5] })  for i in info]
+        for r in ret['data']:
+            r['c_name'] = community.get_community(r['c_id'])[1][0][1]
+            if r['u_role'] == 'root':
+                r['u_role'] = u"超级管理员"
+            if r['u_role'] == 'admin':
+                r['u_role'] = u"管理员"
+            if r['u_role'] == 'user':
+                r['u_role'] = u"普通用户"
     else:
         ret['msg'] = info
     return json.dumps(ret, ensure_ascii=False)
@@ -78,7 +87,9 @@ def modify_user():
     u_role = request.form.get("u_role")
     c_id = request.form.get("c_id")
     u_id = request.form.get("u_id")
-    status = user.update_user(u_id, u_name, u_role, u_phone=u_phone, c_id=c_id)
+    status = user.update_user(u_id=u_id, u_name=u_name, u_role=u_role,
+                              u_phone=u_phone,
+                              c_id=c_id)
     return status
 
 

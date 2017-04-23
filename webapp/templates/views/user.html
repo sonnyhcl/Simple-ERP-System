@@ -75,7 +75,7 @@
                 </div>
                 <div class="modal-body">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='confirm-del-button' type="button" class="btn btn-danger" onclick="">确认</button>
+                    <button id='confirm-del-button' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
                 </div>
             </div>
         </div>
@@ -110,7 +110,6 @@
         console.log('document ready');
         $.post('/user/page/',
             function (ret) {
-                var ret_list = eval('(' + ret + ')');
                 doc_table = $('#user_table').dataTable({
                     "aoColumns": [
                         {"sTitle": "社区"},
@@ -147,28 +146,28 @@
                     "bStateSave": true
                 });
 
-                var members = ret_list.data;
-                for (var i in members) {
+                var members = ret.data;
+                for (var ij in members) {
                     doc_table.fnAddData([
-                        members[i].c_id,
-                        members[i].u_name,
-                        members[i].u_role,
-                        members[i].u_phone,
+                        members[ij].c_name,
+                        members[ij].u_name,
+                        members[ij].u_role,
+                        members[ij].u_phone,
                         "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
-                        members[i].u_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
+                        members[ij].u_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
                         "<button href='#confirmDeleteModal' data-toggle='modal' onclick='delete_it( " +
-                        members[i].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
+                        members[ij].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
                     ])
                 }
-            });
+            }, 'json');
 
         var cid = $("#get_c_id").attr("value");
         $.post('/community/' + cid, function (ret) {
             console.log(ret);
             var communities = ret.data;
-            for (var i in communities) {
-                console.log(communities[i]);
-                $('#t_community').append('<option value="' + communities[i].c_id + '">' + communities[i].c_name + '</option>');
+            for (var ij in communities) {
+                console.log(communities[ij]);
+                $('#t_community').append('<option value="' + communities[ij].c_id + '">' + communities[ij].c_name + '</option>');
             }
         }, 'json')
     });
@@ -182,7 +181,6 @@
 
     function confirm_add_member() {
         console.log('confirm_add_member');
-        console.log();
         $.post("/user/add", {
             'u_name': $("#t_name").val(),
             'u_phone': $("#t_phone").val(),
@@ -220,7 +218,7 @@
         }, function (ret) {
             console.log(ret);
             location.href = '/user';
-        }, 'json');
+        });
     }
 
     function delete_it(id) {
