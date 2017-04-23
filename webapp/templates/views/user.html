@@ -192,7 +192,7 @@
 
     function confirm_add_member() {
         console.log('confirm_add_member');
-        if (!check_value($("#t_name").val(), $("#t_phone").val())){
+        if (!check_value($("#t_name").val(), $("#t_phone").val())) {
             return;
         }
         $.post("/user/add", {
@@ -223,7 +223,7 @@
 
     function confirm_modify_member(id) {
         console.log("confirm_modify_member:" + id);
-        if (!check_value($("#t_name").val(), $("#t_phone").val())){
+        if (!check_value($("#t_name").val(), $("#t_phone").val())) {
             return;
         }
         $.post("/user/modify", {
