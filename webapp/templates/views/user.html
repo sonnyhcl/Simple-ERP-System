@@ -137,36 +137,8 @@
                         "<button id='delrow' href='#confirmDeleteModal' data-toggle='modal' onclick='delete_it( " +
                         members[i].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
                     ])
-
                 }
-
             });
-
-//        $('tbody').on('click', '#delrow', function () {
-//            var data = doc_table.row($(this).parents('tr')).data();
-//            console.log(data);
-//            if (confirm("确认删除？")) {
-//                $.ajax({
-//                    url: '/user/1/delete',
-//                    type: 'delete',
-//                    method: 'POST',
-//                    timeout: '3000',
-//                    cache: "False",
-//                    success: function (ret_str) {
-//                        console.log('came here');
-//                        if (ret_str.data) {
-//                            doc_table.row().remove();
-//                            window.location.reload();
-//                        }
-//                    },
-//                    error: function (err) {
-//                        alert("获取数据失败");
-//                    }
-//                });
-//            }
-//        });
-
-
     });
 
 
