@@ -47,8 +47,8 @@
                             <div class="col-lg-6">
                                 <select id="t_role" class="form-control input-sm" style="color:#666666">
                                     {% if session['u_role'] == 'root' %}
-                                    <option value="root">超级管理员</option>
-                                    <option value="admin">管理员</option>
+                                    <option value="root">主管理员</option>
+                                    <option value="admin">社区管理员</option>
                                     {% endif %}
                                     <option value="user">普通用户</option>
                                 </select>
@@ -88,7 +88,7 @@
             <br>
             <!-- 添加按钮 -->
             <a id="modal-471624" href="#alterUser" role="button" data-toggle="modal"
-               onclick="add_it()" class="btn btn-warning">添加人员</a>
+               onclick="add_it()" class="btn btn-primary">添加人员</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
                    id="user_table" width="100%">
@@ -169,6 +169,7 @@
             }
         }, 'json')
     });
+
     function add_it() {
         console.log("add it");
         $("#myModalLabel").text("添加人员信息");
