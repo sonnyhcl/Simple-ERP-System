@@ -44,17 +44,13 @@ def show_users():
     cid = session['c_id']
     status, info = user.get_user_by_cid(cid)
     ret = {"data": [], "status": status, "msg":""}
+    d = {'root': u"超级管理员", 'admin': u"管理员", 'user': u"普通用户"}
     if status == "Success":
         _ = [ret['data'].append({'u_id':i[0], 'u_name':i[1], "u_role":i[2],
                             "u_phone": i[4], 'c_id': i[5] })  for i in info]
         for r in ret['data']:
             r['c_name'] = community.get_community(r['c_id'])[1][0][1]
-            if r['u_role'] == 'root':
-                r['u_role'] = u"超级管理员"
-            if r['u_role'] == 'admin':
-                r['u_role'] = u"管理员"
-            if r['u_role'] == 'user':
-                r['u_role'] = u"普通用户"
+            r['u_role'] = d[r['u_role']]
     else:
         ret['msg'] = info
     return json.dumps(ret, ensure_ascii=False)
