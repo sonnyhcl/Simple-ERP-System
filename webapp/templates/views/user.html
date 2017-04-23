@@ -65,6 +65,7 @@
     </div>
 
     <!-- 删除弹窗模版 -->
+    {% if session['u_role'] == 'root' %}
     <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -80,6 +81,8 @@
             </div>
         </div>
     </div>
+    {% endif %}
+
     <!-- body -->
     <div class="row clearfix">
         <div class="col-md-12 column">
