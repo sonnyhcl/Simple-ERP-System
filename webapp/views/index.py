@@ -15,7 +15,7 @@ __author__ = 'sonnyhcl'
 
 def get_avatar(username, size):
     # return 'http://www.gravatar.com/avatar/' \
-    return "http://cn.gravatar.com/avatar/"+ md5(username).hexdigest() \
+    return "https://secure.gravatar.com/avatar/"+ md5(username).hexdigest() \
            + '?s=' + str(size)
 
 
