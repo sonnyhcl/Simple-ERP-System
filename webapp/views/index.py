@@ -3,6 +3,7 @@
 首页、登录相关操作以及其它杂七杂八的操作
 """
 import os
+from hashlib import md5
 from flask import render_template, request, session, \
     url_for, redirect, make_response
 from auth.login_required import login_required
@@ -10,6 +11,12 @@ from webapp import app
 from db.db_user import *
 from webapp.mylog import log
 __author__ = 'sonnyhcl'
+
+
+def get_avatar(username, size):
+    # return 'http://www.gravatar.com/avatar/' \
+    return "http://cn.gravatar.com/avatar/"+ md5(username).hexdigest() \
+           + '?s=' + str(size)
 
 
 @app.route('/')
@@ -24,7 +31,7 @@ def index():
     返回首页
     :return:
     """
-    return render_template('/index.html')
+    return render_template('index.html')
 
 
 @app.route('/log_out', methods=['GET'])
@@ -72,12 +79,13 @@ def log_in():
         next_url = url_for('index')
     status, info = validate_user(u_name, u_password)
     if status:
-        # TODO 下一步把跟前端交互cid的参数都删除了
         session['logged_in'] = True
         session['u_id'] = info[0]
         session['u_name'] = info[1]
         session['u_role'] = info[2]
         session['c_id'] = info[5]
+        session['icon'] = get_avatar(session['u_name'], 40)
+        session['big_icon'] = get_avatar(session['u_name'], 140)
         return redirect(next_url)
 
     error_msg = "wrong username or password"
@@ -101,7 +109,6 @@ def reset_password():
     old_passwd = request.form.get('old_password')
     new_passwd = request.form.get('new_password')
     u_name = request.form.get('username')
-    print u_name
     status, info = validate_user(u_name, old_passwd)
     u_id = info[0]
     if status:
