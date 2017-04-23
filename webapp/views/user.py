@@ -104,3 +104,16 @@ def delete_user():
         return "Fail"
     status = user.delete_user(u_id)
     return status
+
+@app.route('/user/reset_password', methods=["POST"])
+def reset_password():
+    old_passwd = request.form.get('old_password')
+    new_passwd = request.form.get('new_password')
+    u_name = request.form.get('username')
+    from views.index import validate_user
+    status, _ = validate_user(u_name, old_passwd)
+    if status:
+        status = user.update_user(u_name=u_name, u_password=new_passwd)
+        return status
+
+    return "Fail"
