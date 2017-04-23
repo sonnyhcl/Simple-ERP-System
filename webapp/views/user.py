@@ -21,15 +21,16 @@ def user_index():
 @app.route('/user/<int:u_id>', methods=['POST'])
 def get_user(u_id):
     """
-    
+    get user by u_id
     :param u_id: 
     :return: 
     """
     status, info = user.get_user_by_uid(u_id)
     ret = {"data": [], "status": status, "msg":""}
     if status == "Success":
-        ret['data'] = {'u_id':info[0][0], 'u_name':info[0][1], "u_role":info[0][2],
-                            "u_phone": info[0][4], 'c_id': info[0][5] }
+        ret['data'] = {'u_id': info[0][0], 'u_name': info[0][1],
+                       "u_role": info[0][2], "u_phone": info[0][4],
+                       'c_id': info[0][5] }
     else:
         ret['msg'] = info
     return json.dumps(ret, ensure_ascii=False)
@@ -38,6 +39,8 @@ def get_user(u_id):
 @app.route('/user/page/', methods=['POST'])
 def show_users():
     """
+    show users by cid
+    cid=0 means show all users
     :param cid:
     :return: json.dumps(info)
     """
