@@ -7,7 +7,7 @@ __author__ = 'sonnyhcl'
 
 @app.route('/product', methods=['GET'])
 def product():
-    return render_template('views/product.html', role='root')
+    return render_template('product.html', role='root')
 
 
 @app.route('/product/<int:cid>/page/', methods=['POST'])

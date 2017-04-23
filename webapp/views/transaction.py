@@ -7,7 +7,7 @@ __author__ = 'sonnyhcl'
 
 @app.route('/transaction', methods=['GET'])
 def transaction():
-    return render_template('views/transaction.html')
+    return render_template('transaction.html')
 
 
 @app.route('/transaction/<int:cid>/page/', methods=['POST'])

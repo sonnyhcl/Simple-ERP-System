@@ -11,7 +11,7 @@ __author__ = 'sonnyhcl'
 
 @app.route('/community', methods=['GET'])
 def community_index():
-    return render_template('views/community.html', role='root')
+    return render_template('community.html', role='root')
 
 
 @app.route('/community/<int:c_id>', methods=['POST'])

@@ -16,7 +16,7 @@ def user_index():
     返回用户管理页面
     :return: templates
     """
-    return render_template('views/user.html')
+    return render_template('user.html')
 
 @app.route('/user/<int:u_id>', methods=['POST'])
 def get_user(u_id):
