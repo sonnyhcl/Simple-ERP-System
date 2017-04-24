@@ -166,7 +166,6 @@
     function add_it() {
         console.log("add it");
         $("#myModalLabel_comm").text("添加社区信息");
-        $("#t_admin").attr("readonly", "true");
         $("#yes_btn_comm").attr('onclick', 'confirm_add_member_comm()');
     }
 
@@ -176,16 +175,16 @@
             return;
         }
         $.post("/community/add", {
-            'c_name': $("#t_name").val()
+            'c_name': $("#t_name").val(),
+            'u_id': $("#c_admin_table").val()
         }, function (ret) {
             console.log(ret);
             location.href = '/community';
-        });
+        }, 'json');
     }
 
     function modify_it(id) {
         console.log("modify it:" + id);
-        $("#t_admin").removeAttr("readonly");
         $.post("/community/" + id, function (ret) {
             console.log(ret);
             data = ret.data[0];
@@ -208,7 +207,7 @@
         }, function (ret) {
             console.log(ret);
             location.href = '/community';
-        });
+        }, 'json');
     }
 
     function delete_it(id) {
@@ -223,7 +222,7 @@
         }, function (ret) {
             console.log(ret);
             location.href = '/community';
-        })
+        }, 'json')
     }
 </script>
 
