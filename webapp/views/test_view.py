@@ -48,5 +48,3 @@ def test():
 @app.route('/task')
 def task_index():
     return render_template('task.html')
-
-@app.route('/order')
