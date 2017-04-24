@@ -19,24 +19,24 @@ def test():
     """
     community = Community()
     community.add_community(c_name='fuck community')
-    flag, response = community.get_all()
+    flag, response = community.get_community_detail(c_id=1)
     print flag, response
-    user = User()
-    user.add_user(u_name='a', u_password='b', u_phone='c', u_role='d', c_id=1)
-    flag, response = user.get_all_user()
-    print flag, response
-    prod = Product()
-    prod.add_product(p_name='fuck')
-    flag, response = prod.get_all()
-    item = Item()
-    item.add_item(i_name='fuck', i_minutes=1, i_prices=1, i_unitprices=1, p_id=1)
-    flag, response = item.get_all()
-    print flag, response
-
-    transactions = Transactions()
-    transactions.add_transactions(u_id=1,c_id=1,p_id=1,i_id=1)
-    flag, response = transactions.get_all()
-    print flag, response
+    # user = User()
+    # user.add_user(u_name='a', u_password='b', u_phone='c', u_role='d', c_id=1)
+    # flag, response = user.get_all_user()
+    # print flag, response
+    # prod = Product()
+    # prod.add_product(p_name='fuck')
+    # flag, response = prod.get_all()
+    # item = Item()
+    # item.add_item(i_name='fuck', i_minutes=1, i_prices=1, i_unitprices=1, p_id=1)
+    # flag, response = item.get_all()
+    # print flag, response
+    #
+    # transactions = Transactions()
+    # transactions.add_transactions(u_id=1,c_id=1,p_id=1,i_id=1)
+    # flag, response = transactions.get_all()
+    # print flag, response
     return render_template('test.html')
 
 

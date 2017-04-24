@@ -148,7 +148,7 @@ conn.execute(
     INSERT INTO user(u_name, u_role, u_password, u_phone, c_id)
     VALUES  ('hcl',     'root', 'hcl',  'hclphone', 1),
             ('user_a',  'a',    'a',    'aphone',   1),
-            ('user_b',  'a',    'a',    'bphone',   1);
+            ('user_b',  'a',    'a',    'bphone',   2);
     """
 )
 

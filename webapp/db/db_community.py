@@ -42,13 +42,22 @@ class Community(object):
         conn.close()
         return "Success"
 
-    def get_community(self, c_id):
+    def get_community(self, c_id = 0):
         conn = sqlite3.connect("test.db")
         param = (c_id,)
         if c_id == 0:
             response = conn.execute('SELECT * FROM community;')
         else:
             response = conn.execute('SELECT * FROM community WHERE c_id = ?;',
+                                    param)
+        response = response.fetchall()
+        conn.close()
+        return "Success", response
+
+    def get_community_detail(self, c_id):
+        conn = sqlite3.connect("test.db")
+        param = (c_id,)
+        response = conn.execute('SELECT community.c_id, community.c_name, user.u_name, user.u_phone FROM community, user WHERE community.c_id = ? and user.c_id = community.c_id;',
                                     param)
         response = response.fetchall()
         conn.close()
