@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <!-- 增改弹窗模板 -->
+    <!-- 增加产品弹窗 -->
     <div class="modal fade" id="alterProduct"
          role="dialog" aria-labelledby="myModalLabel_prod" aria-hidden="true">
         <div class="modal-dialog">
@@ -17,39 +17,102 @@
                 <div class="modal-body" id="myModalBody_prod">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">产品名称</label>
-                            <div class="col-lg-6">
-                                <input size="16" id="t_name" type="text" value="" placeholder="名字"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                            <label class="col-lg-2 control-label">产品名称</label>
+                            <div class="col-lg-9">
+                                <input size="16" id="p_name" type="text" value="" placeholder="产品名称"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">设计师</label>
+                            <div class="col-lg-9">
+                                <input size="16" id="p_designer" type="text" value="" placeholder="设计师"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0"
+                                       data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">添加工艺</label>
+                            <div class="col-lg-9">
+                                <div class="col-lg-5" style="padding: 0 0 0 0">
+                                    <input size="16" id="i_name" type="text" value="" placeholder="工艺名"
+                                           class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                           tabindex="0"
+                                           data-toggle="popover" data-trigger="focus"/>
+                                </div>
+                                <div class="col-lg-3" style="padding: 0 1 0 0">
+                                    <input size="16" id="i_unit" type="text" value="" placeholder="分钟单价"
+                                           class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                           tabindex="0"
+                                           data-toggle="popover" data-trigger="focus"/>
+                                </div>
+                                <div class="col-lg-3" style="padding: 0 0 0 0">
+                                    <input size="16" id="i_time" type="text" value="" placeholder="参考用时"
+                                           class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                           tabindex="0"
+                                           data-toggle="popover" data-trigger="focus"/>
+                                </div>
+                                <div class="col-lg-1" style="padding: 0 0 0 0">
+                                    <i class="fa fa-plus-circle fa-fw fa-2x" href="#" onclick=""></i>
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" id="no_btn_prod" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" id="no-btn-prod" class="btn btn-primary" data-dismiss="modal">取消</button>
                     <button type="button" id="yes_btn_prod" class="btn btn-danger" onclick="">确定</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 删除弹窗模版 -->
+    <!--修改工艺弹窗-->
+    <div class="modal fade" id="alterItem">
+
+    </div>
+
+    <!--删除弹窗模板-->
+    {% if session['u_role'] == 'root' %}
+    <!-- 删除产品 -->
     <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_prod" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel_prod">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">确认删除该产品信息？</h4>
+                    <h4 class="modal-title" id="del_title_prod">确认删除该产品信息？</h4>
                 </div>
                 <div class="modal-body">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='confirm-del-button_prod' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
+                    <button id='confirm-del-button_prod' autofocus type="button" class="btn btn-danger" onclick="">确认
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    <!--删除工艺-->
+    <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_item" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel_item">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="del_title_item">确认删除该工艺信息？</h4>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button id='confirm-del-button_item' autofocus type="button" class="btn btn-danger" onclick="">确认
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- body -->
     <div class="row clearfix">
@@ -57,9 +120,15 @@
             <!-- 标题 -->
             <h3 id="product_manage_title">产品管理系统</h3>
             <br>
+            <!-- 修改按钮 -->
+            <a id="modify_product" href="#modifyProduct" role="button" data-toggle="modal"
+               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>修改产品</a>
             <!-- 添加按钮 -->
             <a id="add_product" href="#alterProduct" role="button" data-toggle="modal"
-               onclick="add_it()" class="btn btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加产品</a>
+               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加产品</a>
+            <!-- 删除按钮 -->
+            <a id="del_product" href="#confirmDeleteModal_prod" role="button" data-toggle="modal"
+               onclick="delete_prod()" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i>删除产品</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
                    id="product_table" width="100%">
@@ -75,20 +144,17 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var doc_table;
-        var cid = $("#get_c_id").attr("value");
         console.log('document ready');
-        $.post('/product/'+ cid,
+        $.post('/product/test',
             function (ret) {
                 doc_table = $('#product_table').dataTable({
                     "aoColumns": [
+                        {"sTitle": "工艺名称"},
+                        {"sTitle": "产品名"},
+                        {"sTitle": "设计师"},
+                        {"sTitle": "分钟单价"},
+                        {"sTitle": "参考用时"},
                         {
-                            "width": "12%" ,
-                            "sTitle": "编号"
-                        },
-                        {   "sTitle": "管理员"},
-                        {   "sTitle": "联系方式"},
-                        {
-                            "width": "12%",
                             "sTitle": "操作",
                             "bSortable": false
                         }
@@ -120,85 +186,163 @@
                 var products = ret.data;
                 for (var ij in products) {
                     doc_table.fnAddData([
-                        products[ij].c_id,
-                        products[ij].c_name,
-                        products[ij].u_name,
-                        products[ij].u_phone,
-                        "<button href='#alterproduct' data-toggle='modal' onclick='modify_it(" +
-                        products[ij].c_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
-                        "<button href='#confirmDeleteModal_prod' data-toggle='modal' onclick='delete_it( " +
-                        products[ij].c_id + ")' class='btn btn-danger' type='button'>删除</button>"
+                        products[ij].i_name,
+                        products[ij].p_name,
+                        products[ij].p_designer,
+                        products[ij].i_unit,
+                        products[ij].i_time,
+                        //修改按钮
+                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
+                        products[ij].i_id + ")' class='btn btn-default' type='button'><i class='fa fa-pencil fa-fw'></i></button>" + " " +
+                        //增加按钮
+                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
+                        products[ij].i_id + ")' class='btn btn-default' type='button'><i class='fa fa-plus-square fa-fw'></i></button>" + " " +
+                        //删除按钮
+                        "<button href='#confirmDeleteModal_item' data-toggle='modal' onclick='delete_it( " +
+                        products[ij].i_id + ")' class='btn btn-danger' type='button'><i class='fa fa-trash fa-fw'></i></button>"
                     ])
                 }
             }, 'json');
     });
 
-    function check_value(name) {
+    function check_value(name, designer) {
         if (name === "") {
-            $('#t_name').popover('show');
+            $('#p_name').popover('show');
+            return (false);
+        }
+        if (designer === "") {
+            $('#p_designer').popover('show');
             return (false);
         }
         return (true);
     }
 
-    function add_it() {
-        console.log("add it");
+    /***** 针对产品的操作 *****/
+    function add_prod() {
+        console.log("add product");
         $("#myModalLabel_prod").text("添加产品信息");
         $("#yes_btn_prod").attr('onclick', 'confirm_add_member_prod()');
     }
 
     function confirm_add_member_prod() {
         console.log('confirm_add_member_prod');
-        if (!check_value($("#t_name").val())){
+        if (!check_value($("#p_name").val(), $("#p_designer").val())) {
             return;
         }
-        $.post("/product/add", {
-            'c_name': $("#t_name").val()
-        }, function (ret) {
-            console.log(ret);
-            location.href = '/product';
-        });
+//        TODO
+//        $.post("/product/add", {
+//            'c_name': $("#t_name").val()
+//        }, function (ret) {
+//            console.log(ret);
+//            location.href = '/product';
+//        });
     }
 
-    function modify_it(id) {
-        console.log("modify it:" + id);
-        $.post("/product/" + id, function (ret) {
-            console.log(ret);
-            data = ret.data[0];
-            $("#t_name").val(data.c_name);
-
-            $("#myModalLabel_prod").text("修改产品信息");
-            $("#yes_btn_prod").attr('onclick', 'confirm_modify_member_prod(' + id + ')');
-        }, 'json');
+    function modify_prod(id) {
+        console.log("modify product:" + id);
+//        TODO
+//        $.post("/product/" + id, function (ret) {
+//            console.log(ret);
+//            data = ret.data[0];
+//            $("#t_name").val(data.c_name);
+//            $("#myModalLabel_prod").text("修改产品信息");
+//            $("#yes_btn_prod").attr('onclick', 'confirm_modify_member_prod(' + id + ')');
+//        }, 'json');
     }
 
     function confirm_modify_member_prod(id) {
         console.log("confirm_modify_member_prod:" + id);
-        if (!check_value($("#t_name").val())){
-            return;
-        }
-        $.post("/product/modify", {
-            'c_id': id,
-            'c_name': $("#t_name").val()
-        }, function (ret) {
-            console.log(ret);
-            location.href = '/product';
-        });
+//        TODO
+//        if (!check_value($("#t_name").val())) {
+//            return;
+//        }
+//        $.post("/product/modify", {
+//            'c_id': id,
+//            'c_name': $("#t_name").val()
+//        }, function (ret) {
+//            console.log(ret);
+//            location.href = '/product';
+//        });
     }
 
-    function delete_it(id) {
-        console.log("delete it");
+    function delete_prod(id) {
+        console.log("delete product");
         $('#confirm-del-button_prod').attr('onclick', 'confirm_del_member_prod(' + id + ')');
     }
 
     function confirm_del_member_prod(id) {
         console.log("confirm_del_member_prod:" + id);
-        $.post("/product/delete", {
-            'c_id': id
-        }, function (ret) {
-            console.log(ret);
-            location.href = '/product';
-        })
+//        TODO
+//        $.post("/product/delete", {
+//            'c_id': id
+//        }, function (ret) {
+//            console.log(ret);
+//            location.href = '/product';
+//        })
+    }
+
+    /***** 针对工艺的操作 *****/
+    function add_item() {
+        console.log("add item");
+        $("#myModalLabel_item").text("添加工艺信息");
+        $("#yes_btn_item").attr('onclick', 'confirm_add_member_item()');
+    }
+
+    function confirm_add_member_item() {
+        console.log('confirm_add_member_item');
+        if (!check_value($("#p_name").val(), $("#p_designer").val())) {
+            return;
+        }
+//        TODO
+//        $.post("/product/add", {
+//            'c_name': $("#t_name").val()
+//        }, function (ret) {
+//            console.log(ret);
+//            location.href = '/product';
+//        });
+    }
+
+    function modify_item(id) {
+        console.log("modify item:" + id);
+//        TODO
+//        $.post("/product/" + id, function (ret) {
+//            console.log(ret);
+//            data = ret.data[0];
+//            $("#t_name").val(data.c_name);
+//            $("#myModalLabel_prod").text("修改产品信息");
+//            $("#yes_btn_prod").attr('onclick', 'confirm_modify_member_prod(' + id + ')');
+//        }, 'json');
+    }
+
+    function confirm_modify_member_item(id) {
+        console.log("confirm_modify_member_item:" + id);
+//        TODO
+//        if (!check_value($("#t_name").val())) {
+//            return;
+//        }
+//        $.post("/product/modify", {
+//            'c_id': id,
+//            'c_name': $("#t_name").val()
+//        }, function (ret) {
+//            console.log(ret);
+//            location.href = '/product';
+//        });
+    }
+
+    function delete_item(id) {
+        console.log("delete item");
+        $('#confirm-del-button_item').attr('onclick', 'confirm_del_member_item(' + id + ')');
+    }
+
+    function confirm_del_member_item(id) {
+        console.log("confirm_del_member_item:" + id);
+//        TODO
+//        $.post("/product/delete", {
+//            'c_id': id
+//        }, function (ret) {
+//            console.log(ret);
+//            location.href = '/product';
+//        })
     }
 </script>
 
