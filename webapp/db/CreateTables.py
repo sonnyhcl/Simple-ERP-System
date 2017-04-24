@@ -32,9 +32,7 @@ conn.execute(
         (
             i_id            INTEGER         PRIMARY KEY    AUTOINCREMENT,
             i_name          char(90)    NOT NULL,
-            i_minutes       INT         NOT NULL,
             i_unitprices    FLOAT       NOT NULL,
-            i_prices        FLOAT       NOT NULL,
             p_id            INT         NOT NULL,
             FOREIGN KEY     (p_id)      REFERENCES      product(p_id)
         )
@@ -73,7 +71,9 @@ conn.execute(
         CREATE TABLE community
         (
             c_id            INTEGER         PRIMARY KEY    AUTOINCREMENT,
-            c_name          char(30)    NOT NULL
+            c_name          char(30)    NOT NULL,
+            u_id            int,
+            FOREIGN KEY     (u_id)      REFERENCES   user(u_id)
         )
         ;
     '''
@@ -130,36 +130,56 @@ conn.execute(
 
 # print "transactions info table created Successfully!"
 
-
-"""
-admin info table
-"""
-
-conn.execute(
-    '''
-        CREATE TABLE admin
-        (
-            c_id            INT         NOT NULL,
-            u_id            INT         NOT NULL,
-            FOREIGN KEY     (c_id)      REFERENCES      community(c_id),
-            FOREIGN KEY     (u_id)      REFERENCES      user(u_id),
-            PRIMARY KEY     (c_id, u_id)
-        )
-        ;
-    '''
-)
-
-# print "admin info table created Successfully!"
-
 conn.execute(
     '''
         SELECT * FROM item;
     '''
 )
 
+
 conn.execute(
     """
-    INSERT INTO user(u_name, u_role, u_password, u_phone)
-    VALUES ('hcl', 'root', 'hcl', 'hclphone')
+    INSERT INTO community(c_name)
+    VALUES  ('community_a'),
+            ('community_b');
     """
 )
+
+conn.execute(
+    """
+    INSERT INTO user(u_name, u_role, u_password, u_phone, c_id)
+    VALUES  ('hcl',     'root',     'hcl',  'hclphone', 1),
+            ('Alice',   'admin',    'a',    'aphone',   1),
+            ('Bob',     'user',     'a',    'bphone',   1);
+    """
+)
+
+
+conn.execute(
+    """
+    INSERT INTO product(p_name, author_name)
+    VALUES  ('prod_a',  'Alice'),
+            ('prod_b',  'Bob');
+    """
+)
+
+conn.execute(
+    """
+    INSERT INTO item(i_name, i_unitprices, p_id)
+    VALUES  ('item_a',  1,  1),
+            ('item_b',  1,  1);
+    """
+)
+
+conn.execute(
+    """
+    INSERT INTO transactions(u_id, c_id, p_id, i_id, amount)
+    VALUES  (1, 1,  1,  1,  1),
+            (1, 1,  1,  1,  1);
+    """
+)
+
+
+
+conn.commit()
+conn.close()

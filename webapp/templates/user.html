@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">名字</label>
                             <div class="col-lg-6">
-                                <input size="16" id="t_name" type="text" value="" placeholder="名字"
+                                <input size="16" id="u_name" type="text" value="" placeholder="名字"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">手机</label>
                             <div class="col-lg-6">
-                                <input size="16" id="t_phone" type="text" value="" placeholder="手机号码"
+                                <input size="16" id="u_phone" type="text" value="" placeholder="手机号码"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">社区</label>
                             <div class="col-lg-6">
-                                <select id="t_community" class="form-control input-sm" style="color:#666666">
+                                <select id="u_community" class="form-control input-sm" style="color:#666666">
                                 </select>
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">身份</label>
                             <div class="col-lg-6">
-                                <select id="t_role" class="form-control input-sm" style="color:#666666">
+                                <select id="u_role" class="form-control input-sm" style="color:#666666">
                                     {% if session['u_role'] == 'root' %}
                                     <option value="root">主管理员</option>
                                     <option value="admin">社区管理员</option>
@@ -168,18 +168,18 @@
             var communities = ret.data;
             for (var ij in communities) {
                 console.log(communities[ij]);
-                $('#t_community').append('<option value="' + communities[ij].c_id + '">' + communities[ij].c_name + '</option>');
+                $('#u_community').append('<option value="' + communities[ij].c_id + '">' + communities[ij].c_name + '</option>');
             }
         }, 'json')
     });
 
     function check_value(name, phone) {
         if (name === "") {
-            $('#t_name').popover('show');
+            $('#u_name').popover('show');
             return (false);
         }
         if (phone === "") {
-            $('#t_phone').popover('show');
+            $('#u_phone').popover('show');
             return (false);
         }
         return (true);
@@ -187,24 +187,24 @@
 
     function add_it() {
         console.log("add it");
-        $("#t_name").val("");
-        $("#t_community").val("");
-        $("#t_phone").val("");
-        $("#t_role").val("");
+        $("#u_name").val("");
+        $("#u_community").val("");
+        $("#u_phone").val("");
+        $("#u_role").val("");
         $("#myModalLabel_user").text("添加人员信息");
         $("#yes_btn_user").attr('onclick', 'confirm_add_member_user()');
     }
 
     function confirm_add_member_user() {
         console.log('confirm_add_member_user');
-        if (!check_value($("#t_name").val(), $("#t_phone").val())) {
+        if (!check_value($("#u_name").val(), $("#u_phone").val())) {
             return;
         }
         $.post("/user/add", {
-            'u_name': $("#t_name").val(),
-            'u_phone': $("#t_phone").val(),
-            'c_id': $("#t_community").val(),
-            'u_role': $("#t_role").val()
+            'u_name': $("#u_name").val(),
+            'u_phone': $("#u_phone").val(),
+            'c_id': $("#u_community").val(),
+            'u_role': $("#u_role").val()
         }, function (ret) {
             console.log(ret);
             location.href = '/user';
@@ -216,10 +216,10 @@
         $.post("/user/" + id, function (ret) {
             console.log(ret);
             data = ret.data;
-            $("#t_name").val(data.u_name);
-            $("#t_phone").val(data.u_phone);
-            $("#t_role").val(data.u_role);
-            $("#t_community").val(data.c_id);
+            $("#u_name").val(data.u_name);
+            $("#u_phone").val(data.u_phone);
+            $("#u_role").val(data.u_role);
+            $("#u_community").val(data.c_id);
             $("#myModalLabel_user").text("修改人员信息");
             $("#yes_btn_user").attr('onclick', 'confirm_modify_member_user(' + id + ')');
         }, 'json');
@@ -227,15 +227,15 @@
 
     function confirm_modify_member_user(id) {
         console.log("confirm_modify_member_user:" + id);
-        if (!check_value($("#t_name").val(), $("#t_phone").val())) {
+        if (!check_value($("#u_name").val(), $("#u_phone").val())) {
             return;
         }
         $.post("/user/modify", {
             'u_id': id,
-            'u_name': $("#t_name").val(),
-            'u_phone': $("#t_phone").val(),
-            'c_id': $("#t_community").val(),
-            'u_role': $("#t_role").val()
+            'u_name': $("#u_name").val(),
+            'u_phone': $("#u_phone").val(),
+            'c_id': $("#u_community").val(),
+            'u_role': $("#u_role").val()
         }, function (ret) {
             console.log(ret);
             location.href = '/user';
