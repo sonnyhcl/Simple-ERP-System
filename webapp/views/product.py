@@ -1,8 +1,14 @@
 # -*- coding: UTF-8 -*-
+import json
 from flask import render_template
 from webapp import app
 
 __author__ = 'sonnyhcl'
+
+
+@app.route('/product/test', methods=['POST'])
+def dsdad():
+    return json.dumps("ddadad")
 
 
 @app.route('/product', methods=['GET'])
