@@ -82,6 +82,7 @@ def modify_user():
     :param cid:
     :return: json.dumps(info)
     """
+    #TODO 修改权限的时候也要修改community表
     u_name = request.form.get("u_name")
     u_phone = request.form.get("u_phone")
     u_role = request.form.get("u_role")
