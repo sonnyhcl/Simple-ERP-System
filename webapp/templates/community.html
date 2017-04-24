@@ -30,9 +30,8 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">管理员</label>
                             <div class="col-lg-6">
-                                <input size="16" id="t_admin" type="text" value="{{session['u_name']}}" placeholder="管理员名字"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
-                                       data-toggle="popover" data-trigger="focus"/>
+                                <!-- 表格 -->
+                                <select id="c_admin_table" class="form-control input-sm" style="color:#666666"></select>
                             </div>
                         </div>
                     </form>
@@ -90,7 +89,7 @@
         var doc_table;
         var cid = $("#get_c_id").attr("value");
         console.log('document ready');
-        $.post('/community/'+ cid,
+        $.post('/community/' + cid,
             function (ret) {
                 doc_table = $('#community_table').dataTable({
                     "aoColumns": [
@@ -98,9 +97,9 @@
                             "width": "12%",
                             "sTitle": "社区编号"
                         },
-                        {   "sTitle": "社区"},
-                        {   "sTitle": "管理员"},
-                        {   "sTitle": "联系方式"},
+                        {"sTitle": "社区"},
+                        {"sTitle": "管理员"},
+                        {"sTitle": "联系方式"},
                         {
                             "width": "12%",
                             "sTitle": "操作",
@@ -145,6 +144,15 @@
                     ])
                 }
             }, 'json');
+
+        $.post('/community/get_all_admin', function (ret) {
+            console.log(ret);
+            var admins = ret.data;
+            for (var ij in admins) {
+                console.log(admins[ij]);
+                $('#c_admin_table').append('<option value="' + admins[ij].u_id + '">' + admins[ij].u_name + '</option>');
+            }
+        }, 'json')
     });
 
     function check_value(name) {
@@ -164,7 +172,7 @@
 
     function confirm_add_member_comm() {
         console.log('confirm_add_member_comm');
-        if (!check_value($("#t_name").val())){
+        if (!check_value($("#t_name").val())) {
             return;
         }
         $.post("/community/add", {
@@ -177,12 +185,12 @@
 
     function modify_it(id) {
         console.log("modify it:" + id);
-        $("#t_admin").remove("readonly");
+        $("#t_admin").removeAttr("readonly");
         $.post("/community/" + id, function (ret) {
             console.log(ret);
             data = ret.data[0];
-            $("#t_name").val(data.c_name);
 
+            $("#t_name").val(data.c_name);
             $("#myModalLabel_comm").text("修改社区信息");
             $("#yes_btn_comm").attr('onclick', 'confirm_modify_member_comm(' + id + ')');
         }, 'json');
@@ -190,12 +198,13 @@
 
     function confirm_modify_member_comm(id) {
         console.log("confirm_modify_member_comm:" + id);
-        if (!check_value($("#t_name").val())){
+        if (!check_value($("#t_name").val())) {
             return;
         }
         $.post("/community/modify", {
             'c_id': id,
-            'c_name': $("#t_name").val()
+            'c_name': $("#t_name").val(),
+            'u_id': $("#c_admin_table").val()
         }, function (ret) {
             console.log(ret);
             location.href = '/community';

@@ -35,10 +35,11 @@ class Community(object):
         conn.close()
         return "Success"
 
-    def update_community(self, c_id, new_c_name):
+    def update_community(self, c_id, new_c_name, u_id):
         conn = sqlite3.connect("test.db")
-        param = (new_c_name, c_id,)
-        conn.execute('UPDATE community SET c_name = ? WHERE c_id = ?;', param)
+        param = (new_c_name, u_id, c_id)
+        conn.execute('UPDATE community SET c_name = ?, u_id = ? WHERE c_id = ?;',
+                     param)
         conn.commit()
         conn.close()
         return "Success"

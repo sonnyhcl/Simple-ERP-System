@@ -26,6 +26,16 @@ def get_community(c_id):
     return json.dumps(ret, ensure_ascii=False)
 
 
+
+@app.route('/community/get_all_admin', methods=['POST'])
+def c_get_all_admin():
+    # TODO 返回所有admin以及root权限的人的{u_id, u_name}
+    response = {'data': [{'u_id':0, 'u_name':'hcl'},
+                     {'u_id':1, 'u_name':'Alice'}],
+                'status': 'Success', 'msg': "error_msg" }
+    return json.dumps(response, ensure_ascii=False)
+
+
 @app.route('/community/page/', methods=['POST'])
 def show_communities():
     """
@@ -54,7 +64,8 @@ def add_community():
 def modify_community():
     c_name = request.form.get('c_name')
     c_id = request.form.get('c_id')
-    status = community.update_community(c_id=c_id, new_c_name=c_name)
+    u_id = request.form.get('u_id')
+    status = community.update_community(c_id=c_id, new_c_name=c_name, u_id=u_id)
     return status
 
 
