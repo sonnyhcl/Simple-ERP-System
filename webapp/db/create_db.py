@@ -168,8 +168,8 @@ conn.execute(
     VALUES  (0, 'hcl',     'root',     'hcl',  '12345678910',   0),
             (1, 'admin',   'admin',    'admin','12345678910',   1),
             (2, 'user',    'user',     'uer',  '12345678910',   1),
-            (3, 'admi',    'admi',     'admin','12345678910',   2),
-            (4, 'use',     'use',      'user', '12345678910',   2);
+            (3, 'admi',    'admin',    'admin','12345678910',   2),
+            (4, 'use',     'user',     'user', '12345678910',   2);
     """
 )
 
