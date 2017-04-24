@@ -25,6 +25,17 @@
                             </div>
                         </div>
                     </form>
+
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">管理员</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="t_admin" type="text" value="{{session['u_name']}}" placeholder="管理员名字"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                       data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="no_btn_comm" class="btn btn-primary" data-dismiss="modal">取消</button>
@@ -147,6 +158,7 @@
     function add_it() {
         console.log("add it");
         $("#myModalLabel_comm").text("添加社区信息");
+        $("#t_admin").attr("readonly", "true");
         $("#yes_btn_comm").attr('onclick', 'confirm_add_member_comm()');
     }
 
@@ -165,6 +177,7 @@
 
     function modify_it(id) {
         console.log("modify it:" + id);
+        $("#t_admin").remove("readonly");
         $.post("/community/" + id, function (ret) {
             console.log(ret);
             data = ret.data[0];

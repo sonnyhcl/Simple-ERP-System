@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 import sqlite3
-
+from flask import session
 __author__ = 'sonnyhcl'
 
 
@@ -20,8 +20,9 @@ class Community(object):
     def add_community(self, c_name):
         # TODO: 社区判重
         conn = sqlite3.connect("test.db")
-        param = (c_name,)
-        conn.execute('INSERT INTO community(c_name) VALUES (?);', param)
+        param = (c_name, session['u_id'])
+        conn.execute('INSERT INTO community(c_name, u_id) VALUES (?, ?);',
+                     param)
         conn.commit()
         conn.close()
         return "Success"

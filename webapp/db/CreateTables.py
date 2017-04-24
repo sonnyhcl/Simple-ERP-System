@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import sqlite3
 
 conn = sqlite3.connect('test.db')
@@ -139,18 +140,19 @@ conn.execute(
 
 conn.execute(
     """
-    INSERT INTO community(c_name)
-    VALUES  ('community_a'),
-            ('community_b');
+    INSERT INTO community(c_id, c_name, u_id)
+    VALUES  (0, '彩虹桥', 0),
+            (1, '社区A',  0),
+            (2, '社区B',  0);
     """
 )
 
 conn.execute(
     """
-    INSERT INTO user(u_name, u_role, u_password, u_phone, c_id)
-    VALUES  ('hcl',     'root',     'hcl',  'hclphone', 1),
-            ('Alice',   'admin',    'a',    'aphone',   1),
-            ('Bob',     'user',     'a',    'bphone',   1);
+    INSERT INTO user(u_id, u_name, u_role, u_password, u_phone, c_id)
+    VALUES  (0, 'hcl',     'root',     'hcl',  'hclphone', 0),
+            (1, 'Alice',   'admin',    'a',    'aphone',   1),
+            (2, 'Bob',     'user',     'a',    'bphone',   1);
     """
 )
 
