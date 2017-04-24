@@ -83,22 +83,13 @@
             function (ret) {
                 doc_table = $('#community_table').dataTable({
                     "aoColumns": [
-                        {   "sTitle": "社区"},
-                        {   "sTitle": "管理员"},
-                        {   "sTitle": "联系方式"},
                         {
                             "width": "12%",
                             "sTitle": "社区编号"
                         },
-                        {
-                            "sTitle": "社区"
-                        },
-                        {
-                            "sTitle": "管理员"
-                        },
-                        {
-                            "sTitle": "联系方式"
-                        },
+                        {   "sTitle": "社区"},
+                        {   "sTitle": "管理员"},
+                        {   "sTitle": "联系方式"},
                         {
                             "width": "12%",
                             "sTitle": "操作",
@@ -132,6 +123,7 @@
                 var communities = ret.data;
                 for (var ij in communities) {
                     doc_table.fnAddData([
+                        communities[ij].c_id,
                         communities[ij].c_name,
                         communities[ij].u_name,
                         communities[ij].u_phone,

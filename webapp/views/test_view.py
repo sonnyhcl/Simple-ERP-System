@@ -50,3 +50,5 @@ def task_index():
     return render_template('task.html')
 
 @app.route('/order')
+def order_index():
+    return "helloworld"
