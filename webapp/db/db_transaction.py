@@ -1,24 +1,9 @@
 # -*- coding: UTF-8 -*-
+"""
+流水页面所有数据库的操作
+"""
 __author__ = 'sonnyhcl'
 import sqlite3
-'''
-        create table transactions
-        (
-            t_id            integer         primary key autoincrement,
-            u_id            int         not null,
-            c_id            int         not null,
-            p_id            int         not null,
-            i_id            int         not null,
-            amount          int,
-            timestamp       datetime    default('now', 'localtime'),
-            foreign key     (u_id)      references   user(u_id),
-            foreign key     (c_id)      references   community(c_id),
-            foreign key     (p_id)      references   product(p_id),
-            foreign key     (i_id)      references   item(i_id)
-        )
-        ;
-'''
-
 
 
 class Transactions(object):

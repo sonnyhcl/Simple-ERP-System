@@ -1,6 +1,10 @@
 # -*- coding: UTF-8 -*-
-import sqlite3
+"""
+社区页面的所有数据库操作
+"""
 
+import sqlite3
+from flask import session
 __author__ = 'sonnyhcl'
 
 
@@ -20,8 +24,9 @@ class Community(object):
     def add_community(self, c_name):
         # TODO: 社区判重
         conn = sqlite3.connect("test.db")
-        param = (c_name,)
-        conn.execute('INSERT INTO community(c_name) VALUES (?);', param)
+        param = (c_name, session['u_id'])
+        conn.execute('INSERT INTO community(c_name, u_id) VALUES (?, ?);',
+                     param)
         conn.commit()
         conn.close()
         return "Success"
@@ -34,10 +39,11 @@ class Community(object):
         conn.close()
         return "Success"
 
-    def update_community(self, c_id, new_c_name):
+    def update_community(self, c_id, new_c_name, u_id):
         conn = sqlite3.connect("test.db")
-        param = (new_c_name, c_id,)
-        conn.execute('UPDATE community SET c_name = ? WHERE c_id = ?;', param)
+        param = (new_c_name, u_id, c_id)
+        conn.execute('UPDATE community SET c_name = ?, u_id = ? WHERE c_id = ?;',
+                     param)
         conn.commit()
         conn.close()
         return "Success"
@@ -45,9 +51,10 @@ class Community(object):
     def add_community_admin(self, c_id, u_id):
         conn = sqlite3.connect("test.db")
         param = (u_id,)
-        response = conn.execute('select u_role from user where user.u_id = ?', param)
+        response = conn.execute('SELECT u_role FROM user WHERE user.u_id = ?',
+                                param)
         response = response.fetchall()
-        if (response is None) or response[0][0] != 'admin' :
+        if (response is None) or response[0][0] != 'admin':
             conn.close()
             return "Fail"
         param = (u_id, c_id,)
@@ -56,7 +63,7 @@ class Community(object):
         conn.close()
         return "Success"
 
-    def get_community(self, c_id = 0):
+    def get_community(self, c_id=0):
         conn = sqlite3.connect("test.db")
         param = (c_id,)
         if c_id == 0:
@@ -70,9 +77,17 @@ class Community(object):
 
     def get_community_detail(self, c_id):
         conn = sqlite3.connect("test.db")
-        response = conn.execute('SELECT community.c_id, community.c_name, user.u_name, user.u_phone '
-                                'FROM community, user '
-                                'WHERE user.u_id = community.u_id;')
+        if c_id == 0:
+            response = conn.execute(
+                'SELECT community.c_id, community.c_name, user.u_name, user.u_phone '
+                'FROM community, user '
+                'WHERE user.u_id = community.u_id;')
+        else:
+            param = (c_id,)
+            response = conn.execute(
+                'SELECT community.c_id, community.c_name, user.u_name, user.u_phone '
+                'FROM community, user '
+                'WHERE community.c_id = ? AND user.u_id = community.u_id;', param)
         response = response.fetchall()
         conn.close()
         return "Success", response

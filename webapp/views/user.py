@@ -47,7 +47,7 @@ def show_users():
     cid = session['c_id']
     status, info = user.get_user_by_cid(cid)
     ret = {"data": [], "status": status, "msg":""}
-    d = {'root': u"超级管理员", 'admin': u"管理员", 'user': u"普通用户"}
+    d = {'root': u"主管理员", 'admin': u"社区管理员", 'user': u"员工"}
     if status == "Success":
         _ = [ret['data'].append({'u_id':i[0], 'u_name':i[1], "u_role":i[2],
                             "u_phone": i[4], 'c_id': i[5] })  for i in info]
