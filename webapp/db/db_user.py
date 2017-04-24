@@ -9,18 +9,17 @@ from webapp.mylog import log
 class User(object):
     """
     封装了与用户信息表相关的所有操作：增删改 + 查
-    create table user
-    (
-        u_id            int         not null,
-        u_name          char(30)    not null,
-        u_role          char(10)    not null,
-        u_password      char(30)    not null,
-        u_phone         char(30)    not null,
-        c_id            int         not null,
-        foreign key     (c_id)      references   community(c_id),
-        primary key     (u_id)
-    )
-    ;
+        CREATE TABLE user
+        (
+            u_id            INTEGER         PRIMARY KEY    AUTOINCREMENT,
+            u_name          char(30)    NOT NULL,
+            u_role          char(10)    NOT NULL,
+            u_password      char(30)    NOT NULL,
+            u_phone         char(30)    NOT NULL,
+            c_id            INT         NOT NULL,
+            FOREIGN KEY     (c_id)      REFERENCES   community(c_id)
+        )
+        ;
     """
 
     def add_user(self, u_name, u_role, u_password, u_phone, c_id):
