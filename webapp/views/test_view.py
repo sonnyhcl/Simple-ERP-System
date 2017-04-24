@@ -40,3 +40,8 @@ def test():
     return render_template('test.html')
 
 
+@app.route('/task')
+def task_index():
+    return render_template('task.html')
+
+@app.route('/order')
