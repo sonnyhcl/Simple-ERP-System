@@ -29,11 +29,14 @@
             <form class="form-signin" method="POST" action="{{ url_for('log_in') }}">
                 <h1 class="form-signin-heading" align="center">彩虹桥</h1>
                 <hr>
-                <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                     <input autofocus="autofocus" id="id_login" name="username" placeholder="用户名"
                            type="text" required="required" class="form-control">
                 </div>
-                <div class="form-group">
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
                     <input id="id_password" name="password" placeholder="密码" type="password"
                            required="required" class="form-control">
                 </div>

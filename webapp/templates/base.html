@@ -16,6 +16,9 @@
           rel="stylesheet">
     <link href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 
+    <!--fontawesome-->
+    <link href="/static/fontawesome-4.7/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/static/fontawesome-4.7/css/font-awesome.css" rel="stylesheet"/>
     {% endblock head%}
 
 </head>
@@ -25,15 +28,15 @@
 <!--修改密码-->
 <div class="container" align="center">
     <div class="modal fade" id="resetPassword"
-         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         role="dialog" aria-labelledby="myModalLabel_rstpwd" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+                    <h4 class="modal-title" id="myModalLabel_rstpwd">修改密码</h4>
                 </div>
 
-                <div class="modal-body" id="myModalBody">
+                <div class="modal-body" id="myModalBody_rstpwd">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="col-lg-3 control-label">用户名</label>
@@ -112,17 +115,23 @@
             </ul>
 
             <ul id="navbar-right" class="nav navbar-nav navbar-right">
-                <li style="margin: inherit">
-                    <img alt="头像" src="{{ session['icon'] }}">
-                </li>
+                <i class="fa fa-user" aria-hidden="true"></i>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        {% if session['u_role'] == 'user' %}
+                        <i class="fa fa-user fa-fw"></i>
+                        {% elif session['u_role'] == 'admin' %}
+                        <i class="fa fa-user-circle fa-fw"></i>
+                        {% elif session['u_role'] == 'root' %}
+                        <i class="fa fa-user-md fa-fw"></i>
+                        {% endif %}
+
                         {{ session['u_name'] | e }}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#resetPassword" data-toggle="modal">修改密码</a></li>
-                        <li><a href="/log_out">退出</a></li>
+                        <li><a href="#resetPassword" data-toggle="modal"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i> 修改密码</a></li>
+                        <li><a href="/log_out"><i class="fa fa-times-circle-o fa-fw" aria-hidden="true"></i> 退出登录</a></li>
                     </ul>
                 </li>
             </ul>
