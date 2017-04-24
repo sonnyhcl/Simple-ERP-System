@@ -70,9 +70,9 @@ class Community(object):
 
     def get_community_detail(self, c_id):
         conn = sqlite3.connect("test.db")
-        param = (c_id,)
-        response = conn.execute('SELECT community.c_id, community.c_name, user.u_id, user.u_name, user.u_phone FROM community, user WHERE community.c_id = ? and user.u_id = community.u_id;',
-                                    param)
+        response = conn.execute('SELECT community.c_id, community.c_name, user.u_name, user.u_phone '
+                                'FROM community, user '
+                                'WHERE user.u_id = community.u_id;')
         response = response.fetchall()
         conn.close()
         return "Success", response

@@ -16,11 +16,11 @@ def community_index():
 
 @app.route('/community/<int:c_id>', methods=['POST'])
 def get_community(c_id):
-    status, info = community.get_community(c_id)
+    status, info = community.get_community_detail(c_id)
     ret = {"data": [], "status": status, "msg":""}
     if status == "Success":
-        _ = [ret['data'].append({'c_id':i[0],
-                                 'c_name':i[1]}) for i in info]
+        _ = [ret['data'].append({'c_id':i[0], 'c_name':i[1],
+                                 'u_name': i[2],'u_phone': i[3]}) for i in info]
     else:
         ret['msg'] = info
     return json.dumps(ret, ensure_ascii=False)
