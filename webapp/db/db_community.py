@@ -18,6 +18,7 @@ class Community(object):
         self.__counter = 0
 
     def add_community(self, c_name):
+        # TODO: 社区判重
         conn = sqlite3.connect("test.db")
         param = (c_name,)
         conn.execute('INSERT INTO community(c_name) VALUES (?);', param)

@@ -5,38 +5,38 @@
 {% block content %}
 <div class="container">
     <!-- 增改弹窗模板 -->
-    <div class="modal fade" id="alterUser"
-         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="alterCommunity"
+         role="dialog" aria-labelledby="communityModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">标题</h4>
+                    <h4 class="modal-title" id="communityModalLabel">标题</h4>
                 </div>
 
-                <div class="modal-body" id="myModalBody">
+                <div class="modal-body" id="communityModalBody">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="col-lg-3 control-label">社区名称</label>
                             <div class="col-lg-6">
                                 <input size="16" id="t_name" type="text" value="" placeholder="名字"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
-                                       role="button" data-toggle="popover" data-trigger="focus"/>
+                                       data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="no_btn" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="yes_btn" class="btn btn-danger" onclick="">确定</button>
+                    <button type="button" id="community_no_btn" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" id="community_yes_btn" class="btn btn-danger" onclick="">确定</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- 删除弹窗模版 -->
-    <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel">
+    <div class="modal fade bs-example-modal-sm" id="community_confirmDeleteModal" tabindex="-1" role="dialog"
+         aria-labelledby="communityModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="modal-body">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='confirm-del-button' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
+                    <button id='community_confirm-del-button' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
                 </div>
             </div>
         </div>
@@ -54,14 +54,14 @@
     <div class="row clearfix">
         <div class="col-md-12 column">
             <!-- 标题 -->
-            <h3 id="user_manage_title">社区管理系统</h3>
+            <h3 id="community_manage_title">社区管理系统</h3>
             <br>
             <!-- 添加按钮 -->
-            <a id="modal-471624" href="#alterUser" role="button" data-toggle="modal"
-               onclick="add_it()" class="btn btn-warning">添加社区</a>
+            <a id="add_community" href="#alterCommunity" role="button" data-toggle="modal"
+               onclick="add_it()" class="btn btn-primary">添加社区</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
-                   id="user_table" width="100%">
+                   id="community_table" width="100%">
             </table>
         </div>
     </div>
@@ -81,7 +81,7 @@
         console.log('document ready');
         $.post('/community/'+ cid,
             function (ret) {
-                doc_table = $('#user_table').dataTable({
+                doc_table = $('#community_table').dataTable({
                     "aoColumns": [
                         {
                             "width": "12%",
@@ -123,9 +123,9 @@
                     doc_table.fnAddData([
                         communities[ij].c_id,
                         communities[ij].c_name,
-                        "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
+                        "<button href='#alterCommunity' data-toggle='modal' onclick='modify_it(" +
                         communities[ij].c_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
-                        "<button href='#confirmDeleteModal' data-toggle='modal' onclick='delete_it( " +
+                        "<button href='#community_confirmDeleteModal' data-toggle='modal' onclick='delete_it( " +
                         communities[ij].c_id + ")' class='btn btn-danger' type='button'>删除</button>"
                     ])
                 }
@@ -133,7 +133,7 @@
     });
 
     function check_value(name) {
-        if (name == "") {
+        if (name === "") {
             $('#t_name').popover('show');
             return (false);
         }
@@ -142,12 +142,12 @@
 
     function add_it() {
         console.log("add it");
-        $("#myModalLabel").text("添加社区信息");
-        $("#yes_btn").attr('onclick', 'confirm_add_member()');
+        $("#communityModalLabel").text("添加社区信息");
+        $("#community_yes_btn").attr('onclick', 'community_confirm_add_member()');
     }
 
-    function confirm_add_member() {
-        console.log('confirm_add_member');
+    function community_confirm_add_member() {
+        console.log('community_confirm_add_member');
         if (!check_value($("#t_name").val())){
             return;
         }
@@ -155,7 +155,7 @@
             'c_name': $("#t_name").val()
         }, function (ret) {
             console.log(ret);
-//            location.href = '/community';
+            location.href = '/community';
         });
     }
 
@@ -166,13 +166,13 @@
             data = ret.data[0];
             $("#t_name").val(data.c_name);
 
-            $("#myModalLabel").text("修改社区信息");
-            $("#yes_btn").attr('onclick', 'confirm_modify_member(' + id + ')');
+            $("#communityModalLabel").text("修改社区信息");
+            $("#community_yes_btn").attr('onclick', 'community_confirm_modify_member(' + id + ')');
         }, 'json');
     }
 
-    function confirm_modify_member(id) {
-        console.log("confirm_modify_member:" + id);
+    function community_confirm_modify_member(id) {
+        console.log("community_confirm_modify_member:" + id);
         if (!check_value($("#t_name").val())){
             return;
         }
@@ -187,11 +187,11 @@
 
     function delete_it(id) {
         console.log("delete it");
-        $('#confirm-del-button').attr('onclick', 'confirm_del_member(' + id + ')');
+        $('#community_confirm-del-button').attr('onclick', 'community_confirm_del_member(' + id + ')');
     }
 
-    function confirm_del_member(id) {
-        console.log("confirm_del_member:" + id);
+    function community_confirm_del_member(id) {
+        console.log("community_confirm_del_member:" + id);
         $.post("/community/delete", {
             'c_id': id
         }, function (ret) {
