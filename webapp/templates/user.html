@@ -11,7 +11,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">标题</h4>
+                    <h4 class="modal-title" id="myModalLabel_user">标题</h4>
                 </div>
 
                 <div class="modal-body" id="myModalBody">
@@ -57,8 +57,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="no_btn" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="yes_btn" class="btn btn-danger" onclick="">确定</button>
+                    <button type="button" id="no_btn_user" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" id="yes_btn_user" class="btn btn-danger" onclick="">确定</button>
                 </div>
             </div>
         </div>
@@ -187,8 +187,8 @@
 
     function add_it() {
         console.log("add it");
-        $("#myModalLabel").text("添加人员信息");
-        $("#yes_btn").attr('onclick', 'confirm_add_member()');
+        $("#myModalLabel_user").text("添加人员信息");
+        $("#yes_btn_user").attr('onclick', 'confirm_add_member()');
     }
 
     function confirm_add_member() {
@@ -216,8 +216,8 @@
             $("#t_phone").val(data.u_phone);
             $("#t_role").val(data.u_role);
             $("#t_community").val(data.c_id);
-            $("#myModalLabel").text("修改人员信息");
-            $("#yes_btn").attr('onclick', 'confirm_modify_member(' + id + ')');
+            $("#myModalLabel_user").text("修改人员信息");
+            $("#yes_btn_user").attr('onclick', 'confirm_modify_member(' + id + ')');
         }, 'json');
     }
 
