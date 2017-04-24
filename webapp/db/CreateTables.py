@@ -71,7 +71,9 @@ conn.execute(
         CREATE TABLE community
         (
             c_id            INTEGER         PRIMARY KEY    AUTOINCREMENT,
-            c_name          char(30)    NOT NULL
+            c_name          char(30)    NOT NULL,
+            u_id            int,
+            FOREIGN KEY     (u_id)      REFERENCES   user(u_id)
         )
         ;
     '''
@@ -146,9 +148,9 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO user(u_name, u_role, u_password, u_phone, c_id)
-    VALUES  ('hcl',     'root', 'hcl',  'hclphone', 1),
-            ('user_a',  'a',    'a',    'aphone',   1),
-            ('user_b',  'a',    'a',    'bphone',   2);
+    VALUES  ('hcl',     'root',     'hcl',  'hclphone', 1),
+            ('Alice',   'admin',    'a',    'aphone',   1),
+            ('Bob',     'user',     'a',    'bphone',   1);
     """
 )
 

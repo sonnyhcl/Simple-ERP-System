@@ -17,8 +17,13 @@ def test():
     该url纯供测试
     :return: 一个空白base模版
     """
+    user = User()
+    flag, response = user.get_all_user()
+    print flag, response
     community = Community()
     community.add_community(c_name='fuck community')
+    flag = community.add_community_admin(c_id=1, u_id=2)
+    print flag
     flag, response = community.get_community_detail(c_id=1)
     print flag, response
     # user = User()
