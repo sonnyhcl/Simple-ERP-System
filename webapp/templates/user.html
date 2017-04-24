@@ -11,10 +11,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="userModalLabel">标题</h4>
+                    <h4 class="modal-title" id="myModalLabel_user">标题</h4>
                 </div>
 
-                <div class="modal-body" id="userModalBody">
+                <div class="modal-body" id="myModalBody_user">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="col-lg-3 control-label">名字</label>
@@ -57,8 +57,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="user_no_btn" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="user_yes_btn" class="btn btn-danger" onclick="">确定</button>
+                    <button type="button" id="no_btn_user" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" id="yes_btn_user" class="btn btn-danger" onclick="">确定</button>
                 </div>
             </div>
         </div>
@@ -66,8 +66,8 @@
 
     <!-- 删除弹窗模版 -->
     {% if session['u_role'] == 'root' %}
-    <div class="modal fade bs-example-modal-sm" id="user_confirmDeleteModal" tabindex="-1" role="dialog"
-         aria-labelledby="userModalLabel">
+    <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_user" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel_user">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -76,7 +76,7 @@
                 </div>
                 <div class="modal-body">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='user_confirm-del-button' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
+                    <button id='confirm-del-button_user' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
                 </div>
             </div>
         </div>
@@ -157,7 +157,7 @@
                         members[ij].u_phone,
                         "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
                         members[ij].u_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
-                        "<button href='#user_confirmDeleteModal' data-toggle='modal' onclick='delete_it( " +
+                        "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_it( " +
                         members[ij].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
                     ])
                 }
@@ -191,12 +191,12 @@
         $("#t_community").val("");
         $("#t_phone").val("");
         $("#t_role").val("");
-        $("#userModalLabel").text("添加人员信息");
-        $("#user_yes_btn").attr('onclick', 'user_confirm_add_member()');
+        $("#myModalLabel_user").text("添加人员信息");
+        $("#yes_btn_user").attr('onclick', 'confirm_add_member_user()');
     }
 
-    function user_confirm_add_member() {
-        console.log('user_confirm_add_member');
+    function confirm_add_member_user() {
+        console.log('confirm_add_member_user');
         if (!check_value($("#t_name").val(), $("#t_phone").val())) {
             return;
         }
@@ -220,13 +220,13 @@
             $("#t_phone").val(data.u_phone);
             $("#t_role").val(data.u_role);
             $("#t_community").val(data.c_id);
-            $("#userModalLabel").text("修改人员信息");
-            $("#user_yes_btn").attr('onclick', 'user_confirm_modify_member(' + id + ')');
+            $("#myModalLabel_user").text("修改人员信息");
+            $("#yes_btn_user").attr('onclick', 'confirm_modify_member_user(' + id + ')');
         }, 'json');
     }
 
-    function user_confirm_modify_member(id) {
-        console.log("user_confirm_modify_member:" + id);
+    function confirm_modify_member_user(id) {
+        console.log("confirm_modify_member_user:" + id);
         if (!check_value($("#t_name").val(), $("#t_phone").val())) {
             return;
         }
@@ -244,11 +244,11 @@
 
     function delete_it(id) {
         console.log("delete it");
-        $('#user_confirm-del-button').attr('onclick', 'user_confirm_del_member(' + id + ')');
+        $('#confirm-del-button_user').attr('onclick', 'confirm_del_member_user(' + id + ')');
     }
 
-    function user_confirm_del_member(id) {
-        console.log("user_confirm_del_member:" + id);
+    function confirm_del_member_user(id) {
+        console.log("confirm_del_member_user:" + id);
         $.post("/user/delete", {
             'u_id': id
         }, function (ret) {
