@@ -58,7 +58,7 @@
             <br>
             <!-- 添加按钮 -->
             <a id="add_community" href="#alterCommunity" role="button" data-toggle="modal"
-               onclick="add_it()" class="btn btn-primary">添加社区</a>
+               onclick="add_it()" class="btn btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加社区</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
                    id="community_table" width="100%">
@@ -83,13 +83,22 @@
             function (ret) {
                 doc_table = $('#community_table').dataTable({
                     "aoColumns": [
-//                        {
-//                            "width": "12%",
-//                            "sTitle": "社区编号"
-//                        },
                         {   "sTitle": "社区"},
                         {   "sTitle": "管理员"},
                         {   "sTitle": "联系方式"},
+                        {
+                            "width": "12%",
+                            "sTitle": "社区编号"
+                        },
+                        {
+                            "sTitle": "社区"
+                        },
+                        {
+                            "sTitle": "管理员"
+                        },
+                        {
+                            "sTitle": "联系方式"
+                        },
                         {
                             "width": "12%",
                             "sTitle": "操作",
@@ -123,7 +132,6 @@
                 var communities = ret.data;
                 for (var ij in communities) {
                     doc_table.fnAddData([
-//                        communities[ij].c_id,
                         communities[ij].c_name,
                         communities[ij].u_name,
                         communities[ij].u_phone,

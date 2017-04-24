@@ -8,19 +8,19 @@
         <!--TODO: session c_name, u_phone-->
         <div class="col-md-3 column">
             <h4 align="left"><i class="fa fa-id-card fa-fw"></i>
-                姓名：{{ session['u_name']}}</h4>
-        </div>
-        <div class="col-md-3 column">
-            <h4 align="left"><i class="fa fa-users fa-fw"></i>
-                社区：{{ session['c_id'] }}</h4>
+                {{ session['u_name']}}</h4>
         </div>
         <div class="col-md-3 column">
             <h4 align="left"><i class="fa fa-user fa-fw"></i>
-                身份：{{ session['u_role'] }}</h4>
+                {{ session['u_role'] }}</h4>
+        </div>
+        <div class="col-md-3 column">
+            <h4 align="left"><i class="fa fa-users fa-fw"></i>
+                {{ session['c_id'] }}</h4>
         </div>
         <div class="col-md-3 column">
             <h4 align="left"><i class="fa fa-phone fa-fw"></i>
-                手机：{{ session['logged_in'] }}</h4>
+                {{ session['logged_in'] }}</h4>
         </div>
     </div>
 
