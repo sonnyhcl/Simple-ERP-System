@@ -1,4 +1,8 @@
 # -*- coding: UTF-8 -*-
+"""
+产品页面所有数据库的相关操作
+涉及到产品表和工艺表
+"""
 __author__ = 'sonnyhcl'
 import sqlite3
 '''

@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 数据库表中的所有操作都要通过log保存一份记录
+用户页面所有数据库相关操作
 """
 import sqlite3
 from webapp.mylog import log

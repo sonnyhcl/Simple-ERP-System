@@ -1,4 +1,8 @@
 # -*- coding: UTF-8 -*-
+"""
+社区页面的所有数据库操作
+"""
+
 import sqlite3
 from flask import session
 __author__ = 'sonnyhcl'
