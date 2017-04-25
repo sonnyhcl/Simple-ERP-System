@@ -32,3 +32,37 @@ def get_mission_by_cid():
          'u_name': 'hcl', 'm_amount': 40, 'm_note': '无'},
     ]
     return json.dumps(ret)
+
+
+@app.route('/mission/add', methods=['POST'])
+def add_mission():
+    """
+
+    :return: {"status": "Success", "msg":"error_msg"}
+    """
+    # TODO status, info = missions.add_mission(u_name, i_name, m_amount)
+    info = {"status": "Success", "msg": "error_msg"}
+    return json.dumps(info, ensure_ascii=False)
+
+
+@app.route('/mission/modify', methods=['POST'])
+def modify_mission():
+    """
+
+    :return: {"status": "Success", "msg":"error_msg"}
+    """
+    # TODO status, info = missions.modify_mission(u_name, i_name, m_amount)
+    info = {"status": "Success", "msg": "error_msg"}
+    return json.dumps(info, ensure_ascii=False)
+
+
+@app.route('/mission/delete', methods=['POST'])
+def delete_mission():
+    """
+
+    :return: {"status": "Success", "msg":"error_msg"}
+    """
+    # TODO status, info = missions.delete_mission(m_id)
+    info = {"status": "Success", "msg": "error_msg"}
+    return json.dumps(info, ensure_ascii=False)
+
