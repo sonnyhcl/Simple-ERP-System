@@ -87,7 +87,7 @@ print "user info table created Successfully!"
 
 
 """
-订单（订单编号，数量, 开单时间，产品编号）
+订单（订单编号，数量, 开单时间，产品编号，订单备注）
 """
 conn.execute(
     '''
@@ -96,6 +96,7 @@ conn.execute(
             o_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
             o_amount        INT,
             o_timestamp     DATETIME    DEFAULT(datetime('now', 'localtime')),
+            o_notes         CHAR(50)    DEFAULT('无'),
             p_id            INT         NOT NULL,
             FOREIGN KEY     (p_id)      REFERENCES   job(p_id)
         )
@@ -114,6 +115,7 @@ conn.execute(
         (
             m_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
             m_amount        INT,
+            m_notes         CHAR(50)    DEFAULT('无'),
             u_id            INT,
             i_id            INT,
             o_id            INT,
@@ -137,6 +139,7 @@ conn.execute(
             t_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
             t_amount        INT,
             t_timestamp     DATETIME    DEFAULT(datetime('now', 'localtime')),
+            t_notes         CHAR(50)    DEFAULT('无'),
             m_id            INT         NOT NULL,
             FOREIGN KEY     (m_id)      REFERENCES   mission(m_id)
         )
@@ -168,8 +171,8 @@ conn.execute(
     VALUES  (0, 'hcl',     'root',     'hcl',  '12345678910',   0),
             (1, 'admin',   'admin',    'admin','12345678910',   1),
             (2, 'user',    'user',     'uer',  '12345678910',   1),
-            (3, 'admi',    'admin',    'admin','12345678910',   2),
-            (4, 'use',     'user',     'user', '12345678910',   2);
+            (3, '管理员',  'admin',    'admin','12345678910',   2),
+            (4, '用户',    'user',     'user', '12345678910',   2);
     """
 )
 
@@ -179,7 +182,7 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO product(p_name, p_authorname)
-    VALUES  ('产品A',  'Alice'), ('产品B',  'Bob');
+    VALUES  ('产品A',  '设计师A'), ('产品B',  '设计师B');
     """
 )
 
