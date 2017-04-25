@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}产品{% endblock %}
-{%  set selected_menu = "product" %}
+{% block title %}订单{% endblock %}
+{%  set selected_menu = "order" %}
 
 {% block content %}
 <div class="container">
-    <!-- 增加产品弹窗 -->
+    <!-- 增加弹窗 -->
     <div class="modal fade" id="alterProduct"
          role="dialog" aria-labelledby="myModalLabel_prod" aria-hidden="true">
         <div class="modal-dialog">
@@ -17,7 +17,7 @@
                 <div class="modal-body" id="myModalBody_prod">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">产品名称</label>
+                            <label class="col-lg-2 control-label">订单名称</label>
                             <div class="col-lg-9">
                                 <input size="16" id="p_name" type="text" value="" placeholder="产品名称"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
@@ -118,7 +118,7 @@
     <div class="row clearfix">
         <div class="col-md-12 column">
             <!-- 标题 -->
-            <h3 id="product_manage_title">产品管理系统</h3>
+            <h3 id="product_manage_title">订单管理系统</h3>
             <br>
             <!-- 修改按钮 -->
             <a id="modify_product" href="#modifyProduct" role="button" data-toggle="modal"
@@ -131,7 +131,7 @@
                onclick="delete_prod()" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i>删除产品</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
-                   id="product_table" width="100%">
+                   id="o_table" width="100%">
             </table>
         </div>
     </div>
@@ -145,15 +145,15 @@
     $(document).ready(function () {
         var doc_table;
         console.log('document ready');
-        $.post('/product/test',
+        $.post('/order/test',
             function (ret) {
-                doc_table = $('#product_table').dataTable({
+                doc_table = $('#o_table').dataTable({
                     "aoColumns": [
+                        {"sTitle": "订单号"},
                         {"sTitle": "产品名"},
-                        {"sTitle": "工艺名称"},
-                        {"sTitle": "设计师"},
-                        {"sTitle": "分钟单价"},
-                        {"sTitle": "参考用时"},
+                        {"sTitle": "数量"},
+                        {"sTitle": "最后交付时间"},
+                        {"sTitle": "金额"},
                         {
                             "sTitle": "操作",
                             "bSortable": false
@@ -183,25 +183,25 @@
                     "bStateSave": true
                 });
 
-                var products = ret.data;
-                for (var ij in products) {
-                    doc_table.fnAddData([
-                        products[ij].p_name,
-                        products[ij].i_name,
-                        products[ij].p_designer,
-                        products[ij].i_unit,
-                        products[ij].i_time,
-                        //修改按钮
-                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
-                        products[ij].i_id + ")' class='btn btn-default' type='button'><i class='fa fa-pencil fa-fw'></i></button>" + " " +
-                        //增加按钮
-                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
-                        products[ij].i_id + ")' class='btn btn-default' type='button'><i class='fa fa-plus-square fa-fw'></i></button>" + " " +
-                        //删除按钮
-                        "<button href='#confirmDeleteModal_item' data-toggle='modal' onclick='delete_it( " +
-                        products[ij].i_id + ")' class='btn btn-danger' type='button'><i class='fa fa-trash fa-fw'></i></button>"
-                    ])
-                }
+//                var products = ret.data;
+//                for (var ij in products) {
+//                    doc_table.fnAddData([
+//                        products[ij].p_name,
+//                        products[ij].i_name,
+//                        products[ij].p_designer,
+//                        products[ij].i_unit,
+//                        products[ij].i_time,
+//                        //修改按钮
+//                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
+//                        products[ij].i_id + ")' class='btn btn-default' type='button'><i class='fa fa-pencil fa-fw'></i></button>" + " " +
+//                        //增加按钮
+//                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
+//                        products[ij].i_id + ")' class='btn btn-default' type='button'><i class='fa fa-plus-square fa-fw'></i></button>" + " " +
+//                        //删除按钮
+//                        "<button href='#confirmDeleteModal_item' data-toggle='modal' onclick='delete_it( " +
+//                        products[ij].i_id + ")' class='btn btn-danger' type='button'><i class='fa fa-trash fa-fw'></i></button>"
+//                    ])
+//                }
             }, 'json');
     });
 

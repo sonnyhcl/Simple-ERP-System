@@ -5,6 +5,7 @@ from webapp.views import item
 from webapp.views import product
 from webapp.views import user
 from webapp.views import community
+from webapp.views import order
 from webapp.views import test_view
 
 __author__ = 'sonnyhcl'
