@@ -28,7 +28,8 @@ def index_index():
     """
     d = {'root': u"主管理员", 'admin': u"社区管理员", 'user': u"员工"}
     status, info = index.get_index_info_by_uid(session['u_id'])
-    user_info = {'u_name': '', 'u_role': '', 'c_name': '', 'u_phone': ''}
+    user_info = {'u_name': 'error', 'u_role': 'user',
+                 'c_name': 'error', 'u_phone': 'error'}
     if status == 'Success':
         user_info = {'u_name': info[0][0], 'u_role': d[info[0][1]],
                      'c_name': info[0][2], 'u_phone': info[0][3]}

@@ -17,7 +17,6 @@ class Index(object):
         :return: 
         """
         # TODO 返回格式status, msg = ..... 以及异常处理
-        log("%s: get_index_info" % (session['u_name']))
         conn = sqlite3.connect("test.db")
         param = (u_id, )
         response = conn.execute('SELECT u_name, u_role, c_name, u_phone '
