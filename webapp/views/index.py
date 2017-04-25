@@ -13,12 +13,6 @@ from webapp.mylog import log
 __author__ = 'sonnyhcl'
 
 
-def get_avatar(username, size):
-    # return 'http://www.gravatar.com/avatar/' \
-    return "https://secure.gravatar.com/avatar/"+ md5(username).hexdigest() \
-           + '?s=' + str(size)
-
-
 @app.route('/')
 def index_():
     return redirect('index')
@@ -40,7 +34,7 @@ def log_out():
     登出，立刻跳转到首页(此时会被重定向到登录页面)
     :return:
     """
-    log(session['u_name'] + "log_out")
+    log("%s log_out" % (session['u_name']))
     session['logged_in'] = False
     session['u_name'] = 'guest'
     session['u_role'] = 'guest'
@@ -59,7 +53,7 @@ def validate_user(u_name, u_password):
     log("validate_user" + u_name)
     if not u_name or not u_password:
         return False, ""
-    status, info = user.get_all_user()
+    status, info = user.get_all_user_info()
     if not status:
         return False, "guest"
 
@@ -84,8 +78,6 @@ def log_in():
         session['u_name'] = info[1]
         session['u_role'] = info[2]
         session['c_id'] = info[5]
-        session['icon'] = get_avatar(session['u_name'], 40)
-        session['big_icon'] = get_avatar(session['u_name'], 140)
         return redirect(next_url)
 
     error_msg = "wrong username or password"

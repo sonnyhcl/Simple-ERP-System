@@ -1,28 +1,14 @@
 # -*- coding: UTF-8 -*-
 """
-数据库表中的所有操作都要通过log保存一份记录
+数据库表中的增改删操作都要log
 用户页面所有数据库相关操作
 """
 import sqlite3
+from flask import session
 from webapp.mylog import log
 
 
 class User(object):
-    """
-    封装了与用户信息表相关的所有操作：增删改 + 查
-        CREATE TABLE user
-        (
-            u_id            INTEGER         PRIMARY KEY    AUTOINCREMENT,
-            u_name          char(30)    NOT NULL,
-            u_role          char(10)    NOT NULL,
-            u_password      char(30)    NOT NULL,
-            u_phone         char(30)    NOT NULL,
-            c_id            INT         NOT NULL,
-            FOREIGN KEY     (c_id)      REFERENCES   community(c_id)
-        )
-        ;
-    """
-
     def add_user(self, u_name, u_role, u_password, u_phone, c_id):
         """
         add_user
@@ -33,9 +19,9 @@ class User(object):
         :param c_id:
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
-        log("add user")
+        log("%s: add_user: %s %s %s %s %s"
+            % (session['u_name'], u_name, u_role, u_password, u_phone, c_id))
         conn = sqlite3.connect("test.db")
-
         param = (u_name, u_role, u_password, u_phone, c_id,)
         conn.execute(
             'INSERT INTO user(u_name, u_role, u_password, u_phone, c_id) VALUES (?, ?, ?, ?, ?);',
@@ -50,7 +36,7 @@ class User(object):
         :param u_id:
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
-        log("delete_user")
+        log("%s: delete_user: %s" % (session['u_name'], u_id))
         conn = sqlite3.connect("test.db")
         param = (u_id,)
         conn.execute('DELETE FROM user WHERE u_id = ?;', param)
@@ -70,7 +56,9 @@ class User(object):
         :param c_id:
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
-        log("update_user")
+        log("%s: update_user: %s %s %s %s %s %s" %
+            (session['u_name'], u_id, u_name, u_role, u_password, u_phone,
+            c_id))
         conn = sqlite3.connect("test.db")
         param = (u_id,)
         response = conn.execute('SELECT * FROM user WHERE u_id = ?;', param)
@@ -99,9 +87,8 @@ class User(object):
         """
 
         :param u_id:
-        :return: 'Success', <cursor> or 'Fail', 'error_msg'
+        :return: 'Success', <response> or 'Fail', 'error_msg'
         """
-        log("get_user_by_uid")
         conn = sqlite3.connect("test.db")
         param = (u_id,)
         response = conn.execute('SELECT * FROM user WHERE u_id = ?;', param)
@@ -113,9 +100,8 @@ class User(object):
         """
         get_user_by_cid
         :param c_id:
-        :return: 'Success', <cursor> or 'Fail', 'error_msg'
+        :return: 'Success', <response> or 'Fail', 'error_msg'
         """
-        log("get_user_by_cid")
         conn = sqlite3.connect("test.db")
         param = (c_id,)
         if c_id == 0:
@@ -126,12 +112,11 @@ class User(object):
         conn.close()
         return "Success", response
 
-    def get_all_user(self):
+    def get_all_user_info(self):
         """
 
-        :return: 'Success', <cursor> or 'Fail', 'error_msg'
+        :return: 'Success', <response> or 'Fail', 'error_msg'
         """
-        log("get_all_user")
         conn = sqlite3.connect("test.db")
         response = conn.execute('SELECT * FROM user;')
         response = response.fetchall()

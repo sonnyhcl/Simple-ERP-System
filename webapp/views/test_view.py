@@ -18,13 +18,13 @@ def test():
     :return: 一个空白base模版
     """
     user = User()
-    flag, response = user.get_all_user()
+    flag, response = user.get_all_user_info()
     print flag, response
     community = Community()
     community.add_community(c_name='fuck community')
     flag = community.add_community_admin(c_id=1, u_id=2)
     print flag
-    flag, response = community.get_community_detail(c_id=1)
+    flag, response = community.get_community_by_cid(c_id=1)
     print flag, response
     # user = User()
     # user.add_user(u_name='a', u_password='b', u_phone='c', u_role='d', c_id=1)

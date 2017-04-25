@@ -89,7 +89,7 @@
         var doc_table;
         var cid = $("#get_c_id").attr("value");
         console.log('document ready');
-        $.post('/community/' + cid,
+        $.post('/community/table/' + cid,
             function (ret) {
                 doc_table = $('#community_table').dataTable({
                     "aoColumns": [
@@ -185,7 +185,7 @@
 
     function modify_it(id) {
         console.log("modify it:" + id);
-        $.post("/community/" + id, function (ret) {
+        $.post("/community/table/" + id, function (ret) {
             console.log(ret);
             data = ret.data[0];
 

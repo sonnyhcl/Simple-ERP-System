@@ -18,8 +18,8 @@ def community_index():
     return render_template('community.html')
 
 
-@app.route('/community/<int:c_id>', methods=['POST'])
-def get_community_detail(c_id):
+@app.route('/community/table/<int:c_id>', methods=['POST'])
+def get_community_by_cid(c_id):
     """
     根据c_id返回社区的信息
     c_id=0意味着返回所有社区的信息，否则只返回该c_id社区的信息。
@@ -27,7 +27,7 @@ def get_community_detail(c_id):
     :return: {"data": [{'c_id':, 'c_name':,'u_name':,'u_phone':}], 
                 "status": status, "msg":""}
     """
-    status, info = community.get_community_detail(c_id)
+    status, info = community.get_community_by_cid(c_id)
     ret = {"data": [], "status": status, "msg":""}
     if status == "Success":
         _ = [ret['data'].append({'c_id':i[0], 'c_name':i[1],
@@ -46,6 +46,7 @@ def get_all_admin():
                 "status": status, "msg":""}
     """
     # TODO 返回所有admin以及root权限的人的{u_id, u_name}
+    # status, response = community.get_all_admin()
     response = {'data': [{'u_id':0, 'u_name':'hcl'},
                      {'u_id':1, 'u_name':'Alice'}],
                 'status': 'Success', 'msg': "error_msg" }
@@ -61,7 +62,8 @@ def add_community():
     """
     c_name = request.form.get('c_name')
     u_id = request.form.get('u_id')
-    # TODO 添加一个社区
+    # TODO 修改返回格式和传入参数
+    # status, msg = community.add_community(c_name, u_id)
     status = community.add_community(c_name)
     return json.dumps({"status": status, "msg":"error_msg"})
 
@@ -75,17 +77,20 @@ def modify_community():
     c_name = request.form.get('c_name')
     c_id = request.form.get('c_id')
     u_id = request.form.get('u_id')
-    status = community.update_community(c_id=c_id, new_c_name=c_name, u_id=u_id)
+    # TODO 修改返回格式
+    # status， msg = community.update_community(c_id, c_name, u_id)
+    status = community.update_community(c_id, c_name, u_id)
     return json.dumps({"status": status, "msg":"error_msg"})
 
 
 @app.route('/community/delete', methods=['POST'])
 def delete_community():
     """
-    根据传入的{c_name}删除一个社区信息
+    根据传入的{c_id}删除一个社区信息
     :return: {"status": "Success", "msg":"error_msg"}
     """
     c_id = request.form.get('c_id')
+    # TODO 就不应该有社区删除操作，待商榷
     status = community.delete_community(c_id)
     return json.dumps({"status": status, "msg":"error_msg"})
 

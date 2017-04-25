@@ -111,7 +111,7 @@
     $(document).ready(function () {
         var doc_table;
         console.log('document ready');
-        $.post('/user/page/',
+        $.post('/user/table',
             function (ret) {
                 doc_table = $('#user_table').dataTable({
                     "aoColumns": [
@@ -163,7 +163,7 @@
                 }
             }, 'json');
         var cid = $("#get_c_id").attr("value");
-        $.post('/community/' + cid, function (ret) {
+        $.post('/community/table/' + cid, function (ret) {
             console.log(ret);
             var communities = ret.data;
             for (var ij in communities) {
