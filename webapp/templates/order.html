@@ -122,13 +122,13 @@
             <br>
             <!-- 修改按钮 -->
             <a id="modify_product" href="#modifyProduct" role="button" data-toggle="modal"
-               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>修改产品</a>
+               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>修改订单</a>
             <!-- 添加按钮 -->
             <a id="add_product" href="#alterProduct" role="button" data-toggle="modal"
-               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加产品</a>
+               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加订单</a>
             <!-- 删除按钮 -->
             <a id="del_product" href="#confirmDeleteModal_prod" role="button" data-toggle="modal"
-               onclick="delete_prod()" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i>删除产品</a>
+               onclick="delete_prod()" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i>删除订单</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
                    id="o_table" width="100%">
@@ -154,6 +154,7 @@
                         {"sTitle": "数量"},
                         {"sTitle": "最后交付时间"},
                         {"sTitle": "金额"},
+                        {"sTitle": "备注"},
                         {
                             "sTitle": "操作",
                             "bSortable": false
