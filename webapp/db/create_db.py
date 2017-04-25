@@ -48,7 +48,7 @@ print "item info table created Successfully!"
 
 
 """
- 社区（社区编号，社区名，管理员编号）
+社区（社区编号，社区名，管理员编号）
 """
 conn.execute(
     '''
@@ -109,7 +109,7 @@ print "orders info table created Successfully!"
 
 
 """
-任务（任务编号，分配数量，用户编号，工艺编号，订单号）
+任务（任务编号，用户编号，工艺编号，订单编号，分配数量，任务备注）
 """
 conn.execute(
     '''
@@ -132,7 +132,7 @@ print "mission info table created Successfully!"
 
 
 """
-流水（流水编号，数量，交付日期，任务编号）
+流水（流水编号，数量，交付日期，流水备注，任务编号）
 """
 conn.execute(
     '''

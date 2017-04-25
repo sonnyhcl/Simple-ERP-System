@@ -116,13 +116,13 @@
                 doc_table = $('#t_table').dataTable({
                     "aoColumns": [
                         {"sTitle": "开单日期"},
-                        {"sTitle": "订单号"},
+                        {"sTitle": "单号"},
                         {"sTitle": "产品"},
                         {"sTitle": "工艺"},
                         {"sTitle": "规格"}, // 工艺备注
                         {"sTitle": "数量"},
                         {"sTitle": "单价"},
-                        {"sTitle": "总金额"},
+                        {"sTitle": "总价"},
                         {"sTitle": "交单时间"},
                         {"sTitle": "制作点"}, // 社区名称
                         {"sTitle": "制作人"},
@@ -173,10 +173,10 @@
                         transactions[i].t_note,
                         "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
                         transactions[i].u_id + ")' class='btn btn-default' type='button'> " +
-                        "<i class='fa fa-pencil fa-fw'></i></button>" + "  " +
+                        "<i class='fa fa-pencil'></i></button>" + "  " +
                         "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_it( " +
                         transactions[i].u_id + ")' class='btn btn-danger' type='button'>" +
-                        "<i class='fa fa-trash fa-fw'></i></button>"
+                        "<i class='fa fa-trash'></i></button>"
                     ])
                 }
             }, 'json');
