@@ -8,19 +8,19 @@
         <!--TODO: session c_name, u_phone-->
         <div class="col-md-3 column">
             <h4 align="left"><i class="fa fa-id-card fa-fw"></i>
-                {{ session['u_name']}}</h4>
+                {{ user_info.u_name }}</h4>
         </div>
         <div class="col-md-3 column">
             <h4 align="left"><i class="fa fa-user fa-fw"></i>
-                {{ session['u_role'] }}</h4>
+                {{ user_info.u_role }}</h4>
         </div>
         <div class="col-md-3 column">
             <h4 align="left"><i class="fa fa-users fa-fw"></i>
-                {{ session['c_id'] }}</h4>
+                {{ user_info.c_name }}</h4>
         </div>
         <div class="col-md-3 column">
             <h4 align="left"><i class="fa fa-phone fa-fw"></i>
-                {{ session['logged_in'] }}</h4>
+                {{ user_info.u_phone }}</h4>
         </div>
     </div>
 
