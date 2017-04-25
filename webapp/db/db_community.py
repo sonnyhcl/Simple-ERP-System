@@ -11,7 +11,7 @@ __author__ = 'sonnyhcl'
 
 class Community(object):
 
-    def add_community(self, c_name):
+    def add_community(self, c_name, u_id):
         """
         
         :param c_name: 
@@ -19,9 +19,9 @@ class Community(object):
         """
         # TODO: 社区名字判重
         # TODO 返回格式status, msg = ..... 以及异常处理
-        log("%s: add community: %s" % (session['u_name'], c_name))
+        log("%s: add community: %s %s" % (session['u_name'], c_name, u_id))
         conn = sqlite3.connect("test.db")
-        param = (c_name, session['u_id'])
+        param = (c_name, u_id)
         conn.execute('INSERT INTO community(c_name, u_id) VALUES (?, ?);',
                      param)
         conn.commit()
@@ -115,13 +115,17 @@ class Community(object):
         conn = sqlite3.connect("test.db")
         if c_id == 0:
             response = conn.execute(
-                'SELECT community.c_id, community.c_name, user.u_name, user.u_phone '
-                'FROM community, user '
+                'SELECT community.c_id, community.c_name, '
+                'user.u_name, user.u_phone, user.u_id '
+                'FROM'
+                ' '
+                'community, user '
                 'WHERE user.u_id = community.u_id;')
         else:
             param = (c_id,)
             response = conn.execute(
-                'SELECT community.c_id, community.c_name, user.u_name, user.u_phone '
+                'SELECT community.c_id, community.c_name, '
+                'user.u_name, user.u_phone, user.u_id '
                 'FROM community, user '
                 'WHERE community.c_id = ? AND user.u_id = community.u_id;', param)
         response = response.fetchall()

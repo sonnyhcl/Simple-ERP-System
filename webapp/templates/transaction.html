@@ -4,157 +4,258 @@
 
 {% block content %}
 <div class="container">
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <h3>
-                流水管理系统
-            </h3>
-             <a id="modal-471624" href="#alterTransaction"
-                role="button" class="btn" data-toggle="modal">添加流水</a>
+    <!-- 增改弹窗模板 -->
+    <div class="modal fade" id="alterUser"
+         role="dialog" aria-labelledby="user_ModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel_tran">标题</h4>
+                </div>
 
-            <!--遮罩模板-->
-            <div class="modal fade" id="alterTransaction"
-                 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                             <button type="button" class="close"
-                                     data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title" id="myModalLabel">
-                                添加流水
-                            </h4>
+                <div class="modal-body" id="myModalBody_user">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">名字</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="t_name" type="text" value="" placeholder="名字"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                       data-toggle="popover" data-trigger="focus"/>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            内容...
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">手机</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="t_phone" type="text" value="" placeholder="手机号码"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                       data-toggle="popover" data-trigger="focus"/>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">社区</label>
+                            <div class="col-lg-6">
+                                <select id="t_community" class="form-control input-sm" style="color:#666666">
+                                </select>
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">身份</label>
+                            <div class="col-lg-6">
+                                <select id="t_role" class="form-control input-sm" style="color:#666666">
+                                    {% if session['u_role'] == 'root' %}
+                                    <option value="root">主管理员</option>
+                                    <option value="admin">社区管理员</option>
+                                    {% endif %}
+                                    <option value="user">普通用户</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="no_btn_tran" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" id="yes_btn_tran" class="btn btn-danger" onclick="">确定</button>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            时间
-                        </th>
-                        <th>
-                            单号
-                        </th>
-                        <th>
-                            社区
-                        </th>
-                        <th>
-                            制作人
-                        </th>
-                        <th>
-                            产品名
-                        </th>
-                        <th>
-                            工艺名
-                        </th>
-                        <th>
-                            单价
-                        </th>
-                        <th>
-                            数量
-                        </th>
-                        <th>
-                            总价
-                        </th>
-                        <th>
-                            操作
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            2017/4/17
-                        </td>
-                        <td>
-                            604
-                        </td>
-                        <td>
-                            高科苑
-                        </td>
-                        <td>
-                            cjj
-                        </td>
-                        <td>
-                            iPhone
-                        </td>
-                        <td>
-                            贴膜
-                        </td>
-                        <td>
-                            9.8
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            98
-                        </td>
-                        <td>
-                            <a href="#alterTransaction" data-toggle="modal" onclick="modify_it()">修改</a>
-                            /
-                            <a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>
-                        </td>
-                    </tr>
-                    <tr class="info">
-                        <td>
-                            2017/4/17
-                        </td>
-                        <td>
-                            605
-                        </td>
-                        <td>
-                            文图
-                        </td>
-                        <td>
-                            cjj
-                        </td>
-                        <td>
-                            iPhone
-                        </td>
-                        <td>
-                            水手机
-                        </td>
-                        <td>
-                            0.1
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            <a href="#alterTransaction" data-toggle="modal" onclick="modify_it()">修改</a>
-                            /
-                            <a href="#alterTransaction" data-toggle="modal" onclick="delete_it()">删除</a>
-                        </td>
-                    </tr>
-                </tbody>
+    <!-- 删除弹窗模版 -->
+    {% if session['u_role'] == 'root' %}
+    <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_user" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel_tran">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">确认删除该人员信息？</h4>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button id='confirm-del-button_tran' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- body -->
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <!-- 标题 -->
+            <h3 id="transaction_manage_title">流水管理系统</h3>
+            <br>
+            <!-- 添加按钮 -->
+            <a id="add_user" href="#alterUser" role="button" data-toggle="modal"
+               onclick="add_it()" class="btn btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加流水</a>
+            <!-- 表格 -->
+            <table class="table table-bordered table-striped table-hover" cellspacing="0"
+                   id="t_table" width="100%">
             </table>
-
-            <!--TODO: 分页-->
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
-    function modify_it(){
-        $("#myModalLabel").text("修改流水")
-    }
-
-    function delete_it(){
-        $("#myModalLabel").text("删除流水")
-    }
-</script>
+<!-- cid -->
+<input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">
 
 {% endblock content %}
 
+{% block script %}
+{{ super() }}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var doc_table;
+        console.log('document ready');
+        $.post('/user/table',
+            function (ret) {
+                doc_table = $('#user_table').dataTable({
+                    "aoColumns": [
+                        {"sTitle": "社区"},
+                        {"sTitle": "姓名"},
+                        {"sTitle": "身份"},
+                        {"sTitle": "联系方式"},
+                        {
+                            "width": "12%",
+                            "sTitle": "操作",
+                            "bSortable": false
+                        }
+                    ],
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sPrevious": "上一页",
+                            "sNext": "下一页",
+                            "sFirst": "第一页",
+                            "sLast": "最后一页"
+                        },
+                        "sZeroRecords": "似乎来到了一块没有数据的荒原...",
+                        "sInfo": "共 _PAGES_ 页，从第 _START_ 页到第 _END_ 页，共 _TOTAL_ 条 ",
+                        "sInfoEmpty": "0 条记录",
+                        "sInfoFiltered": "",
+                        "sLengthMenu": "显示 _MENU_ 条",
+                        "sSearch": "<i class='fa fa-search' aria-hidden='true'></i>",
+                        "sProcessing": "<i class='fa-li fa fa-spinner fa-spin'></i>请稍等..."
+                    },
+                    "bSort": true,
+                    "bPaginate": true,
+                    "sPaginationType": "full",
+                    "sPageButton": "",
+                    "bAutoWidth": true,
+                    "bScrollCollapse": true,
+                    "bStateSave": true
+                });
+                var members = ret.data;
+                for (var ij in members) {
+                    doc_table.fnAddData([
+                        members[ij].c_name,
+                        members[ij].u_name,
+                        members[ij].u_role,
+                        members[ij].u_phone,
+                        "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
+                        members[ij].u_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
+                        "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_it( " +
+                        members[ij].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
+                    ])
+                }
+            }, 'json');
+        var cid = $("#get_c_id").attr("value");
+        $.post('/community/table/' + cid, function (ret) {
+            console.log(ret);
+            var communities = ret.data;
+            for (var ij in communities) {
+                console.log(communities[ij]);
+                $('#t_community').append('<option value="' + communities[ij].c_id + '">' + communities[ij].c_name + '</option>');
+            }
+        }, 'json')
+    });
+
+    function check_value(name, phone) {
+        if (name === "") {
+            $('#t_name').popover('show');
+            return (false);
+        }
+        if (phone === "") {
+            $('#t_phone').popover('show');
+            return (false);
+        }
+        return (true);
+    }
+
+    function add_it() {
+        console.log("add it");
+        $("#t_name").val("");
+        $("#t_community").val("");
+        $("#t_phone").val("");
+        $("#t_role").val("");
+        $("#myModalLabel_tran").text("添加人员信息");
+        $("#yes_btn_tran").attr('onclick', 'confirm_add_member_user()');
+    }
+
+    function confirm_add_member_user() {
+        console.log('confirm_add_member_user');
+        if (!check_value($("#t_name").val(), $("#t_phone").val())) {
+            return;
+        }
+        $.post("/user/add", {
+            'u_name': $("#t_name").val(),
+            'u_phone': $("#t_phone").val(),
+            'c_id': $("#t_community").val(),
+            'u_role': $("#t_role").val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/user';
+        });
+    }
+
+    function modify_it(id) {
+        console.log("modify it");
+        $.post("/user/" + id, function (ret) {
+            console.log(ret);
+            data = ret.data;
+            $("#t_name").val(data.u_name);
+            $("#t_phone").val(data.u_phone);
+            $("#t_role").val(data.u_role);
+            $("#t_community").val(data.c_id);
+            $("#myModalLabel_user").text("修改人员信息");
+            $("#yes_btn_tran").attr('onclick', 'confirm_modify_member_user(' + id + ')');
+        }, 'json');
+    }
+
+    function confirm_modify_member_user(id) {
+        console.log("confirm_modify_member_user:" + id);
+        if (!check_value($("#t_name").val(), $("#t_phone").val())) {
+            return;
+        }
+        $.post("/user/modify", {
+            'u_id': id,
+            'u_name': $("#t_name").val(),
+            'u_phone': $("#u_phone").val(),
+            'c_id': $("#u_community").val(),
+            'u_role': $("#u_role").val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/user';
+        });
+    }
+
+    function delete_it(id) {
+        console.log("delete it");
+        $('#confirm-del-button_user').attr('onclick', 'confirm_del_member_user(' + id + ')');
+    }
+
+    function confirm_del_member_user(id) {
+        console.log("confirm_del_member_user:" + id);
+        $.post("/user/delete", {
+            'u_id': id
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/user';
+        })
+    }
+</script>
+
+{% endblock script %}
