@@ -145,7 +145,7 @@
     $(document).ready(function () {
         var doc_table;
         console.log('document ready');
-        $.post('/product/test',
+        $.post('/product/table',
             function (ret) {
                 doc_table = $('#product_table').dataTable({
                     "aoColumns": [

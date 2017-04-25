@@ -6,41 +6,48 @@ from webapp import app
 __author__ = 'sonnyhcl'
 
 
-@app.route('/product/test', methods=['POST'])
-def dsdad():
+@app.route('/product', methods=['GET'])
+def product():
+    return render_template('product.html')
+
+
+@app.route('/product/table', methods=['POST'])
+def get_all_products_detail():
+    # TODO status, info = products.get_all_products_detail()
     return json.dumps("ddadad")
 
 
-@app.route('/product', methods=['GET'])
-def product():
-    return render_template('product.html', role='root')
-
-
-@app.route('/product/<int:cid>/page/', methods=['POST'])
-def show_product(cid):
+@app.route('/product/add', methods=['POST'])
+def add_product():
     """
-    next=1 or prev=1 or page=?
-    :param cid:
-    :return:
+    这里需要添加多个工艺，所以item是个数组
+    :return: {"status": "Success", "msg":"error_msg"}
     """
-    return "show_product"
+    # item = [{i_name, i_unit_price, i_ref_time},...]
+    # TODO status, info = products.add_product(p_name, p_author_name, item)
+    info = {"status": "Success", "msg": "error_msg"}
+    return json.dumps(info, ensure_ascii=False)
 
 
-@app.route('/product/<int:cid>/add', methods=['POST'])
-def add_product(cid):
-    return "add_product"
+@app.route('/product/modify', methods=['POST'])
+def modify_product():
+    """
+    需要判断是否增加了工艺或者删除了工艺，同时更新产品表和工艺表
+    :return: {"status": "Success", "msg":"error_msg"}
+    """
+    # item = [{i_name, i_unit_price, i_ref_time},...]
+    # TODO status, info = products.modify_product(p_name, p_author_name, item)
+    info = {"status": "Success", "msg": "error_msg"}
+    return json.dumps(info, ensure_ascii=False)
 
 
-@app.route('/product/<int:cid>/modify', methods=['POST'])
-def modify_product(cid):
-    return "modify_product"
+@app.route('/product/delete', methods=['POST'])
+def delete_product():
+    """
 
+    :return: {"status": "Success", "msg":"error_msg"}
+    """
+    # TODO status, info = products.delete_product(p_id)
+    info = {"status": "Success", "msg": "error_msg"}
+    return json.dumps(info, ensure_ascii=False)
 
-@app.route('/product/<int:cid>/delete', methods=['POST'])
-def delete_product(cid):
-    return "add_product"
-
-
-@app.route('/product/filter', methods=['POST'])
-def filter_product():
-    return "filter_product"

@@ -87,14 +87,16 @@ print "user info table created Successfully!"
 
 
 """
-订单（订单编号，数量, 开单时间，产品编号，订单备注）
+订单（订单编号，数量, 金额，开单时间，订单备注, 产品编号)
+#TODO 最后交付时间先不放
 """
 conn.execute(
     '''
         CREATE TABLE orders
         (
             o_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
-            o_amount        INT,
+            o_amount        INT         NOT NULL,
+            o_money         FLOAT       NOT NULL,
             o_timestamp     DATETIME    DEFAULT(datetime('now', 'localtime')),
             o_notes         CHAR(50)    DEFAULT('无'),
             p_id            INT         NOT NULL,
@@ -198,12 +200,12 @@ conn.execute(
 )
 
 """
-添加订单（订单编号，数量，开单时间，产品编号）
+添加订单（数量, 金额，产品编号)
 """
 conn.execute(
     """
-    INSERT INTO orders(o_amount, p_id)
-    VALUES ('10', 1), ('20', 2);
+    INSERT INTO orders(o_amount, o_money, p_id)
+    VALUES (10, 1000, 1), (20, 20000, 2);
 """
 )
 
