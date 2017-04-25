@@ -19,6 +19,7 @@ class User(object):
         :param c_id:
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
+        # TODO 名字判重
         log("%s: add_user: %s %s %s %s %s"
             % (session['u_name'], u_name, u_role, u_password, u_phone, c_id))
         conn = sqlite3.connect("test.db")

@@ -50,7 +50,7 @@ def validate_user(u_name, u_password):
     :param u_password:
     :return: True, [user_info] or False, ""
     """
-    log("validate_user" + u_name)
+    log("validate_user %s" % u_name)
     if not u_name or not u_password:
         return False, ""
     status, info = user.get_all_user_info()
