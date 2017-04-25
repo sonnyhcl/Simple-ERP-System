@@ -13,8 +13,19 @@ def product():
 
 @app.route('/product/table', methods=['POST'])
 def get_all_products_detail():
+    ret = {"data": [], "status": 'Success', "msg": ""}
     # TODO status, info = products.get_all_products_detail()
-    return json.dumps("ddadad")
+    ret['data'] = [
+        {'p_name': '产品A', 'i_name': "产品A的工艺1",
+         'i_unit_price': 10.0, 'p_author_name': '设计师A', 'i_ref_time': 100},
+        {'p_name': '产品A', 'i_name': "产品A的工艺2",
+         'i_unit_price': 20.0, 'p_author_name': '设计师A', 'i_ref_time': 200},
+        {'p_name': '产品B', 'i_name': "产品B的工艺1",
+         'i_unit_price': 30.0, 'p_author_name': '设计师A', 'i_ref_time': 300},
+        {'p_name': '产品B', 'i_name': "产品B的工艺2",
+         'i_unit_price': 40.0, 'p_author_name': '设计师A', 'i_ref_time': 400},
+    ]
+    return json.dumps(ret)
 
 
 @app.route('/product/add', methods=['POST'])

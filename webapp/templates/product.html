@@ -150,11 +150,12 @@
                 doc_table = $('#product_table').dataTable({
                     "aoColumns": [
                         {"sTitle": "产品名"},
-                        {"sTitle": "工艺名称"},
                         {"sTitle": "设计师"},
+                        {"sTitle": "工艺名称"},
                         {"sTitle": "分钟单价"},
                         {"sTitle": "参考用时"},
                         {
+                            "width": "23%",
                             "sTitle": "操作",
                             "bSortable": false
                         }
@@ -188,18 +189,21 @@
                     doc_table.fnAddData([
                         products[ij].p_name,
                         products[ij].i_name,
-                        products[ij].p_designer,
-                        products[ij].i_unit,
-                        products[ij].i_time,
+                        products[ij].p_author_name,
+                        products[ij].i_unit_price,
+                        products[ij].i_ref_time,
                         //修改按钮
-                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
-                        products[ij].i_id + ")' class='btn btn-default' type='button'><i class='fa fa-pencil fa-fw'></i></button>" + " " +
+                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_item(" +
+                        products[ij].i_id + ")' class='btn btn-default' type='button'>" +
+                        "<i class='fa fa-pencil fa-fw'></i>修改</button>" + " " +
                         //增加按钮
-                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
-                        products[ij].i_id + ")' class='btn btn-default' type='button'><i class='fa fa-plus-square fa-fw'></i></button>" + " " +
+                        "<button href='#alterProduct' data-toggle='modal' onclick='add_item(" +
+                        products[ij].i_id + ")' class='btn btn-default' type='button'><" +
+                        "i class='fa fa-plus-square fa-fw'></i>增加</button>" + " " +
                         //删除按钮
-                        "<button href='#confirmDeleteModal_item' data-toggle='modal' onclick='delete_it( " +
-                        products[ij].i_id + ")' class='btn btn-danger' type='button'><i class='fa fa-trash fa-fw'></i></button>"
+                        "<button href='#confirmDeleteModal_item' data-toggle='modal' onclick='delete_item( " +
+                        products[ij].i_id + ")' class='btn btn-danger' type='button'>" +
+                        "<i class='fa fa-trash fa-fw'></i>删除</button>"
                     ])
                 }
             }, 'json');
