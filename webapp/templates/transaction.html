@@ -111,14 +111,21 @@
     $(document).ready(function () {
         var doc_table;
         console.log('document ready');
-        $.post('/user/table',
+        $.post('/transaction/table',
             function (ret) {
-                doc_table = $('#user_table').dataTable({
+                doc_table = $('#t_table').dataTable({
                     "aoColumns": [
-                        {"sTitle": "社区"},
-                        {"sTitle": "姓名"},
-                        {"sTitle": "身份"},
-                        {"sTitle": "联系方式"},
+                        {"sTitle": "开单日期"},
+                        {"sTitle": "订单号"},
+                        {"sTitle": "制作点"}, // 社区名称
+                        {"sTitle": "工艺"},
+                        {"sTitle": "规格"}, // 工艺备注
+                        {"sTitle": "数量"},
+                        {"sTitle": "单价"},
+                        {"sTitle": "金额"},
+                        {"sTitle": "预计交单时间"},
+                        {"sTitle": "制作人"},
+                        {"sTitle": "备注"},
                         {
                             "width": "12%",
                             "sTitle": "操作",
@@ -148,19 +155,19 @@
                     "bScrollCollapse": true,
                     "bStateSave": true
                 });
-                var members = ret.data;
-                for (var ij in members) {
-                    doc_table.fnAddData([
-                        members[ij].c_name,
-                        members[ij].u_name,
-                        members[ij].u_role,
-                        members[ij].u_phone,
-                        "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
-                        members[ij].u_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
-                        "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_it( " +
-                        members[ij].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
-                    ])
-                }
+//                var members = ret.data;
+//                for (var ij in members) {
+//                    doc_table.fnAddData([
+//                        members[ij].c_name,
+//                        members[ij].u_name,
+//                        members[ij].u_role,
+//                        members[ij].u_phone,
+//                        "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
+//                        members[ij].u_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
+//                        "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_it( " +
+//                        members[ij].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
+//                    ])
+//                }
             }, 'json');
         var cid = $("#get_c_id").attr("value");
         $.post('/community/table/' + cid, function (ret) {

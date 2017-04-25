@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import json
 from flask import render_template
 from webapp import app
 
@@ -9,6 +10,9 @@ __author__ = 'sonnyhcl'
 def transaction():
     return render_template('transaction.html')
 
+@app.route('/transaction/table', methods=['POST'])
+def get_transaction_by_uid():
+    return json.dumps({'status':'Success'})
 
 @app.route('/transaction/<int:cid>/page/', methods=['POST'])
 def show_transaction(cid):
