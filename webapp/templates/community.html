@@ -68,7 +68,7 @@
             <br>
             <!-- 添加按钮 -->
             <a id="add_community" href="#alterCommunity" role="button" data-toggle="modal"
-               onclick="add_it()" class="btn btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加社区</a>
+               onclick="add_comm()" class="btn btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加社区</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
                    id="community_table" width="100%">
@@ -137,9 +137,9 @@
                         communities[ij].c_name,
                         communities[ij].u_name,
                         communities[ij].u_phone,
-                        "<button href='#alterCommunity' data-toggle='modal' onclick='modify_it(" +
+                        "<button href='#alterCommunity' data-toggle='modal' onclick='modify_comm(" +
                         communities[ij].c_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
-                        "<button href='#confirmDeleteModal_comm' data-toggle='modal' onclick='delete_it( " +
+                        "<button href='#confirmDeleteModal_comm' data-toggle='modal' onclick='delete_comm( " +
                         communities[ij].c_id + ")' class='btn btn-danger' type='button'>删除</button>"
                     ])
                 }
@@ -163,16 +163,16 @@
         return (true);
     }
 
-    function add_it() {
+    function add_comm() {
         console.log("add it");
         $("#c_name").val("");
         $("#c_admin_table").val(0);
         $("#myModalLabel_comm").text("添加社区信息");
-        $("#yes_btn_comm").attr('onclick', 'confirm_add_member_comm()');
+        $("#yes_btn_comm").attr('onclick', 'confirm_add_comm()');
     }
 
-    function confirm_add_member_comm() {
-        console.log('confirm_add_member_comm');
+    function confirm_add_comm() {
+        console.log('confirm_add_comm');
         if (!check_value($("#c_name").val())) {
             return;
         }
@@ -186,7 +186,7 @@
         }, 'json');
     }
 
-    function modify_it(id) {
+    function modify_comm(id) {
         console.log("modify it:" + id);
         $.post("/community/table/" + id, function (ret) {
             console.log(ret);
@@ -195,12 +195,12 @@
             $("#c_name").val(data.c_name);
             $("#c_admin_table").val(data.u_id);
             $("#myModalLabel_comm").text("修改社区信息");
-            $("#yes_btn_comm").attr('onclick', 'confirm_modify_member_comm(' + id + ')');
+            $("#yes_btn_comm").attr('onclick', 'confirm_modify_comm(' + id + ')');
         }, 'json');
     }
 
-    function confirm_modify_member_comm(id) {
-        console.log("confirm_modify_member_comm:" + id);
+    function confirm_modify_comm(id) {
+        console.log("confirm_modify_comm:" + id);
         if (!check_value($("#c_name").val())) {
             return;
         }
@@ -214,13 +214,13 @@
         }, 'json');
     }
 
-    function delete_it(id) {
+    function delete_comm(id) {
         console.log("delete it");
-        $('#confirm-del-button_comm').attr('onclick', 'confirm_del_member_comm(' + id + ')');
+        $('#confirm-del-button_comm').attr('onclick', 'confirm_del_comm(' + id + ')');
     }
 
-    function confirm_del_member_comm(id) {
-        console.log("confirm_del_member_comm:" + id);
+    function confirm_del_comm(id) {
+        console.log("confirm_del_comm:" + id);
         $.post("/community/delete", {
             'c_id': id
         }, function (ret) {

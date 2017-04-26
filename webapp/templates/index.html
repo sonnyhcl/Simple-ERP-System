@@ -7,7 +7,13 @@
     <div class="col-md-12 column" style="background-color: white">
         <div class="col-md-4 column">
             <!--未来这里可以用来放微信头像-->
-            <i class="fa fa-user fa-5x" aria-hidden="true"></i>
+            {% if session['u_role'] == 'user' %}
+            <i class="fa fa-user fa-5x fa-fw" aria-hidden="true"></i>
+            {% elif session['u_role'] == 'admin' %}
+            <i class="fa fa-user-circle fa-5x fa-fw" aria-hidden="true"></i>
+            {% elif session['u_role'] == 'root' %}
+            <i class="fa fa-user-md fa-5x fa-fw" aria-hidden="true"></i>
+            {% endif %}
         </div>
 
         <div class="col-md-6 row">
@@ -119,7 +125,7 @@
                         transactions[i].i_note,
                         transactions[i].m_amount,
                         transactions[i].i_unit_price,
-                        transactions[i].m_amount*transactions[i].i_unit_price,
+                        transactions[i].m_amount * transactions[i].i_unit_price,
                         transactions[i].t_timestamp.substring(0, 10),
                         transactions[i].c_name,
                         transactions[i].u_name,

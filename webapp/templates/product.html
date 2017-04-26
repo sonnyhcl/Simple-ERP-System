@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <!-- 增加产品弹窗 -->
+    <!-- 增加产品/工艺弹窗 -->
     <div class="modal fade" id="alterProduct"
          role="dialog" aria-labelledby="myModalLabel_prod" aria-hidden="true">
         <div class="modal-dialog">
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">设计师</label>
                             <div class="col-lg-9">
-                                <input size="16" id="p_designer" type="text" value="" placeholder="设计师"
+                                <input size="16" id="p_author_name" type="text" value="" placeholder="设计师"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
                                        tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
@@ -37,26 +37,23 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">添加工艺</label>
                             <div class="col-lg-9">
-                                <div class="col-lg-5" style="padding: 0 0 0 0">
-                                    <input size="16" id="i_name" type="text" value="" placeholder="工艺名"
+                                <div class="col-lg-6" style="padding: 0 0 0 0">
+                                    <input size="16" id="item_name" type="text" value="" placeholder="工艺名"
                                            class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
                                            tabindex="0"
                                            data-toggle="popover" data-trigger="focus"/>
                                 </div>
                                 <div class="col-lg-3" style="padding: 0 1 0 0">
-                                    <input size="16" id="i_unit" type="text" value="" placeholder="分钟单价"
+                                    <input size="16" id="i_unit_price" type="text" value="" placeholder="分钟单价"
                                            class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
                                            tabindex="0"
                                            data-toggle="popover" data-trigger="focus"/>
                                 </div>
                                 <div class="col-lg-3" style="padding: 0 0 0 0">
-                                    <input size="16" id="i_time" type="text" value="" placeholder="参考用时"
+                                    <input size="16" id="i_ref_time" type="text" value="" placeholder="参考用时"
                                            class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
                                            tabindex="0"
                                            data-toggle="popover" data-trigger="focus"/>
-                                </div>
-                                <div class="col-lg-1" style="padding: 0 0 0 0">
-                                    <i class="fa fa-plus-circle fa-fw fa-2x" href="#" onclick=""></i>
                                 </div>
                             </div>
                         </div>
@@ -69,11 +66,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!--修改工艺弹窗-->
-    <div class="modal fade" id="alterItem">
-
     </div>
 
     <!--删除弹窗模板-->
@@ -119,11 +111,7 @@
         <div class="col-md-12 column">
             <!-- 标题 -->
             <h3 id="product_manage_title">产品管理系统</h3>
-            <br>
-            <!-- 修改按钮 -->
-            <a id="modify_product" href="#modifyProduct" role="button" data-toggle="modal"
-               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>修改产品</a>
-            <!-- 添加按钮 -->
+            <br><!-- 添加按钮 -->
             <a id="add_product" href="#alterProduct" role="button" data-toggle="modal"
                onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加产品</a>
             <!-- 删除按钮 -->
@@ -188,7 +176,7 @@
                 for (var ij in products) {
                     doc_table.fnAddData([
                         products[ij].p_name,
-                        products[ij].i_name,
+                        products[ij].item_name,
                         products[ij].p_author_name,
                         products[ij].i_unit_price,
                         products[ij].i_ref_time,
@@ -209,13 +197,25 @@
             }, 'json');
     });
 
-    function check_value(name, designer) {
+    function check_value(name, author_name, item_name, i_unit_price, i_ref_time) {
         if (name === "") {
             $('#p_name').popover('show');
             return (false);
         }
-        if (designer === "") {
-            $('#p_designer').popover('show');
+        if (author_name === "") {
+            $('#p_author_name').popover('show');
+            return (false);
+        }
+        if (item_name === "") {
+            $('#item_name').popover('show');
+            return (false);
+        }
+        if (i_unit_price === "") {
+            $('#i_unit_price').popover('show');
+            return (false);
+        }
+        if (i_ref_time === "") {
+            $('#i_ref_time').popover('show');
             return (false);
         }
         return (true);
@@ -225,128 +225,115 @@
     function add_prod() {
         console.log("add product");
         $("#myModalLabel_prod").text("添加产品信息");
-        $("#yes_btn_prod").attr('onclick', 'confirm_add_member_prod()');
+        $("#yes_btn_prod").attr('onclick', 'confirm_add_product()');
     }
 
-    function confirm_add_member_prod() {
-        console.log('confirm_add_member_prod');
-        if (!check_value($("#p_name").val(), $("#p_designer").val())) {
+    function confirm_add_product() {
+        console.log('confirm_add_product');
+        if (!check_value($("#p_name").val(), $("#p_author_name").val(), $('#item_name').val(), $('#i_unit_price').val(), $('#i_ref_time').val())) {
             return;
         }
-//        TODO
-//        $.post("/product/add", {
-//            'c_name': $("#t_name").val()
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        });
+        $.post("/product/add", {
+            'p_name': $("#p_name").val(),
+            'p_author_name': $('#p_author_name').val(),
+            'item_name': $('#item_name').val(),
+            'i_unit_price': $('#i_unit_price').val(),
+            'i_ref_time': $('i_ref_time').val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/product';
+        }, 'json');
     }
 
     function modify_prod(id) {
         console.log("modify product:" + id);
-//        TODO
-//        $.post("/product/" + id, function (ret) {
-//            console.log(ret);
-//            data = ret.data[0];
-//            $("#t_name").val(data.c_name);
-//            $("#myModalLabel_prod").text("修改产品信息");
-//            $("#yes_btn_prod").attr('onclick', 'confirm_modify_member_prod(' + id + ')');
-//        }, 'json');
+        $.post("/product/" + id, function (ret) {
+            console.log(ret);
+            data = ret.data[0];
+            $("#p_name").val(data.p_name);
+            $("#p_author_name").val(data.p_author_name);
+            $("#item_name").val(data.item_name);
+            $("#i_unit_price").val(data.i_unit_price);
+            $("#i_ref_time").val(data.i_ref_time);
+            $("#myModalLabel_prod").text("修改产品及工艺信息");
+            $("#yes_btn_prod").attr('onclick', 'confirm_modify_product(' + id + ')');
+        }, 'json');
     }
 
-    function confirm_modify_member_prod(id) {
-        console.log("confirm_modify_member_prod:" + id);
-//        TODO
-//        if (!check_value($("#t_name").val())) {
-//            return;
-//        }
-//        $.post("/product/modify", {
-//            'c_id': id,
-//            'c_name': $("#t_name").val()
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        });
+    function confirm_modify_product(id) {
+        console.log("confirm_modify_product:" + id);
+        if (!check_value($("#p_name").val(), $("#p_author_name").val(), $('#item_name').val(), $('#i_unit_price').val(), $('#i_ref_time').val())) {
+            return;
+        }
+        $.post("/product/modify", {
+            'i_id': id,
+            'p_name': $('#p_name').val(),
+            'p_author_name': $('#p_author_name').val(),
+            'item_name': $('#item_name').val(),
+            'i_unit_price': $('#i_unit_price').val(),
+            'i_ref_time': $('#i_ref_time').val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/product';
+        }, 'json');
     }
 
     function delete_prod(id) {
         console.log("delete product");
-        $('#confirm-del-button_prod').attr('onclick', 'confirm_del_member_prod(' + id + ')');
+        $('#confirm-del-button_prod').attr('onclick', 'confirm_del_product(' + id + ')');
     }
 
-    function confirm_del_member_prod(id) {
-        console.log("confirm_del_member_prod:" + id);
-//        TODO
-//        $.post("/product/delete", {
-//            'c_id': id
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        })
+    function confirm_del_product(id) {
+        console.log("confirm_del_product:" + id);
+        $.post("/product/delete", {
+            'p_id': id
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/product';
+        }, 'json')
     }
 
     /***** 针对工艺的操作 *****/
-    function add_item() {
+    function add_item(i_id) {
         console.log("add item");
-        $("#myModalLabel_item").text("添加工艺信息");
-        $("#yes_btn_item").attr('onclick', 'confirm_add_member_item()');
+        $.post("/product/" + i_id, function (ret) {
+            console.log(ret);
+            data = ret.data;
+            $('p_name').val(data.p_name);
+            $('p_author_name').val(data.p_author_name);
+            $("#myModalLabel_prod").text("添加工艺信息");
+            $("#yes_btn_prod").attr('onclick', 'confirm_add_item()');
+        }, 'json');
     }
 
-    function confirm_add_member_item() {
-        console.log('confirm_add_member_item');
-        if (!check_value($("#p_name").val(), $("#p_designer").val())) {
+    function confirm_add_item() {
+        console.log('confirm_add_item');
+        if (!check_value(1, 1, $("#item_name").val(), $("#i_unit_price").val(), $("i_ref_time").val())) {
             return;
         }
-//        TODO
-//        $.post("/product/add", {
-//            'c_name': $("#t_name").val()
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        });
-    }
-
-    function modify_item(id) {
-        console.log("modify item:" + id);
-//        TODO
-//        $.post("/product/" + id, function (ret) {
-//            console.log(ret);
-//            data = ret.data[0];
-//            $("#t_name").val(data.c_name);
-//            $("#myModalLabel_prod").text("修改产品信息");
-//            $("#yes_btn_prod").attr('onclick', 'confirm_modify_member_prod(' + id + ')');
-//        }, 'json');
-    }
-
-    function confirm_modify_member_item(id) {
-        console.log("confirm_modify_member_item:" + id);
-//        TODO
-//        if (!check_value($("#t_name").val())) {
-//            return;
-//        }
-//        $.post("/product/modify", {
-//            'c_id': id,
-//            'c_name': $("#t_name").val()
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        });
+        $.post("/product/additem", {
+            'item_name': $("#item_name").val(),
+            'i_unit_price': $("#i_unit_price").val(),
+            'i_ref_time': $('#i_ref_time').val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/product';
+        }, 'json');
     }
 
     function delete_item(id) {
         console.log("delete item");
-        $('#confirm-del-button_item').attr('onclick', 'confirm_del_member_item(' + id + ')');
+        $('#confirm-del-button_item').attr('onclick', 'confirm_del_item(' + id + ')');
     }
 
-    function confirm_del_member_item(id) {
-        console.log("confirm_del_member_item:" + id);
-//        TODO
-//        $.post("/product/delete", {
-//            'c_id': id
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        })
+    function confirm_del_item(id) {
+        console.log("confirm_del_item:" + id);
+        $.post("/product/delete_item", {
+            'i_id': id
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/product';
+        })
     }
 </script>
 

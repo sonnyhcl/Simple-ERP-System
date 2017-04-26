@@ -91,7 +91,7 @@
             <br>
             <!-- 添加按钮 -->
             <a id="add_user" href="#alterUser" role="button" data-toggle="modal"
-               onclick="add_it()" class="btn btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加人员</a>
+               onclick="add_user()" class="btn btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加人员</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
                    id="user_table" width="100%">
@@ -156,9 +156,9 @@
                         members[ij].u_name,
                         members[ij].u_role,
                         members[ij].u_phone,
-                        "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
+                        "<button href='#alterUser' data-toggle='modal' onclick='modify_user(" +
                         members[ij].u_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
-                        "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_it( " +
+                        "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_user( " +
                         members[ij].u_id + ")' class='btn btn-danger' type='button'>删除</button>"
                     ])
                 }
@@ -185,18 +185,18 @@
         return (true);
     }
 
-    function add_it() {
+    function add_user() {
         console.log("add it");
         $("#u_name").val("");
         $("#u_phone").val("");
         $("#u_community").val(cid);
         $("#u_role").val("user");
         $("#myModalLabel_user").text("添加人员信息");
-        $("#yes_btn_user").attr('onclick', 'confirm_add_member_user()');
+        $("#yes_btn_user").attr('onclick', 'confirm_add_user()');
     }
 
-    function confirm_add_member_user() {
-        console.log('confirm_add_member_user');
+    function confirm_add_user() {
+        console.log('confirm_add_user');
         if (!check_value($("#u_name").val(), $("#u_phone").val())) {
             return;
         }
@@ -208,10 +208,10 @@
         }, function (ret) {
             console.log(ret);
             location.href = '/user';
-        });
+        }, 'json');
     }
 
-    function modify_it(id) {
+    function modify_user(id) {
         console.log("modify it");
         $.post("/user/" + id, function (ret) {
             console.log(ret);
@@ -221,12 +221,12 @@
             $("#u_role").val(data.u_role);
             $("#u_community").val(data.c_id);
             $("#myModalLabel_user").text("修改人员信息");
-            $("#yes_btn_user").attr('onclick', 'confirm_modify_member_user(' + id + ')');
+            $("#yes_btn_user").attr('onclick', 'confirm_modify_user(' + id + ')');
         }, 'json');
     }
 
-    function confirm_modify_member_user(id) {
-        console.log("confirm_modify_member_user:" + id);
+    function confirm_modify_user(id) {
+        console.log("confirm_modify_user:" + id);
         if (!check_value($("#u_name").val(), $("#u_phone").val())) {
             return;
         }
@@ -239,16 +239,16 @@
         }, function (ret) {
             console.log(ret);
             location.href = '/user';
-        });
+        }, 'json');
     }
 
-    function delete_it(id) {
+    function delete_user(id) {
         console.log("delete it");
-        $('#confirm-del-button_user').attr('onclick', 'confirm_del_member_user(' + id + ')');
+        $('#confirm-del-button_user').attr('onclick', 'confirm_del_user(' + id + ')');
     }
 
-    function confirm_del_member_user(id) {
-        console.log("confirm_del_member_user:" + id);
+    function confirm_del_user(id) {
+        console.log("confirm_del_user:" + id);
         $.post("/user/delete", {
             'u_id': id
         }, function (ret) {

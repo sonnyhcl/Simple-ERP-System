@@ -4,7 +4,7 @@ from flask import render_template
 from webapp import app
 from auth.login_required import login_required
 
-__author__ = 'sonnyhcl'
+__author_name__ = 'sonnyhcl'
 
 
 @app.route('/product', methods=['GET'])
@@ -35,7 +35,7 @@ def get_all_products_detail():
 @login_required
 def add_product():
     """
-    这里需要添加多个工艺，所以item是个数组
+    这里需要添加1个工艺，所以item是个数组
     :return: {"status": "Success", "msg":"error_msg"}
     """
     # item = [{i_name, i_unit_price, i_ref_time},...]
