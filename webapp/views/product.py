@@ -52,8 +52,8 @@ def modify_product():
     每次修改只针对一个产品和它的一个工艺
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = products.add_product(p_name, p_author_name, i_name,
-    #  i_unit_price, i_ref_time)
+    # TODO status, info = products.add_product(p_id, p_name, p_author_name,
+    # i_id, i_name, i_unit_price, i_ref_time)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
