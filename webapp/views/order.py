@@ -15,13 +15,14 @@ def order():
 
 @app.route('/order/table', methods=['POST'])
 @login_required
-def get_all_orders():
+def get_orders_by_cid():
     """
-    获取所有订单信息
-    :return: 
+    返回社区c_id拥有的订单信息
+    如果cid=0则返回所有订单信息
+    :return: {"data": [], "status": 'Success', "msg": ""}
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    # TODO status, info = orders.get_all_orders()
+    # TODO status, info = orders.get_orders_by_cid()
     ret['data'] = [
         {'o_id': 1, 'p_name': '产品A', 'o_amount': 10, 'o_money': 1000,
          'o_note': '无'},
@@ -33,9 +34,9 @@ def get_all_orders():
 
 @app.route('/order/add', methods=['POST'])
 @login_required
-def add_order():
+def add_order_for_cid():
     """
-    
+    为社区c_id添加一个订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
     # TODO status, info = orders.add_order(o_amount, o_money, p_id)
@@ -47,7 +48,7 @@ def add_order():
 @login_required
 def modify_order():
     """
-    
+    修改社区c_id的订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
     # TODO status, info = orders.modify_order(o_amount, o_money, p_id)
@@ -59,7 +60,7 @@ def modify_order():
 @login_required
 def delete_order():
     """
-    
+    删除社区c_id的订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
     # TODO status, info = orders.delete_order(i_id)
