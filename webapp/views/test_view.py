@@ -21,8 +21,13 @@ def test():
     flag, response = user.get_all_user_info()
     print flag, response
     community = Community()
-    community.add_community(c_name='fuck community')
-    flag = community.add_community_admin(c_id=1, u_id=2)
+    flag, response = community.add_community(c_name='fuck community')
+    print flag, response
+    flag, response = community.add_community(c_name='fuck community')
+    print flag, response
+    flag, response = community.delete_community(c_id = 1)
+    print flag, response
+    flag = community.add_community_admin(c_id=1, u_id=111)
     print flag
     flag, response = community.get_community_by_cid(c_id=1)
     print flag, response

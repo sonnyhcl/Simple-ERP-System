@@ -25,7 +25,7 @@ class Item(object):
     def __init__(self) :
         self.__counter = 0
     def add_item(self, i_name, i_minutes, i_unitprices, i_prices, p_id):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("demo.db");
         param = (None, i_name, i_minutes, i_unitprices, i_prices, p_id,)
         conn.execute('insert into item values (?, ?, ?, ?, ?, ?);', param)
         conn.commit()
@@ -33,7 +33,7 @@ class Item(object):
         return "Success"
 
     def delete_item(self, i_id):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("demo.db");
 
         param = (i_id,)
         conn.execute('delete from item where i_id = ?;', param)
@@ -43,7 +43,7 @@ class Item(object):
 
     def update_item(self, i_id, _i_name = None, _i_minutes = None, _i_unitprices = None, _i_prices = None, _p_id = None):
 
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("demo.db");
 
         param = (i_id,)
         response = conn.execute('select * from item where i_id = ?;', param)
@@ -66,7 +66,7 @@ class Item(object):
         return "Success"
 
     def get_item(self, i_id):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("demo.db");
 
         param = (i_id,)
         response = conn.execute('select * from item where i_id = ?;', param)
@@ -75,7 +75,7 @@ class Item(object):
         return "Success", response
 
     def get_all(self, ):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("demo.db");
         response = conn.execute('select * from item;')
         response = response.fetchall()
         conn.close()

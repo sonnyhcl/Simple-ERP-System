@@ -144,6 +144,7 @@
                         {"sTitle": "工艺名称"},
                         {"sTitle": "分钟单价"},
                         {"sTitle": "参考用时"},
+                        {"sTitle": "规格"},
                         {
                             "width": "23%",
                             "sTitle": "操作",
@@ -182,6 +183,7 @@
                         products[ij].i_name,
                         products[ij].i_unit_price,
                         products[ij].i_ref_time,
+                        products[ij].i_note,
                         //修改按钮
                         "<button href='#alterProduct' data-toggle='modal' id='modify-item-btn_" + products[ij].i_id + "' " +
                         "onclick='modify_prod(" + products[ij].i_id + ")' class='btn btn-default' type='button'>" +

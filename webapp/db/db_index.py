@@ -17,7 +17,7 @@ class Index(object):
         :return: 
         """
         # TODO 返回格式status, msg = ..... 以及异常处理
-        conn = sqlite3.connect("test.db")
+        conn = sqlite3.connect("demo.db")
         param = (u_id, )
         response = conn.execute('SELECT u_name, u_role, c_name, u_phone '
                                 'FROM user, community '
