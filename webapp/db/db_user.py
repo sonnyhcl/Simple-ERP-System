@@ -22,7 +22,7 @@ class User(object):
         # TODO 名字判重
         log("%s: add_user: %s %s %s %s %s"
             % (session['u_name'], u_name, u_role, u_password, u_phone, c_id))
-        conn = sqlite3.connect("test.db")
+        conn = sqlite3.connect("demo.db")
         param = (u_name, u_role, u_password, u_phone, c_id,)
         conn.execute(
             'INSERT INTO user(u_name, u_role, u_password, u_phone, c_id) VALUES (?, ?, ?, ?, ?);',
@@ -38,7 +38,7 @@ class User(object):
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
         log("%s: delete_user: %s" % (session['u_name'], u_id))
-        conn = sqlite3.connect("test.db")
+        conn = sqlite3.connect("demo.db")
         param = (u_id,)
         conn.execute('DELETE FROM user WHERE u_id = ?;', param)
         conn.commit()
@@ -60,7 +60,7 @@ class User(object):
         log("%s: update_user: %s %s %s %s %s %s" %
             (session['u_name'], u_id, u_name, u_role, u_password, u_phone,
             c_id))
-        conn = sqlite3.connect("test.db")
+        conn = sqlite3.connect("demo.db")
         param = (u_id,)
         response = conn.execute('SELECT * FROM user WHERE u_id = ?;', param)
         origin = response.fetchall()[0]
@@ -90,7 +90,7 @@ class User(object):
         :param u_id:
         :return: 'Success', <response> or 'Fail', 'error_msg'
         """
-        conn = sqlite3.connect("test.db")
+        conn = sqlite3.connect("demo.db")
         param = (u_id,)
         response = conn.execute('SELECT * FROM user WHERE u_id = ?;', param)
         response = response.fetchall()
@@ -103,7 +103,7 @@ class User(object):
         :param c_id:
         :return: 'Success', <response> or 'Fail', 'error_msg'
         """
-        conn = sqlite3.connect("test.db")
+        conn = sqlite3.connect("demo.db")
         param = (c_id,)
         if c_id == 0:
             response = conn.execute('SELECT * FROM user')
@@ -118,7 +118,7 @@ class User(object):
 
         :return: 'Success', <response> or 'Fail', 'error_msg'
         """
-        conn = sqlite3.connect("test.db")
+        conn = sqlite3.connect("demo.db")
         response = conn.execute('SELECT * FROM user;')
         response = response.fetchall()
         conn.close()

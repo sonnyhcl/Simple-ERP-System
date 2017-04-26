@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-生成一份可供测试的完善的数据库test.db
+生成一份可供测试的完善的数据库demo.db
 """
 import os
 import sqlite3

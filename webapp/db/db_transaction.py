@@ -14,7 +14,7 @@ class Transactions(object):
     # def __init__(self) :
     #     self.__counter = 0
     def add_transactions(self, u_id, c_id, p_id, i_id, amount = 0):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("demo.db");
         param = (None, u_id, c_id, p_id, i_id, amount, )
         conn.execute('insert into transactions(t_id, u_id, c_id, p_id, i_id, amount) values (?, ?, ?, ?, ?, ?);', param)
         conn.commit()
@@ -22,7 +22,7 @@ class Transactions(object):
         return "Success"
 
     def delete_transactions(self, t_id):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("demo.db");
 
         param = (t_id,)
         conn.execute('delete from transactions where t_id = ?;', param)
@@ -31,7 +31,7 @@ class Transactions(object):
         return "Success"
 
     def update_transactions(self, t_id, u_id = None, c_id = None, p_id = None, i_id = None):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("demo.db");
 
         param = (t_id,)
         response = conn.execute('select * from transactions where t_id = ?;', param)
@@ -53,7 +53,7 @@ class Transactions(object):
         return "Success"
 
     def get_transactions(self, t_id):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("demo.db");
 
         param = (t_id,)
         response = conn.execute('select * from transactions where t_id = ?;', param)
@@ -62,7 +62,7 @@ class Transactions(object):
         return "Success", response
 
     def get_all(self, ):
-        conn = sqlite3.connect("test.db");
+        conn = sqlite3.connect("demo.db");
 
         response = conn.execute('select * from transactions;')
         response = response.fetchall()
