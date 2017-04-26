@@ -97,8 +97,10 @@ class Product(object):
 
     def get_all(self, ):
         conn = sqlite3.connect("demo.db");
-
-        response = conn.execute('select * from product;')
-        response = response.fetchall()
+        try :
+            response = conn.execute('select * from product, item where product.p_id = item.p_id;')
+            response = response.fetchall()
+        except Exception :
+            return "Fail", Exception
         conn.close()
         return "Success", response
