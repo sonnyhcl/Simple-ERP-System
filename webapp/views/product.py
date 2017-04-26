@@ -1,8 +1,9 @@
 # -*- coding: UTF-8 -*-
 import json
-from flask import render_template
+from flask import render_template, request
 from webapp import app
 from auth.login_required import login_required
+from db.db_product import products
 
 __author__ = 'sonnyhcl'
 
@@ -17,18 +18,16 @@ def product():
 @login_required
 def get_all_products_detail():
     ret = {"data": [], "status": 'Success', "msg": ""}
-    # TODO status, info = products.get_all_products_detail()
-    ret['data'] = [
-        {'p_name': '产品A', 'i_name': "产品A的工艺1",
-         'i_unit_price': 10.0, 'p_author_name': '设计师A', 'i_ref_time': 100},
-        {'p_name': '产品A', 'i_name': "产品A的工艺2",
-         'i_unit_price': 20.0, 'p_author_name': '设计师A', 'i_ref_time': 200},
-        {'p_name': '产品B', 'i_name': "产品B的工艺1",
-         'i_unit_price': 30.0, 'p_author_name': '设计师B', 'i_ref_time': 300},
-        {'p_name': '产品B', 'i_name': "产品B的工艺2",
-         'i_unit_price': 40.0, 'p_author_name': '设计师B', 'i_ref_time': 400},
-    ]
-    return json.dumps(ret)
+    # status, info = products.get_all_products_detail()
+    status, info = products.get_all()
+    if status == "Success":
+        _ = [ret['data'].append({'p_id': i[0], 'p_name': i[1],
+            "p_author_name": i[2], "i_name": i[3], "i_id": i[4],
+            "i_unit_price": i[5], "i_ref_time": i[6], "i_note": i[7]})
+             for i in info]
+    else:
+        ret['msg'] = str(info)
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/product/add', methods=['POST'])
@@ -39,10 +38,17 @@ def add_product():
     这里需要更新两个表
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = products.add_product(p_name, p_author_name, i_name,
-    #  i_unit_price, i_ref_time)
-    info = {"status": "Success", "msg": "error_msg"}
-    return json.dumps(info, ensure_ascii=False)
+    ret = {}
+    p_name = request.form.get('p_name')
+    p_author = request.form.get('p_author')
+    i_name = request.form.get('i_name')
+    i_unit_price = request.form.get('i_unit_price')
+    i_ref_time = request.form.get('i_ref_time')
+    i_note = request.form.get('i_note')
+    ret["status"], ret['msg'] = products.add_product(p_name, p_author, i_name,
+                            i_unit_price, i_ref_time, i_note)
+
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/product/modify', methods=['POST'])
@@ -52,10 +58,19 @@ def modify_product():
     每次修改只针对一个产品和它的一个工艺
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = products.add_product(p_id, p_name, p_author_name,
-    # i_id, i_name, i_unit_price, i_ref_time)
-    info = {"status": "Success", "msg": "error_msg"}
-    return json.dumps(info, ensure_ascii=False)
+    ret = {}
+    p_id = request.form.get('p_id')
+    p_name = request.form.get('p_name')
+    p_author = request.form.get('p_author')
+    i_id = request.form.get('i_id')
+    i_name = request.form.get('i_name')
+    i_unit_price = request.form.get('i_unit_price')
+    i_ref_time = request.form.get('i_ref_time')
+    i_note = request.form.get('i_note')
+    ret["status"], ret['msg'] = products.update_product(p_id, i_id, p_name,
+                    p_author, i_name, i_unit_price, i_ref_time, i_note)
+
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/product/delete', methods=['POST'])
@@ -65,6 +80,7 @@ def delete_product():
     删除这个产品，以及这个产品的所有工艺
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = products.delete_product(p_id)
-    info = {"status": "Success", "msg": "error_msg"}
-    return json.dumps(info, ensure_ascii=False)
+    ret = {}
+    p_id = request.form.get('p_id')
+    ret["status"], ret["msg"] = products.delete_product(p_id)
+    return json.dumps(ret, ensure_ascii=False)

@@ -84,8 +84,6 @@ def add_user():
     u_role = request.form.get("u_role")
     c_id = request.form.get("c_id")
     u_password = '123456'
-    # TODO 如果新用户为某个社区的管理员，需要判断一下该社区是否已有管理员
-    # 如果没有，则应该顺便更新community表
     # TODO 返回格式status, msg = .....
     status = user.add_user(u_name, u_role, u_password, u_phone, c_id)
     return status

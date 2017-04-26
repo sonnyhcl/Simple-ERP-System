@@ -44,8 +44,9 @@ class Product(object):
         conn.close()
         return "Success"
 
-    def update_product(self, p_id, i_id, p_name=None, author_name=None,
-                       i_name=None, i_unit_price=None, i_ref_time=None):
+    def update_product(self, p_id, i_id, p_name=None, author=None,
+                       i_name=None, i_unit_price=None, i_ref_time=None,
+                       i_note=None):
         conn = sqlite3.connect("demo.db")
         try:
             param = (p_id,)
@@ -55,11 +56,12 @@ class Product(object):
             origin = list(origin)
             if p_name is not None:
                 origin[1] = p_name
-            if author_name is not None:
-                origin[2] = author_name
+            if author is not None:
+                origin[2] = author
             param = tuple(origin) + (p_id,)
             conn.execute(
-                'UPDATE product SET p_id = ?, p_name = ?, author_name = ? WHERE p_id = ?;',
+                'UPDATE product SET p_id = ?, p_name = ?, p_author = ? '
+                'WHERE p_id = ?;',
                 param)
             param = (i_id,)
             response = conn.execute('SELECT * FROM item WHERE i_id = ?;', param)
@@ -80,7 +82,7 @@ class Product(object):
             return "Fail", Exception
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
     def get_product(self, p_id):
         conn = sqlite3.connect("demo.db")
@@ -102,5 +104,4 @@ class Product(object):
         conn.close()
         return "Success", response
 
-
-product = Product()
+products = Product()

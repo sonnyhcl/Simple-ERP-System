@@ -7,7 +7,7 @@ import sqlite3
 
 filename = 'demo.db'
 if os.path.exists(filename):
-  os.remove(filename)
+    os.remove(filename)
 conn = sqlite3.connect(filename)
 print "Open Database Successfully!"
 
@@ -20,7 +20,7 @@ conn.execute(
         (
             p_id          INTEGER     PRIMARY KEY    AUTOINCREMENT,
             p_name        char(60)    NOT NULL,
-            p_authorname  char(10)
+            p_author      char(10)
         )
         ;
     '''
@@ -37,7 +37,7 @@ conn.execute(
         (
             i_id            INTEGER     PRIMARY KEY    AUTOINCREMENT,
             i_name          char(90)    NOT NULL,
-            i_unitprices    FLOAT       NOT NULL,
+            i_unit_price    FLOAT       NOT NULL,
             i_ref_time      INT         NOT NULL,
             i_note          INT         DEFAULT('无'),
             p_id            INT         NOT NULL,
@@ -185,7 +185,7 @@ conn.execute(
 """
 conn.execute(
     """
-    INSERT INTO product(p_name, p_authorname)
+    INSERT INTO product(p_name, p_author)
     VALUES  ('产品A',  '设计师A'), ('产品B',  '设计师B');
     """
 )
@@ -195,7 +195,7 @@ conn.execute(
 """
 conn.execute(
     """
-    INSERT INTO item(i_name, i_unitprices, i_ref_time, p_id)
+    INSERT INTO item(i_name, i_unit_price, i_ref_time, p_id)
     VALUES  ('产品A的工艺1',  10,  100, 1), ('产品A的工艺2',  20, 200, 1),
             ('产品B的工艺2',  30,  300, 2), ('产品B的工艺2',  40, 400, 2);
     """
