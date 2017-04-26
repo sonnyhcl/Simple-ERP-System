@@ -21,18 +21,15 @@ class Community(object):
         # TODO 返回格式status, msg = ..... 以及异常处理
         log("%s: add community: %s %s" % (session['u_name'], c_name, u_id))
         conn = sqlite3.connect("demo.db")
-        #check if the community name has been used
-        param = (c_name,)
-        response = conn.execute('select * from community where c_name = ?;', param)
-        response = response.fetchall()
-        if (response is not None) :
-            return "Fail", "%s has been used as community names before." % c_name
-        param = (c_name, u_id,)
-        conn.execute('INSERT INTO community(c_name, u_id) VALUES (?, ?);',
-                     param)
+        try:
+            param = (c_name, u_id,)
+            conn.execute('INSERT INTO community(c_name, u_id) VALUES (?, ?);', param)
+        except Exception:
+            conn.close()
+            return "Fail", Exception
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
     def delete_community(self, c_id):
         """
@@ -49,11 +46,15 @@ class Community(object):
         response = response.fetchall()
         if (response is not None) :
             return "Fail", "There are still users belonging to community %s" % c_id
-        param = (c_id,)
-        conn.execute('DELETE FROM community WHERE c_id = ?;', param)
+        try:
+            param = (c_id,)
+            conn.execute('DELETE FROM community WHERE c_id = ?;', param)
+        except Exception:
+            conn.close()
+            return "Fail", Exception
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
     def update_community(self, c_id, new_c_name, u_id):
         """
@@ -96,14 +97,18 @@ class Community(object):
                                 param)
         response = response.fetchall()
         # TODO 这一步不应该出现错误,由community.get_all_admin()保证
-        if (response is None) or response[0][0] != 'admin':
+        if (len(response) == 0) or response[0][0] != 'admin':
             conn.close()
             return "Fail", "%s is not root or admin" % u_id
-        param = (u_id, c_id,)
-        conn.execute('UPDATE community SET u_id = ? WHERE c_id = ?;', param)
+        try:
+            param = (u_id, c_id,)
+            conn.execute('UPDATE community SET u_id = ? WHERE c_id = ?;', param)
+        except Exception:
+            conn.close()
+            return "Fail", Exception
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
     # def get_community(self, c_id):
     #     conn = sqlite3.connect("demo.db")
@@ -125,21 +130,25 @@ class Community(object):
         """
         # TODO 返回格式status, msg = ..... 以及异常处理
         conn = sqlite3.connect("demo.db")
-        if c_id == 0:
-            response = conn.execute(
+        try:
+            if c_id == 0:
+                response = conn.execute(
                 'SELECT community.c_id, community.c_name, '
                 'user.u_name, user.u_phone, user.u_id '
                 'FROM'
                 ' '
                 'community, user '
                 'WHERE user.u_id = community.u_id;')
-        else:
-            param = (c_id,)
-            response = conn.execute(
+            else:
+                param = (c_id,)
+                response = conn.execute(
                 'SELECT community.c_id, community.c_name, '
                 'user.u_name, user.u_phone, user.u_id '
                 'FROM community, user '
                 'WHERE community.c_id = ? AND user.u_id = community.u_id;', param)
+        except Exception:
+            conn.close()
+            return "Fail", Exception
         response = response.fetchall()
         conn.close()
         return "Success", response
