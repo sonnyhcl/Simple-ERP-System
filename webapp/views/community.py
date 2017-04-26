@@ -6,10 +6,12 @@ import json
 from flask import render_template, session, request
 from webapp import app
 from db.db_community import *
+from auth.login_required import login_required
 __author__ = 'sonnyhcl'
 
 
 @app.route('/community', methods=['GET'])
+@login_required
 def community_index():
     """
     返回社区页面
@@ -19,6 +21,7 @@ def community_index():
 
 
 @app.route('/community/table/<int:c_id>', methods=['POST'])
+@login_required
 def get_community_by_cid(c_id):
     """
     根据c_id返回社区的信息
@@ -38,6 +41,7 @@ def get_community_by_cid(c_id):
 
 
 @app.route('/community/get_all_admin', methods=['POST'])
+@login_required
 def get_all_admin():
     """
     返回所有权限为admin & root的人的信息
@@ -55,6 +59,7 @@ def get_all_admin():
 
 
 @app.route('/community/add', methods=['POST'])
+@login_required
 def add_community():
     """
     根据传入的{c_name, u_id}添加一个社区信息
@@ -69,6 +74,7 @@ def add_community():
 
 
 @app.route('/community/modify', methods=['POST'])
+@login_required
 def modify_community():
     """
     根据传入的{c_name, c_id, u_id}修改一个社区信息
@@ -84,6 +90,7 @@ def modify_community():
 
 
 @app.route('/community/delete', methods=['POST'])
+@login_required
 def delete_community():
     """
     根据传入的{c_id}删除一个社区信息

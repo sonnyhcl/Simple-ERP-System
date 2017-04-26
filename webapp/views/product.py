@@ -2,16 +2,19 @@
 import json
 from flask import render_template
 from webapp import app
+from auth.login_required import login_required
 
 __author__ = 'sonnyhcl'
 
 
 @app.route('/product', methods=['GET'])
+@login_required
 def product():
     return render_template('product.html')
 
 
 @app.route('/product/table', methods=['POST'])
+@login_required
 def get_all_products_detail():
     ret = {"data": [], "status": 'Success', "msg": ""}
     # TODO status, info = products.get_all_products_detail()
@@ -29,6 +32,7 @@ def get_all_products_detail():
 
 
 @app.route('/product/add', methods=['POST'])
+@login_required
 def add_product():
     """
     这里需要添加多个工艺，所以item是个数组
@@ -41,6 +45,7 @@ def add_product():
 
 
 @app.route('/product/modify', methods=['POST'])
+@login_required
 def modify_product():
     """
     需要判断是否增加了工艺或者删除了工艺，同时更新产品表和工艺表
@@ -53,6 +58,7 @@ def modify_product():
 
 
 @app.route('/product/delete', methods=['POST'])
+@login_required
 def delete_product():
     """
 

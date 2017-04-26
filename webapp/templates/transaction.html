@@ -117,9 +117,12 @@
                     "aoColumns": [
                         {"sTitle": "开单日期"},
                         {"sTitle": "单号"},
-                        {"sTitle": "产品"},
                         {
-                            "width":"15%",
+                            "width":"10%",
+                            "sTitle": "产品"
+                        },
+                        {
+                            "width":"10%",
                             "sTitle": "工艺"
                         },
                         {"sTitle": "规格"}, // 工艺备注
@@ -178,7 +181,7 @@
                         transactions[i].u_id + ")' class='btn btn-sm btn-default' type='button'> " +
                         "<i class='fa fa-pencil'></i></button>" + "  " +
                         "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_it( " +
-                        transactions[i].u_id + ")' class='btn btn-sm btn-danger' type='button'>" +
+                        transactions[i].u_id + ")' class='btn btn-xs btn-danger' type='button'>" +
                         "<i class='fa fa-trash'></i></button>"
                     ])
                 }

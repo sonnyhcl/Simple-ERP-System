@@ -76,7 +76,7 @@ def validate_user(u_name, u_password):
 def log_in():
     u_name = request.form.get('username', None)
     u_password = request.form.get('password', None)
-    next_url = request.form.get('next', url_for('index'))
+    next_url = request.form.get('next', 'index')
     if next_url in ('log_out', '/log_out', url_for('log_out')):
         next_url = url_for('index')
     status, info = validate_user(u_name, u_password)
@@ -139,6 +139,7 @@ def not_found(e):
 
 
 @app.route('/show_web_log', methods=['GET'])
+@login_required
 def show_web_log():
     """
     给运维预留的日志接口
@@ -152,6 +153,7 @@ def show_web_log():
 
 
 @app.route('/show_db_log', methods=['GET'])
+@login_required
 def show_db_log():
     """
     给超管预留的数据库操作流水接口

@@ -133,15 +133,15 @@
                     ])
                 }
             }, 'json');
-        var cid = $("#get_c_id").attr("value");
-        $.post('/community/table/' + cid, function (ret) {
-            console.log(ret);
-            var communities = ret.data;
-            for (var i in communities) {
-                console.log(communities[i]);
-                $('#t_community').append('<option value="' + communities[i].c_id + '">' + communities[i].c_name + '</option>');
-            }
-        }, 'json')
+//        var cid = $("#get_c_id").attr("value");
+//        $.post('/community/table/' + cid, function (ret) {
+//            console.log(ret);
+//            var communities = ret.data;
+//            for (var i in communities) {
+//                console.log(communities[i]);
+//                $('#t_community').append('<option value="' + communities[i].c_id + '">' + communities[i].c_name + '</option>');
+//            }
+//        }, 'json')
     });
 
     function check_value(name, phone) {

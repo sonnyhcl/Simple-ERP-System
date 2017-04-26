@@ -10,8 +10,8 @@ from db.db_transaction import *
 __author__ = 'sonnyhcl'
 
 
-@login_required
 @app.route('/test')
+@login_required
 def test():
     """
     该url纯供测试
@@ -46,10 +46,12 @@ def test():
 
 
 @app.route('/task')
+@login_required
 def task_index():
     return render_template('task.html')
 
 
 @app.route('/order')
+@login_required
 def order_index():
     return "helloworld"
