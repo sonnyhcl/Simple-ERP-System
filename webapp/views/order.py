@@ -2,16 +2,19 @@
 import json
 from flask import render_template
 from webapp import app
+from auth.login_required import login_required
 
 __author__ = 'sonnyhcl'
 
 
 @app.route('/order', methods=['GET'])
+@login_required
 def order():
     return render_template('order.html')
 
 
 @app.route('/order/table', methods=['POST'])
+@login_required
 def get_all_orders():
     """
     获取所有订单信息
@@ -29,6 +32,7 @@ def get_all_orders():
 
 
 @app.route('/order/add', methods=['POST'])
+@login_required
 def add_order():
     """
     
@@ -40,6 +44,7 @@ def add_order():
 
 
 @app.route('/order/modify', methods=['POST'])
+@login_required
 def modify_order():
     """
     
@@ -51,6 +56,7 @@ def modify_order():
 
 
 @app.route('/order/delete', methods=['POST'])
+@login_required
 def delete_order():
     """
     

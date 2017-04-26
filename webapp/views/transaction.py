@@ -2,16 +2,19 @@
 import json
 from flask import render_template
 from webapp import app
+from auth.login_required import login_required
 
 __author__ = 'sonnyhcl'
 
 
 @app.route('/transaction', methods=['GET'])
+@login_required
 def transaction():
     return render_template('transaction.html')
 
 
 @app.route('/transaction/table', methods=['POST'])
+@login_required
 def get_transaction_by_uid():
     ret = {"data": [], "status": 'Success', "msg": ""}
     # TODO status, info = transaction.get_transaction_by_cid()
@@ -25,6 +28,7 @@ def get_transaction_by_uid():
 
 
 @app.route('/transaction/add', methods=['POST'])
+@login_required
 def add_transaction():
     """
 
@@ -36,6 +40,7 @@ def add_transaction():
 
 
 @app.route('/transaction/modify', methods=['POST'])
+@login_required
 def modify_transaction():
     """
 
@@ -47,6 +52,7 @@ def modify_transaction():
 
 
 @app.route('/transaction/delete', methods=['POST'])
+@login_required
 def delete_transaction():
     """
 

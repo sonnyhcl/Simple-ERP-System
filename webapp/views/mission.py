@@ -3,16 +3,19 @@ import json
 from flask import render_template, session, request
 from webapp import app
 from db.db_community import *
+from auth.login_required import login_required
 
 __author__ = 'sonnyhcl'
 
 @app.route('/mission', methods=['GET'])
+@login_required
 def mission_index():
     return render_template('mission.html')
 
 
 
 @app.route('/mission/table', methods=['POST'])
+@login_required
 def get_mission_by_cid():
     """
     返回社区c_id的任务信息
@@ -35,6 +38,7 @@ def get_mission_by_cid():
 
 
 @app.route('/mission/add', methods=['POST'])
+@login_required
 def add_mission():
     """
 
@@ -46,6 +50,7 @@ def add_mission():
 
 
 @app.route('/mission/modify', methods=['POST'])
+@login_required
 def modify_mission():
     """
 
@@ -57,6 +62,7 @@ def modify_mission():
 
 
 @app.route('/mission/delete', methods=['POST'])
+@login_required
 def delete_mission():
     """
 

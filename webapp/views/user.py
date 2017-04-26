@@ -7,10 +7,12 @@ from flask import render_template, session, request
 from webapp import app
 from db.db_user import *
 from db.db_community import *
+from auth.login_required import login_required
 __author__ = 'sonnyhcl'
 
 
 @app.route('/user', methods=['GET'])
+@login_required
 def user_index():
     """
     返回用户管理页面
@@ -19,6 +21,7 @@ def user_index():
     return render_template('user.html')
 
 @app.route('/user/<int:u_id>', methods=['POST'])
+@login_required
 def get_user_by_uid(u_id):
     """
     根据u_id获取用户信息
@@ -39,6 +42,7 @@ def get_user_by_uid(u_id):
 
 
 @app.route('/user/table', methods=['POST'])
+@login_required
 def get_users_by_cid():
     """
     人员管理页面
@@ -69,6 +73,7 @@ def get_users_by_cid():
 
 
 @app.route('/user/add', methods=['POST'])
+@login_required
 def add_user():
     """
     添加用户{u_name, u_phone, u_role, c_id} 默认密码为'123456'
@@ -87,6 +92,7 @@ def add_user():
 
 
 @app.route('/user/modify', methods=['POST'])
+@login_required
 def modify_user():
     """
 
@@ -106,6 +112,7 @@ def modify_user():
 
 
 @app.route('/user/delete', methods=['POST'])
+@login_required
 def delete_user():
     """
     删除用户

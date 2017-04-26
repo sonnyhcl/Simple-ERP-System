@@ -28,7 +28,8 @@ conn.execute(
 print "product info table created Successfully!"
 
 """
-工艺（工艺编号，工艺名，分钟单价，参考时间，产品编号）
+工艺（工艺编号，工艺名，分钟单价，参考时间，工艺规格，产品编号）
+这里还是按照工艺编号实现好了 | 工艺规格就是工艺的备注
 """
 conn.execute(
     '''
@@ -37,7 +38,8 @@ conn.execute(
             i_id            INTEGER     PRIMARY KEY    AUTOINCREMENT,
             i_name          char(90)    NOT NULL,
             i_unitprices    FLOAT       NOT NULL,
-            i_ref_time      INTEGER     NOT NULL,
+            i_ref_time      INT         NOT NULL,
+            i_note          INT         DEFAULT('无'),
             p_id            INT         NOT NULL,
             FOREIGN KEY     (p_id)      REFERENCES      product(p_id)
         )
@@ -87,7 +89,7 @@ print "user info table created Successfully!"
 
 
 """
-订单（订单编号，数量, 金额，开单时间，订单备注, 产品编号)
+订单（订单编号，数量, 开单时间，金额，订单备注, 产品编号)
 #TODO 最后交付时间先不放
 """
 conn.execute(
@@ -154,7 +156,7 @@ print "transactions info table created Successfully!"
 ##################################################
 """
 添加社区信息（社区id，社区名，社区管理员id）
-默认社区管理员均为u_id=0的人
+默认社区管理员为u_id=0的人
 """
 conn.execute(
     """
@@ -173,8 +175,8 @@ conn.execute(
     VALUES  (0, 'hcl',     'root',     'hcl',  '12345678910',   0),
             (1, 'admin',   'admin',    'admin','12345678910',   1),
             (2, 'user',    'user',     'uer',  '12345678910',   1),
-            (3, '管理员',  'admin',    'admin','12345678910',   2),
-            (4, '用户',    'user',     'user', '12345678910',   2);
+            (3, '管理员',   'admin',    'admin','12345678910',   2),
+            (4, '用户',     'user',     'user', '12345678910',   2);
     """
 )
 
