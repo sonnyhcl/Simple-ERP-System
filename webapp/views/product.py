@@ -24,9 +24,9 @@ def get_all_products_detail():
         {'p_name': '产品A', 'i_name': "产品A的工艺2",
          'i_unit_price': 20.0, 'p_author_name': '设计师A', 'i_ref_time': 200},
         {'p_name': '产品B', 'i_name': "产品B的工艺1",
-         'i_unit_price': 30.0, 'p_author_name': '设计师A', 'i_ref_time': 300},
+         'i_unit_price': 30.0, 'p_author_name': '设计师B', 'i_ref_time': 300},
         {'p_name': '产品B', 'i_name': "产品B的工艺2",
-         'i_unit_price': 40.0, 'p_author_name': '设计师A', 'i_ref_time': 400},
+         'i_unit_price': 40.0, 'p_author_name': '设计师B', 'i_ref_time': 400},
     ]
     return json.dumps(ret)
 
@@ -35,11 +35,12 @@ def get_all_products_detail():
 @login_required
 def add_product():
     """
-    这里需要添加多个工艺，所以item是个数组
+    添加一个产品，同时添加该产品的第一个工艺
+    这里需要更新两个表
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # item = [{i_name, i_unit_price, i_ref_time},...]
-    # TODO status, info = products.add_product(p_name, p_author_name, item)
+    # TODO status, info = products.add_product(p_name, p_author_name, i_name,
+    #  i_unit_price, i_ref_time)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
@@ -48,11 +49,11 @@ def add_product():
 @login_required
 def modify_product():
     """
-    需要判断是否增加了工艺或者删除了工艺，同时更新产品表和工艺表
+    每次修改只针对一个产品和它的一个工艺
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # item = [{i_name, i_unit_price, i_ref_time},...]
-    # TODO status, info = products.modify_product(p_name, p_author_name, item)
+    # TODO status, info = products.add_product(p_name, p_author_name, i_name,
+    #  i_unit_price, i_ref_time)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
@@ -61,10 +62,9 @@ def modify_product():
 @login_required
 def delete_product():
     """
-
+    删除这个产品，以及这个产品的所有工艺
     :return: {"status": "Success", "msg":"error_msg"}
     """
     # TODO status, info = products.delete_product(p_id)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
-
