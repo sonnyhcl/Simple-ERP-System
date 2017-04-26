@@ -93,3 +93,4 @@ bootstrap-*
 tree.txt
 *.ipynb
 test.db
+webapp/db/demo.db

@@ -6,7 +6,7 @@
     <title>{% block title %}{% endblock title %} - 彩虹桥</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <!-- 引入 Bootstrap -->
+    <!-- Bootstrap -->
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
@@ -16,7 +16,7 @@
           rel="stylesheet">
     <link href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 
-    <!--fontawesome-->
+    <!-- font awesome -->
     <link href="/static/fontawesome-4.7/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/static/fontawesome-4.7/css/font-awesome.css" rel="stylesheet"/>
     {% endblock head%}
@@ -25,7 +25,7 @@
 
 <body>
 
-<!--修改密码-->
+<!-- 修改密码 -->
 <div class="container" align="center">
     <div class="modal fade" id="resetPassword"
          role="dialog" aria-labelledby="myModalLabel_rstpwd" aria-hidden="true">
@@ -143,13 +143,13 @@
 {% endif %}
 
 
-<!--Body-->
+<!-- Body -->
 <div id="content" align="center">
     {% block content %}
     {% endblock %}
 </div>
 
-<!--Footer-->
+<!-- Footer -->
 {% if session['logged_in'] == True %}
 <div class="container" align="center" style="bottom: 0;left: 0; right: 0;">
     <hr>
@@ -178,7 +178,7 @@
 <!-- jquery.datatables -->
 <script src="http://cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
 
-<!--修改密码-->
+<!-- 修改密码 -->
 <script type="text/javascript">
     function check_password(name, old_password, new_password, confirm_new_password) {
         if (name === "") {
