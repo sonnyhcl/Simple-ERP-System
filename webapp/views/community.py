@@ -24,13 +24,13 @@ def get_community_by_cid(c_id):
     根据c_id返回社区的信息
     c_id=0意味着返回所有社区的信息，否则只返回该c_id社区的信息。
     :param c_id: 
-    :return: {"data": [{'c_id':, 'c_name':,'u_name':,'u_phone':}], 
+    :return: {"data": [{'c_id':,'c_name':,'u_name':,'u_phone':,'u_id':}], 
                 "status": status, "msg":""}
     """
     status, info = community.get_community_by_cid(c_id)
     ret = {"data": [], "status": status, "msg":""}
     if status == "Success":
-        _ = [ret['data'].append({'c_id':i[0], 'c_name':i[1],
+        _ = [ret['data'].append({'c_id':i[0], 'c_name':i[1], 'u_id': i[4],
                                  'u_name': i[2],'u_phone': i[3]}) for i in info]
     else:
         ret['msg'] = info
@@ -48,7 +48,7 @@ def get_all_admin():
     # TODO 返回所有admin以及root权限的人的{u_id, u_name}
     # status, response = community.get_all_admin()
     response = {'data': [{'u_id':0, 'u_name':'hcl'},
-                     {'u_id':1, 'u_name':'Alice'}],
+                     {'u_id':1, 'u_name':'admin'}],
                 'status': 'Success', 'msg': "error_msg" }
     return json.dumps(response, ensure_ascii=False)
 
@@ -64,7 +64,7 @@ def add_community():
     u_id = request.form.get('u_id')
     # TODO 修改返回格式和传入参数
     # status, msg = community.add_community(c_name, u_id)
-    status = community.add_community(c_name)
+    status = community.add_community(c_name, u_id)
     return json.dumps({"status": status, "msg":"error_msg"})
 
 

@@ -9,6 +9,7 @@ from flask import render_template, request, session, \
 from auth.login_required import login_required
 from webapp import app
 from db.db_user import *
+from db.db_index import index
 from webapp.mylog import log
 __author__ = 'sonnyhcl'
 
@@ -20,12 +21,19 @@ def index_():
 
 @app.route('/index')
 @login_required
-def index():
+def index_index():
     """
     返回首页
     :return:
     """
-    return render_template('index.html')
+    d = {'root': u"主管理员", 'admin': u"社区管理员", 'user': u"员工"}
+    status, info = index.get_index_info_by_uid(session['u_id'])
+    user_info = {'u_name': 'error', 'u_role': 'user',
+                 'c_name': 'error', 'u_phone': 'error'}
+    if status == 'Success':
+        user_info = {'u_name': info[0][0], 'u_role': d[info[0][1]],
+                     'c_name': info[0][2], 'u_phone': info[0][3]}
+    return render_template('index.html', user_info=user_info)
 
 
 @app.route('/log_out', methods=['GET'])
@@ -36,10 +44,10 @@ def log_out():
     """
     log("%s log_out" % (session['u_name']))
     session['logged_in'] = False
+    session['u_id'] = -1
     session['u_name'] = 'guest'
     session['u_role'] = 'guest'
     session['c_id'] = -1
-    session['u_id'] = -1
     return redirect('index')
 
 
@@ -50,7 +58,7 @@ def validate_user(u_name, u_password):
     :param u_password:
     :return: True, [user_info] or False, ""
     """
-    log("validate_user" + u_name)
+    log("validate_user %s" % u_name)
     if not u_name or not u_password:
         return False, ""
     status, info = user.get_all_user_info()

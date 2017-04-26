@@ -104,10 +104,11 @@
                 <li><a href="/product"><font color="{% if selected_menu == 'product' %}orange{% endif %}">产品</font></a></li>
 
                 {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
+                <li><a href="/transaction">
+                    <font color="{% if selected_menu == 'transaction' %}orange{% endif %}">流水</font></a></li>
+                <li><a href="/mission"><font color="{% if selected_menu == 'mission' %}orange{% endif %}">任务</font></a></li>
+                <li><a href="/order"><font color="{% if selected_menu == 'order' %}orange{% endif %}">订单</font></a></li>
                 <li><a href="/user"><font color="{% if selected_menu == 'user' %}orange{% endif %}">人员</font></a></li>
-                <li><a href="/task"><font color="{% if selected_menu == 'task' %}orange{% endif %}">订单</font></a></li>
-                <li><a href="/transaction"><font
-                        color="{% if selected_menu == 'transaction' %}orange{% endif %}">流水</font></a></li>
                 {% endif %}
 
                 {% if session['u_role'] == 'root' %}

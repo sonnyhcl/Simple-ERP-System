@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}用户{% endblock %}
+{% block title %}人员{% endblock %}
 {%  set selected_menu = "user" %}
 
 {% block content %}
@@ -108,6 +108,7 @@
 {% block script %}
 {{ super() }}
 <script type="text/javascript">
+    var cid = $("#get_c_id").attr("value");
     $(document).ready(function () {
         var doc_table;
         console.log('document ready');
@@ -162,7 +163,6 @@
                     ])
                 }
             }, 'json');
-        var cid = $("#get_c_id").attr("value");
         $.post('/community/table/' + cid, function (ret) {
             console.log(ret);
             var communities = ret.data;
@@ -188,9 +188,9 @@
     function add_it() {
         console.log("add it");
         $("#u_name").val("");
-        $("#u_community").val("");
         $("#u_phone").val("");
-        $("#u_role").val("");
+        $("#u_community").val(cid);
+        $("#u_role").val("user");
         $("#myModalLabel_user").text("添加人员信息");
         $("#yes_btn_user").attr('onclick', 'confirm_add_member_user()');
     }

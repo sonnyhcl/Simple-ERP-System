@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">社区名称</label>
                             <div class="col-lg-6">
-                                <input size="16" id="t_name" type="text" value="" placeholder="名字"
+                                <input size="16" id="c_name" type="text" value="" placeholder="名字"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
@@ -157,7 +157,7 @@
 
     function check_value(name) {
         if (name === "") {
-            $('#t_name').popover('show');
+            $('#c_name').popover('show');
             return (false);
         }
         return (true);
@@ -165,17 +165,20 @@
 
     function add_it() {
         console.log("add it");
+        $("#c_name").val("");
+        $("#c_admin_table").val(0);
         $("#myModalLabel_comm").text("添加社区信息");
         $("#yes_btn_comm").attr('onclick', 'confirm_add_member_comm()');
     }
 
     function confirm_add_member_comm() {
         console.log('confirm_add_member_comm');
-        if (!check_value($("#t_name").val())) {
+        if (!check_value($("#c_name").val())) {
             return;
         }
+        //根据u_id添加管理员这一步，db部分暂时还没有做完
         $.post("/community/add", {
-            'c_name': $("#t_name").val(),
+            'c_name': $("#c_name").val(),
             'u_id': $("#c_admin_table").val()
         }, function (ret) {
             console.log(ret);
@@ -189,7 +192,8 @@
             console.log(ret);
             data = ret.data[0];
 
-            $("#t_name").val(data.c_name);
+            $("#c_name").val(data.c_name);
+            $("#c_admin_table").val(data.u_id);
             $("#myModalLabel_comm").text("修改社区信息");
             $("#yes_btn_comm").attr('onclick', 'confirm_modify_member_comm(' + id + ')');
         }, 'json');
@@ -197,12 +201,12 @@
 
     function confirm_modify_member_comm(id) {
         console.log("confirm_modify_member_comm:" + id);
-        if (!check_value($("#t_name").val())) {
+        if (!check_value($("#c_name").val())) {
             return;
         }
         $.post("/community/modify", {
             'c_id': id,
-            'c_name': $("#t_name").val(),
+            'c_name': $("#c_name").val(),
             'u_id': $("#c_admin_table").val()
         }, function (ret) {
             console.log(ret);

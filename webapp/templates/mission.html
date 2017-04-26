@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}产品{% endblock %}
-{%  set selected_menu = "product" %}
+{% block title %}任务{% endblock %}
+{%  set selected_menu = "mission" %}
 
 {% block content %}
 <div class="container">
-    <!-- 增加产品弹窗 -->
+    <!-- 增加弹窗 -->
     <div class="modal fade" id="alterProduct"
          role="dialog" aria-labelledby="myModalLabel_prod" aria-hidden="true">
         <div class="modal-dialog">
@@ -17,7 +17,7 @@
                 <div class="modal-body" id="myModalBody_prod">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">产品名称</label>
+                            <label class="col-lg-2 control-label">订单名称</label>
                             <div class="col-lg-9">
                                 <input size="16" id="p_name" type="text" value="" placeholder="产品名称"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
@@ -118,20 +118,20 @@
     <div class="row clearfix">
         <div class="col-md-12 column">
             <!-- 标题 -->
-            <h3 id="product_manage_title">产品管理系统</h3>
+            <h3 id="product_manage_title">任务管理系统</h3>
             <br>
             <!-- 修改按钮 -->
             <a id="modify_product" href="#modifyProduct" role="button" data-toggle="modal"
-               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>修改产品</a>
+               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>修改任务</a>
             <!-- 添加按钮 -->
             <a id="add_product" href="#alterProduct" role="button" data-toggle="modal"
-               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加产品</a>
+               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加任务</a>
             <!-- 删除按钮 -->
             <a id="del_product" href="#confirmDeleteModal_prod" role="button" data-toggle="modal"
-               onclick="delete_prod()" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i>删除产品</a>
+               onclick="delete_prod()" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i>删除任务</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover" cellspacing="0"
-                   id="product_table" width="100%">
+                   id="o_table" width="100%">
             </table>
         </div>
     </div>
@@ -145,15 +145,16 @@
     $(document).ready(function () {
         var doc_table;
         console.log('document ready');
-        $.post('/product/table',
+        $.post('/mission/table',
             function (ret) {
-                doc_table = $('#product_table').dataTable({
+                doc_table = $('#o_table').dataTable({
                     "aoColumns": [
+                        {"sTitle": "订单号"},
                         {"sTitle": "产品名"},
-                        {"sTitle": "设计师"},
-                        {"sTitle": "工艺名称"},
-                        {"sTitle": "分钟单价"},
-                        {"sTitle": "参考用时"},
+                        {"sTitle": "工艺名"},
+                        {"sTitle": "用户名"},
+                        {"sTitle": "数量"},
+                        {"sTitle": "备注"},//其实就是备注
                         {
                             "width": "23%",
                             "sTitle": "操作",
@@ -184,25 +185,26 @@
                     "bStateSave": true
                 });
 
-                var products = ret.data;
-                for (var ij in products) {
+                var missions = ret.data;
+                for (var i in missions) {
                     doc_table.fnAddData([
-                        products[ij].p_name,
-                        products[ij].i_name,
-                        products[ij].p_author_name,
-                        products[ij].i_unit_price,
-                        products[ij].i_ref_time,
+                        missions[i].o_id,
+                        missions[i].p_name,
+                        missions[i].i_name,
+                        missions[i].u_name,
+                        missions[i].m_amount,
+                        missions[i].m_note,
                         //修改按钮
-                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_item(" +
-                        products[ij].i_id + ")' class='btn btn-default' type='button'>" +
+                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
+                        missions[i].i_id + ")' class='btn btn-default' type='button'>" +
                         "<i class='fa fa-pencil fa-fw'></i>修改</button>" + " " +
                         //增加按钮
-                        "<button href='#alterProduct' data-toggle='modal' onclick='add_item(" +
-                        products[ij].i_id + ")' class='btn btn-default' type='button'><" +
-                        "i class='fa fa-plus-square fa-fw'></i>增加</button>" + " " +
+                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
+                        missions[i].i_id + ")' class='btn btn-default' type='button'>" +
+                        "<i class='fa fa-plus-square fa-fw'></i>增加</button>" + " " +
                         //删除按钮
-                        "<button href='#confirmDeleteModal_item' data-toggle='modal' onclick='delete_item( " +
-                        products[ij].i_id + ")' class='btn btn-danger' type='button'>" +
+                        "<button href='#confirmDeleteModal_item' data-toggle='modal' onclick='delete_it( " +
+                        missions[i].i_id + ")' class='btn btn-danger' type='button'>" +
                         "<i class='fa fa-trash fa-fw'></i>删除</button>"
                     ])
                 }

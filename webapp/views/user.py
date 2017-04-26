@@ -101,8 +101,7 @@ def modify_user():
     u_id = request.form.get("u_id")
     # TODO 返回格式status, msg = .....
     status = user.update_user(u_id=u_id, u_name=u_name, u_role=u_role,
-                              u_phone=u_phone,
-                              c_id=c_id)
+                              u_phone=u_phone, c_id=c_id)
     return status
 
 
@@ -112,7 +111,6 @@ def delete_user():
     删除用户
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO 在这里再验证一下权限？
     u_id = request.form.get('u_id')
     if u_id == session['u_id']:
         return "Fail"

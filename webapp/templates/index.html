@@ -5,22 +5,31 @@
 {% block content %}
 <div class="container">
     <div class="col-md-12 column" style="background-color: white">
-        <!--TODO: session c_name, u_phone-->
-        <div class="col-md-3 column">
-            <h4 align="left"><i class="fa fa-id-card fa-fw"></i>
-                {{ session['u_name']}}</h4>
+        <div class="col-md-4 column">
+            <!--未来这里可以用来放微信头像-->
+            <i class="fa fa-user fa-5x" aria-hidden="true"></i>
         </div>
-        <div class="col-md-3 column">
-            <h4 align="left"><i class="fa fa-user fa-fw"></i>
-                {{ session['u_role'] }}</h4>
+
+        <div class="col-md-6 row">
+            <div class="col-md-4">
+                <h4 align="left"><i class="fa fa-id-card fa-fw"></i>
+                    {{ user_info.u_name }}</h4>
+            </div>
+            <div class="col-md-4">
+                <h4 align="left"><i class="fa fa-address-card fa-fw"></i>
+                    {{ user_info.u_role }}</h4>
+            </div>
         </div>
-        <div class="col-md-3 column">
-            <h4 align="left"><i class="fa fa-users fa-fw"></i>
-                {{ session['c_id'] }}</h4>
-        </div>
-        <div class="col-md-3 column">
-            <h4 align="left"><i class="fa fa-phone fa-fw"></i>
-                {{ session['logged_in'] }}</h4>
+
+        <div class="col-md-6 row">
+            <div class="col-md-4">
+                <h4 align="left"><i class="fa fa-users fa-fw"></i>
+                    {{ user_info.c_name }}</h4>
+            </div>
+            <div class="col-md-4">
+                <h4 align="left"><i class="fa fa-phone fa-fw"></i>
+                    {{ user_info.u_phone }}</h4>
+            </div>
         </div>
     </div>
 
@@ -36,8 +45,186 @@
 
     <!-- TODO: 个人流水表格 -->
     <!--<table class="table table-bordered table-striped table-hover" cellspacing="0"-->
-           <!--id="i_table" width="100%">-->
+    <!--id="i_table" width="100%">-->
     <!--</table>-->
+    <!-- 表格 -->
+    <table class="table table-bordered table-striped table-hover" cellspacing="0"
+           id="index_table" width="100%">
+    </table>
 </div>
 
 {% endblock content %}
+
+{% block script %}
+{{ super() }}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var doc_table;
+        console.log('document ready');
+        $.post('/transaction/table',
+            function (ret) {
+                doc_table = $('#index_table').dataTable({
+                    "aoColumns": [
+                        {"sTitle": "开单日期"},
+                        {"sTitle": "订单号"},
+                        {"sTitle": "产品"},
+                        {"sTitle": "工艺"},
+                        {"sTitle": "规格"}, // 工艺备注
+                        {"sTitle": "数量"},
+                        {"sTitle": "单价"},
+                        {"sTitle": "总金额"},
+                        {"sTitle": "交单时间"},
+                        {"sTitle": "制作点"}, // 社区名称
+                        {"sTitle": "制作人"},
+                        {"sTitle": "备注"},
+                        {
+                            "width": "10%",
+                            "sTitle": "操作",
+                            "bSortable": false
+                        }
+                    ],
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sPrevious": "上一页",
+                            "sNext": "下一页",
+                            "sFirst": "第一页",
+                            "sLast": "最后一页"
+                        },
+                        "sZeroRecords": "似乎来到了一块没有数据的荒原...",
+                        "sInfo": "共 _PAGES_ 页，从第 _START_ 页到第 _END_ 页，共 _TOTAL_ 条 ",
+                        "sInfoEmpty": "0 条记录",
+                        "sInfoFiltered": "",
+                        "sLengthMenu": "显示 _MENU_ 条",
+                        "sSearch": "<i class='fa fa-search' aria-hidden='true'></i>",
+                        "sProcessing": "<i class='fa-li fa fa-spinner fa-spin'></i>请稍等..."
+                    },
+                    "bSort": true,
+                    "bPaginate": true,
+                    "sPaginationType": "full",
+                    "sPageButton": "",
+                    "bAutoWidth": true,
+                    "bScrollCollapse": true,
+                    "bStateSave": true
+                });
+                var transactions = ret.data;
+                for (var i in transactions) {
+                    doc_table.fnAddData([
+                        transactions[i].o_timestamp,
+                        transactions[i].o_id,
+                        transactions[i].p_name,
+                        transactions[i].i_name,
+                        transactions[i].i_note,
+                        transactions[i].m_amount,
+                        transactions[i].i_unit_price,
+                        transactions[i].m_amount*transactions[i].i_unit_price,
+                        transactions[i].t_timestamp,
+                        transactions[i].c_name,
+                        transactions[i].u_name,
+                        transactions[i].t_note,
+                        "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
+                        transactions[i].u_id + ")' class='btn btn-default' type='button'> " +
+                        "<i class='fa fa-pencil'></i></button>" + "  " +
+                        "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_it( " +
+                        transactions[i].u_id + ")' class='btn btn-danger' type='button'>" +
+                        "<i class='fa fa-trash'></i></button>"
+                    ])
+                }
+            }, 'json');
+        var cid = $("#get_c_id").attr("value");
+        $.post('/community/table/' + cid, function (ret) {
+            console.log(ret);
+            var communities = ret.data;
+            for (var i in communities) {
+                console.log(communities[i]);
+                $('#t_community').append('<option value="' + communities[i].c_id + '">' + communities[i].c_name + '</option>');
+            }
+        }, 'json')
+    });
+
+    function check_value(name, phone) {
+        if (name === "") {
+            $('#t_name').popover('show');
+            return (false);
+        }
+        if (phone === "") {
+            $('#t_phone').popover('show');
+            return (false);
+        }
+        return (true);
+    }
+
+    function add_it() {
+        console.log("add it");
+        $("#t_name").val("");
+        $("#t_community").val("");
+        $("#t_phone").val("");
+        $("#t_role").val("");
+        $("#myModalLabel_tran").text("添加人员信息");
+        $("#yes_btn_tran").attr('onclick', 'confirm_add_member_user()');
+    }
+
+    function confirm_add_member_user() {
+        console.log('confirm_add_member_user');
+        if (!check_value($("#t_name").val(), $("#t_phone").val())) {
+            return;
+        }
+        $.post("/user/add", {
+            'u_name': $("#t_name").val(),
+            'u_phone': $("#t_phone").val(),
+            'c_id': $("#t_community").val(),
+            'u_role': $("#t_role").val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/user';
+        });
+    }
+
+    function modify_it(id) {
+        console.log("modify it");
+        $.post("/user/" + id, function (ret) {
+            console.log(ret);
+            data = ret.data;
+            $("#t_name").val(data.u_name);
+            $("#t_phone").val(data.u_phone);
+            $("#t_role").val(data.u_role);
+            $("#t_community").val(data.c_id);
+            $("#myModalLabel_user").text("修改人员信息");
+            $("#yes_btn_tran").attr('onclick', 'confirm_modify_member_user(' + id + ')');
+        }, 'json');
+    }
+
+    function confirm_modify_member_user(id) {
+        console.log("confirm_modify_member_user:" + id);
+        if (!check_value($("#t_name").val(), $("#t_phone").val())) {
+            return;
+        }
+        $.post("/user/modify", {
+            'u_id': id,
+            'u_name': $("#t_name").val(),
+            'u_phone': $("#u_phone").val(),
+            'c_id': $("#u_community").val(),
+            'u_role': $("#u_role").val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/user';
+        });
+    }
+
+    function delete_it(id) {
+        console.log("delete it");
+        $('#confirm-del-button_user').attr('onclick', 'confirm_del_member_user(' + id + ')');
+    }
+
+    function confirm_del_member_user(id) {
+        console.log("confirm_del_member_user:" + id);
+        $.post("/user/delete", {
+            'u_id': id
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/user';
+        })
+    }
+
+</script>
+
+{% endblock script %}
