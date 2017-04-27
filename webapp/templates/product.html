@@ -45,7 +45,7 @@
                                            data-toggle="popover" data-trigger="focus"/>
                                 </div>
                                 <div class="col-lg-4" style="padding: 0 0 0 0">
-                                    <input size="16" id="i_unit_price" type="text" value="" placeholder="分钟单价"
+                                    <input size="16" id="i_unit_price" type="text" value="" placeholder="分钟单价（元）"
                                            class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
                                            tabindex="0"
                                            data-toggle="popover" data-trigger="focus"/>
@@ -60,7 +60,7 @@
                                            data-toggle="popover" data-trigger="focus"/>
                                 </div>
                                 <div class="col-lg-4" style="padding: 0 0 0 0">
-                                    <input size="16" id="i_ref_time" type="text" value="" placeholder="参考用时"
+                                    <input size="16" id="i_ref_time" type="text" value="" placeholder="参考用时/数量"
                                            class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
                                            tabindex="0"
                                            data-toggle="popover" data-trigger="focus"/>
@@ -203,12 +203,12 @@
                         items[ij].i_note,
                         //修改按钮
                         "<button href='#alterProduct' data-toggle='modal' id='modify-item-btn_" + items[ij].i_id + "' " +
-                        "onclick='modify_prod(" + items[ij].i_id + ")' class='btn btn-default' type='button'>" +
-                        "<i class='fa fa-pencil fa-fw'></i>修改</button>" + " " +
+                        "onclick='modify_prod(" + items[ij].p_id + ", " + items[ij].i_id + ")' class='btn btn-default' " +
+                        "type='button'><i class='fa fa-pencil fa-fw'></i>修改</button>" + " " +
                         //增加按钮
                         "<button href='#alterProduct' data-toggle='modal' id='add-item-btn_" + items[ij].i_id + "' " +
-                        "onclick='add_item(" + items[ij].i_id + ")' class='btn btn-default' type='button'>" +
-                        "<i class='fa fa-plus-square fa-fw'></i>增加</button>" + " " +
+                        "onclick='add_item(" + items[ij].p_id + ", " + items[ij].i_id + ")' class='btn btn-default' " +
+                        "type='button'><i class='fa fa-plus-square fa-fw'></i>增加</button>" + " " +
                         //删除按钮
                         "<button href='#confirmDeleteModal' data-toggle='modal' onclick='delete_item( " +
                         items[ij].i_id + ")' class='btn btn-danger' type='button'>" +
@@ -260,7 +260,7 @@
 
     /***** 针对产品的操作 *****/
     //修改工艺&产品
-    function modify_prod(i_id) {
+    function modify_prod(p_id, i_id) {
         console.log("modify product:" + i_id);
         pname = $('#modify-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[0].innerText;
         pauthor = $('#modify-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[1].innerText;
@@ -275,20 +275,21 @@
         $("#i_note").val(inote);
         $("#i_unit_price").val(unitprice);
         $("#i_ref_time").val(reftime);
-        $("#yes_btn_prod").attr('onclick', 'confirm_modify_product(' + i_id + ')');
+        $("#yes_btn_prod").attr('onclick', 'confirm_modify_product(' + p_id + ', ' + i_id + ')');
     }
 
 
-    function confirm_modify_product(i_id) {
+    function confirm_modify_product(p_id, i_id) {
         console.log("confirm_modify_product:" + i_id);
         if (!check_value($("#p_name").val(), $("#p_author_name").val(), $('#i_name').val(),
                 $('#i_unit_price').val(), $('#i_ref_time').val())) {
             return;
         }
         $.post("/product/modify", {
-            'i_id': i_id,
+            'p_id': p_id,
             'p_name': $('#p_name').val(),
             'p_author_name': $('#p_author_name').val(),
+            'i_id': i_id,
             'i_name': $('#i_name').val(),
             'i_unit_price': $('#i_unit_price').val(),
             'i_ref_time': $('#i_ref_time').val()
@@ -349,7 +350,7 @@
 
     /***** 针对工艺的操作 *****/
     //增加工艺
-    function add_item(i_id) {
+    function add_item(p_id, i_id) {
         $("#myModalLabel_prod").text("添加工艺信息");
         console.log("add item");
         pname = $('#add-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[0].innerText;
@@ -363,21 +364,23 @@
         //unlock readonly
         $('#cancel_prod').attr('onclick', 'unset_readOnly(\'p_name\');' + 'unset_readOnly(\'p_author_name\')');
         $('#yes_btn_prod').attr('onclick', 'unset_readOnly(\'p_name\');' + 'unset_readOnly(\'p_author_name\');'
-            + 'confirm_add_item(' + i_id + ')');
+            + 'confirm_add_item(' + p_id + ')');
         $('#no-btn-prod').attr('onclick', 'unset_readOnly(\'p_name\');' + 'unset_readOnly(\'p_author_name\')');
     }
 
 
-    function confirm_add_item() {
+    function confirm_add_item(p_id) {
         console.log('confirm_add_item');
         if (!check_value(1, 1, $("#i_name").val(), $("#i_unit_price").val(), $("i_ref_time").val())) {
             return;
         }
         //TODO: /additem还没做，也许可以从/add改，json多传一个p_id，多一个判断产品id的过程
         $.post("/product/additem", {
+            'p_id': p_id,
             'i_name': $("#i_name").val(),
             'i_unit_price': $("#i_unit_price").val(),
-            'i_ref_time': $('#i_ref_time').val()
+            'i_ref_time': $('#i_ref_time').val(),
+            'i_note': $('#i_note').val()
         }, function (ret) {
             console.log(ret);
             location.href = '/product';
