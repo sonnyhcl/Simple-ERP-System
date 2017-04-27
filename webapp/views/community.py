@@ -46,11 +46,13 @@ def get_all_admin():
     :return: {"data": [{'u_id':, 'u_name':}], 
                 "status": status, "msg":""}
     """
-    status, response = community.get_all_admin()
-    response = {'data': [{'u_id': 0, 'u_name': 'hcl'},
-                         {'u_id': 1, 'u_name': 'admin'}],
-                'status': 'Success', 'msg': "error_msg"}
-    return json.dumps(response, ensure_ascii=False)
+    status, info = community.get_all_admin()
+    ret = {"data": [], "status": status, "msg": ""}
+    if status == "Success":
+        _ = [ret['data'].append({'u_id': i[0], 'u_name': i[1]}) for i in info]
+    else:
+        ret['msg'] = info
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/community/add', methods=['POST'])
@@ -74,12 +76,13 @@ def modify_community():
     根据传入的{c_name, c_id, u_id}修改一个社区信息
     :return: {"status": "Success", "msg":"error_msg"}
     """
+    ret = {}
     c_name = request.form.get('c_name')
     c_id = request.form.get('c_id')
     u_id = request.form.get('u_id')
-    # status， msg = community.update_community(c_id, c_name, u_id)
-    status = community.update_community(c_id, c_name, u_id)
-    return json.dumps({"status": status, "msg": "error_msg"})
+    ret['status'], ret['msg'] = community.update_community(c_id, c_name, u_id)
+
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/community/delete', methods=['POST'])
@@ -89,6 +92,8 @@ def delete_community():
     根据传入的{c_id}删除一个社区信息
     :return: {"status": "Success", "msg":"error_msg"}
     """
+    ret = {}
     c_id = request.form.get('c_id')
-    status = community.delete_community(c_id)
-    return json.dumps({"status": status, "msg": "error_msg"})
+    ret['status'], ret['msg'] = community.delete_community(c_id)
+    print ret
+    return json.dumps(ret, ensure_ascii=False)

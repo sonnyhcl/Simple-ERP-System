@@ -42,7 +42,8 @@ class Community(object):
         param = (c_id,)
         response = conn.execute('SELECT * FROM user WHERE c_id = ?;', param)
         response = response.fetchall()
-        if (response is not None):
+        print response
+        if not response == []:
             return "Fail", "There are still users belonging to community %s" \
                    % c_id
         try:
@@ -77,11 +78,12 @@ class Community(object):
         :return: 'Success', <response> or 'Fail', 'error_msg' 
         """
         conn = sqlite3.connect("demo.db")
-        try :
-            response = conn.execute('SELECT u_id, u_name from user'
-                     'WHERE u_role = root or u_role = admin;')
+        try:
+            response = conn.execute('SELECT u_id, u_name FROM user '
+                                    'WHERE u_role = ? OR u_role = ?;',
+                                    ('root', 'admin'))
             response = response.fetchall()
-        except Exception :
+        except Exception:
             return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()

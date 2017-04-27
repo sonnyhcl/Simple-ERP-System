@@ -2,12 +2,10 @@
 """
 首页、登录相关操作以及其它杂七杂八的操作
 """
-import os
 from flask import render_template, request, session, \
     url_for, redirect, make_response
 from auth.login_required import login_required
 from webapp import app
-from db.db_user import *
 from db.db_index import *
 from webapp.mylog import log
 
