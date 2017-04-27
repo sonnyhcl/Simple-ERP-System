@@ -109,8 +109,8 @@
 {{ super() }}
 <script type="text/javascript">
     $(document).ready(function () {
-        var doc_table;
         console.log('document ready');
+        var doc_table;
         $.post('/transaction/table',
             function (ret) {
                 doc_table = $('#t_table').dataTable({
@@ -164,6 +164,7 @@
                 });
                 var transactions = ret.data;
                 for (var i in transactions) {
+                    console.log(transactions[i]);
                     doc_table.fnAddData([
                         transactions[i].o_timestamp.substring(0, 10),
                         transactions[i].o_id,
@@ -188,10 +189,8 @@
             }, 'json');
         var cid = $("#get_c_id").attr("value");
         $.post('/community/table/' + cid, function (ret) {
-            console.log(ret);
             var communities = ret.data;
             for (var i in communities) {
-                console.log(communities[i]);
                 $('#t_community').append('<option value="' + communities[i].c_id + '">' + communities[i].c_name + '</option>');
             }
         }, 'json')

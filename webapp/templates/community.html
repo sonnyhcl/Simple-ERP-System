@@ -131,28 +131,27 @@
                 });
 
                 var communities = ret.data;
-                for (var ij in communities) {
+                for (var i in communities) {
+                    console.log(communities[i]);
                     doc_table.fnAddData([
-                        communities[ij].c_id,
-                        communities[ij].c_name,
-                        communities[ij].u_name,
-                        communities[ij].u_phone,
+                        communities[i].c_id,
+                        communities[i].c_name,
+                        communities[i].u_name,
+                        communities[i].u_phone,
                         "<button href='#alterCommunity' data-toggle='modal' onclick='modify_comm(" +
-                        communities[ij].c_id + ")' class='btn  btn-sm btn-default' type='button'>" +
+                        communities[i].c_id + ")' class='btn  btn-sm btn-default' type='button'>" +
                         "<i class='fa fa-pencil fa-fw'></i>修改</button>" + "  " +
                         "<button href='#confirmDeleteModal_comm' data-toggle='modal' onclick='delete_comm( " +
-                        communities[ij].c_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
+                        communities[i].c_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
                         "<i class='fa fa-trash fa-fw'></i>删除</button>"
                     ])
                 }
             }, 'json');
 
         $.post('/community/get_all_admin', function (ret) {
-            console.log(ret);
             var admins = ret.data;
-            for (var ij in admins) {
-                console.log(admins[ij]);
-                $('#c_admin_table').append('<option value="' + admins[ij].u_id + '">' + admins[ij].u_name + '</option>');
+            for (var i in admins) {
+                $('#c_admin_table').append('<option value="' + admins[i].u_id + '">' + admins[i].u_name + '</option>');
             }
         }, 'json')
     });
@@ -178,7 +177,7 @@
         if (!check_value($("#c_name").val())) {
             return;
         }
-        //根据u_id添加管理员这一步，db部分暂时还没有做完
+        // TODO 根据u_id添加管理员这一步，db部分暂时还没有做完
         $.post("/community/add", {
             'c_name': $("#c_name").val(),
             'u_id': $("#c_admin_table").val()

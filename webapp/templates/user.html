@@ -150,27 +150,28 @@
                     "bStateSave": true
                 });
                 var members = ret.data;
-                for (var ij in members) {
+                for (var i in members) {
+                console.log(members[i]);
                     doc_table.fnAddData([
-                        members[ij].c_name,
-                        members[ij].u_name,
-                        members[ij].u_role,
-                        members[ij].u_phone,
+                        members[i].c_name,
+                        members[i].u_name,
+                        members[i].u_role,
+                        members[i].u_phone,
                         "<button href='#alterUser' data-toggle='modal' onclick='modify_user(" +
-                        members[ij].u_id + ")' class='btn  btn-sm btn-default' type='button'>" +
+                        members[i].u_id + ")' class='btn  btn-sm btn-default' type='button'>" +
                         "<i class='fa fa-pencil fa-fw'></i>修改</button>" + "  " +
                         "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_user( " +
-                        members[ij].u_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
+                        members[i].u_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
                         "<i class='fa fa-trash fa-fw'></i>删除</button>"
                     ])
                 }
             }, 'json');
+
         $.post('/community/table/' + cid, function (ret) {
-            console.log(ret);
             var communities = ret.data;
-            for (var ij in communities) {
-                console.log(communities[ij]);
-                $('#u_community').append('<option value="' + communities[ij].c_id + '">' + communities[ij].c_name + '</option>');
+            for (var i in communities) {
+                console.log(communities[i]);
+                $('#u_community').append('<option value="' + communities[i].c_id + '">' + communities[i].c_name + '</option>');
             }
         }, 'json')
     });
@@ -210,7 +211,7 @@
         }, function (ret) {
             console.log(ret);
             location.href = '/user';
-        });
+        }, 'json');
     }
 
     function modify_user(id) {

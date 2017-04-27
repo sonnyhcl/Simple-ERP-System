@@ -182,6 +182,7 @@
 
                 var orders = ret.data;
                 for (var i in orders) {
+                    console.log(orders[i]);
                     doc_table.fnAddData([
                         orders[i].o_id,
                         orders[i].p_name,

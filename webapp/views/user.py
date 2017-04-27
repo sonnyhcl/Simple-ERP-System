@@ -77,7 +77,7 @@ def add_user():
     u_password = '123456'
     # TODO 返回格式status, msg = .....
     status = user.add_user(u_name, u_role, u_password, u_phone, c_id)
-    return status
+    return json.dumps(status)
 
 
 @app.route('/user/modify', methods=['POST'])
@@ -98,7 +98,7 @@ def modify_user():
     # TODO 返回格式status, msg = .....
     status = user.update_user(u_id=u_id, u_name=u_name, u_role=u_role,
                               u_phone=u_phone, c_id=c_id)
-    return status
+    return json.dumps(status)
 
 
 @app.route('/user/delete', methods=['POST'])
@@ -113,4 +113,4 @@ def delete_user():
         return "Fail"
     # TODO 返回格式status, msg = .....
     status = user.delete_user(u_id)
-    return status
+    return json.dumps(status)

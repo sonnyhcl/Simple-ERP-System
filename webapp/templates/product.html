@@ -36,9 +36,9 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label">工艺名称</label>
                             <div class="col-lg-6">
-                                    <input size="16" id="i_name" type="text" value="" placeholder="工艺名称"
-                                           class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                           tabindex="0"  data-toggle="popover" data-trigger="focus"/>
+                                <input size="16" id="i_name" type="text" value="" placeholder="工艺名称"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0" data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -89,17 +89,19 @@
                     <h4 class="modal-title" id="del_title_prod">确认删除标题</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">产品</label>
-                        <div class="col-lg-8">
-                            <select id="p_products" class="form-control input-sm" style="color:#666666">
-                            </select>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">产品</label>
+                            <div class="col-lg-6">
+                                <select id="p_products" class="form-control input-sm" style="color:#666666">
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <hr>
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='confirm-del-button_prod' autofocus type="button" class="btn btn-danger" onclick="">确认
-                    </button>
+                    <button id='confirm-del-button_prod' autofocus type="submit" class="btn btn-danger" onclick="">确认</button>
                 </div>
             </div>
         </div>
@@ -192,6 +194,7 @@
 
                 var items = ret.data;
                 for (var i in items) {
+                    console.log(items[i]);
                     doc_table.fnAddData([
                         items[i].p_name,
                         items[i].p_author_name,
@@ -216,14 +219,15 @@
             }, 'json');
         $.post('/product/table', function (ret) {
             var raw_products = ret.data;
-            var products = [], temp = {};
+            var products = [];
+            var temp = {};
             for (var i = 0; i < raw_products.length; i++) {
                 if (!temp[raw_products[i].p_name]) {
                     products.push(raw_products[i]);
                     temp[raw_products[i].p_name] = !0;
                 }
             }
-            for (var i in products) {
+            for (i in products) {
                 console.log(products[i]);
                 $('#p_products').append('<option value="' + products[i].p_id + '">' + products[i].p_name + '</option>');
             }
