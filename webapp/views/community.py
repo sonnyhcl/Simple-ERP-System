@@ -46,8 +46,7 @@ def get_all_admin():
     :return: {"data": [{'u_id':, 'u_name':}], 
                 "status": status, "msg":""}
     """
-    # TODO 返回所有admin以及root权限的人的{u_id, u_name}
-    # status, response = community.get_all_admin()
+    status, response = community.get_all_admin()
     response = {'data': [{'u_id': 0, 'u_name': 'hcl'},
                          {'u_id': 1, 'u_name': 'admin'}],
                 'status': 'Success', 'msg': "error_msg"}
@@ -63,7 +62,6 @@ def add_community():
     """
     c_name = request.form.get('c_name')
     u_id = request.form.get('u_id')
-    # TODO 修改返回格式和传入参数
     # status, msg = community.add_community(c_name, u_id)
     status = community.add_community(c_name, u_id)
     return json.dumps({"status": status, "msg": "error_msg"})
@@ -79,7 +77,6 @@ def modify_community():
     c_name = request.form.get('c_name')
     c_id = request.form.get('c_id')
     u_id = request.form.get('u_id')
-    # TODO 修改返回格式
     # status， msg = community.update_community(c_id, c_name, u_id)
     status = community.update_community(c_id, c_name, u_id)
     return json.dumps({"status": status, "msg": "error_msg"})
@@ -93,7 +90,5 @@ def delete_community():
     :return: {"status": "Success", "msg":"error_msg"}
     """
     c_id = request.form.get('c_id')
-    # TODO 只能删除没有人的社区以及没有订单的社区，也就是刚刚新建什么操作都没有做的社区
-    # 订单的操作可以等开始做订单页面了再搞
     status = community.delete_community(c_id)
     return json.dumps({"status": status, "msg": "error_msg"})

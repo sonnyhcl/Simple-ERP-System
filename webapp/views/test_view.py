@@ -27,9 +27,13 @@ def test():
     print flag, response
     flag, response = community.delete_community(c_id=1)
     print flag, response
+    flag = community.add_community_admin(c_id=1, u_id=1)
+    print flag
     flag = community.add_community_admin(c_id=1, u_id=111)
     print flag
     flag, response = community.get_community_by_cid(c_id=1)
+    print flag, response
+    flag, response = user.update_user(u_id = 2, c_id = 1)
     print flag, response
     # user = User()
     # user.add_user(u_name='a', u_password='b', u_phone='c', u_role='d', c_id=1)
