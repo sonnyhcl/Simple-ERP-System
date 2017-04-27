@@ -1,53 +1,37 @@
 # -*- coding: UTF-8 -*-
-# TODO 待删
 import sqlite3
 
 __author__ = 'sonnyhcl'
-'''
-        create table item
-        (
-            i_id            int         not null,
-            i_name          char(90)    not null,
-            i_minutes       int         not null,
-            i_unitprices    float       not null,
-            i_prices        float       not null,
-            p_id            int         not null,
-            foreign key     (p_id)      references      product(p_id),
-            primary key     (i_id)
-        )
-        ;
-'''
 
 
 class Item(object):
-    """
-    Item信息表
-    """
-
-    def __init__(self):
-        self.__counter = 0
-
-    def add_item(self, i_name, i_minutes, i_unitprices, i_prices, p_id):
-        conn = sqlite3.connect("demo.db");
-        param = (None, i_name, i_minutes, i_unitprices, i_prices, p_id,)
-        conn.execute('INSERT INTO item VALUES (?, ?, ?, ?, ?, ?);', param)
+    def add_item_for_product(self, i_name, i_ref_time, i_unit_price, i_note, p_id):
+        conn = sqlite3.connect("demo.db")
+        param = (i_name, i_ref_time, i_unit_price, i_note, p_id)
+        conn.execute('INSERT INTO item(i_name, i_unit_price, i_ref_time, i_note, p_id) '
+                     'VALUES (?, ?, ?, ?, ?);', param)
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
-    def delete_item(self, i_id):
-        conn = sqlite3.connect("demo.db");
+    def delete_item_for_product(self, p_id, i_id):
+        conn = sqlite3.connect("demo.db")
 
+        param = (p_id,)
+        response = conn.execute('SELECT count(*) from item WHERE p_id = ?;', param)
+        count = response.fetchall()
+        if count[0] == 0:
+            return "Fail", "you can not delete the last item of this product"
         param = (i_id,)
         conn.execute('DELETE FROM item WHERE i_id = ?;', param)
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
     def update_item(self, i_id, _i_name=None, _i_minutes=None,
-                    _i_unitprices=None, _i_prices=None, _p_id=None):
+                    _i_prices=None, _p_id=None):
 
-        conn = sqlite3.connect("demo.db");
+        conn = sqlite3.connect("demo.db")
 
         param = (i_id,)
         response = conn.execute('SELECT * FROM item WHERE i_id = ?;', param)
@@ -57,22 +41,20 @@ class Item(object):
             origin[1] = _i_name
         if _i_minutes is not None:
             origin[2] = _i_minutes
-        if _i_unitprices is not None:
-            origin[3] = _i_unitprices
         if _i_prices is not None:
-            origin[4] = _i_prices
+            origin[3] = _i_prices
         if _p_id is not None:
-            origin[5] = _p_id
+            origin[4] = _p_id
         param = tuple(origin) + (i_id,)
         conn.execute(
-            'UPDATE item SET i_id = ?, i_name = ?, i_minutes = ?, i_unitprices = ?, i_prices = ?, p_id = ? WHERE i_id = ?;',
+            'UPDATE item SET i_id = ?, i_name = ?, i_unit_price = ?, p_id = ? WHERE i_id = ?;',
             param)
         conn.commit()
         conn.close()
         return "Success"
 
     def get_item(self, i_id):
-        conn = sqlite3.connect("demo.db");
+        conn = sqlite3.connect("demo.db")
 
         param = (i_id,)
         response = conn.execute('SELECT * FROM item WHERE i_id = ?;', param)
@@ -81,8 +63,10 @@ class Item(object):
         return "Success", response
 
     def get_all(self, ):
-        conn = sqlite3.connect("demo.db");
+        conn = sqlite3.connect("demo.db")
         response = conn.execute('SELECT * FROM item;')
         response = response.fetchall()
         conn.close()
         return "Success", response
+
+item = Item()
