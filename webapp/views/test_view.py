@@ -5,7 +5,6 @@ from auth.login_required import login_required
 from db.db_user import *
 from db.db_product import *
 from db.db_community import *
-from db.db_item import *
 from db.db_transaction import *
 
 __author__ = 'sonnyhcl'

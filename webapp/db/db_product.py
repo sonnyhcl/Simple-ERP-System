@@ -9,12 +9,28 @@ __author__ = 'sonnyhcl'
 
 
 class Product(object):
-    def add_item_for_product(self, p_id, i_name, i_unit_price, i_ref_time,
-                             i_note):
-        pass
+    def add_item_for_product(self, i_name, i_ref_time, i_unit_price, i_note, p_id):
+        conn = sqlite3.connect("demo.db")
+        param = (i_name, i_ref_time, i_unit_price, i_note, p_id)
+        conn.execute('INSERT INTO item(i_name, i_unit_price, i_ref_time, i_note, p_id)'
+                     'VALUES (?, ?, ?, ?, ?);', param)
+        conn.commit()
+        conn.close()
+        return "Success", ""
 
     def delete_item_for_product(self, p_id, i_id):
-        pass
+        conn = sqlite3.connect("demo.db")
+
+        param = (p_id,)
+        response = conn.execute('SELECT count(*) from item WHERE p_id = ?;', param)
+        count = response.fetchall()
+        if count[0] == 0:
+            return "Fail", "you can not delete the last item of this product"
+        param = (i_id,)
+        conn.execute('DELETE FROM item WHERE i_id = ?;', param)
+        conn.commit()
+        conn.close()
+        return "Success", ""
 
     def add_product(self, p_name, i_name, i_unit_price, i_ref_time, i_note,
                     p_author):

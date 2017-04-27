@@ -377,7 +377,7 @@
             return;
         }
         //TODO: /additem还没做，也许可以从/add改，json多传一个p_id，多一个判断产品id的过程
-        $.post("/product/additem", {
+        $.post("/product/add_item", {
             'p_id': p_id,
             'i_name': $("#i_name").val(),
             'i_unit_price': $("#i_unit_price").val(),
