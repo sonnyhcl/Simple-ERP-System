@@ -316,11 +316,11 @@
         }
         $.post("/product/add", {
             'p_name': $("#p_name").val(),
-            'p_author_name': $('#p_author_name').val(),
+            'p_author': $('#p_author_name').val(),
             'i_name': $('#i_name').val(),
             'i_unit_price': $('#i_unit_price').val(),
-            'i_ref_time': $('i_ref_time').val(),
-            'i_note': $('i_note').val()
+            'i_ref_time': $('#i_ref_time').val(),
+            'i_note': $('#i_note').val()
         }, function (ret) {
             console.log(ret);
             location.href = '/product';
