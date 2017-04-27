@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <!-- 增加修改产品/工艺弹窗 -->
+    <!-- 增加、修改 产品/工艺弹窗 -->
     <div class="modal fade" id="alterProduct"
          role="dialog" aria-labelledby="myModalLabel_prod" aria-hidden="true">
         <div class="modal-dialog">
@@ -18,53 +18,51 @@
                 <div class="modal-body" id="myModalBody_prod">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">产品名称</label>
-                            <div class="col-lg-9">
+                            <label class="col-lg-4 control-label">产品名称</label>
+                            <div class="col-lg-6">
                                 <input size="16" id="p_name" type="text" value="" placeholder="产品名称"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                       tabindex="0"
-                                       data-toggle="popover" data-trigger="focus"/>
+                                       tabindex="0" data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">设计师</label>
-                            <div class="col-lg-9">
+                            <label class="col-lg-4 control-label">设计师</label>
+                            <div class="col-lg-6">
                                 <input size="16" id="p_author_name" type="text" value="" placeholder="设计师"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                       tabindex="0"
-                                       data-toggle="popover" data-trigger="focus"/>
+                                       tabindex="0" data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">添加工艺</label>
-                            <div class="col-lg-9">
-                                <div class="col-lg-8" style="padding: 0 0 0 0">
-                                    <input size="16" id="i_name" type="text" value="" placeholder="工艺名"
+                            <label class="col-lg-4 control-label">工艺名称</label>
+                            <div class="col-lg-6">
+                                    <input size="16" id="i_name" type="text" value="" placeholder="工艺名称"
                                            class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                           tabindex="0"
-                                           data-toggle="popover" data-trigger="focus"/>
-                                </div>
-                                <div class="col-lg-4" style="padding: 0 0 0 0">
-                                    <input size="16" id="i_unit_price" type="text" value="" placeholder="分钟单价（元）"
-                                           class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                           tabindex="0"
-                                           data-toggle="popover" data-trigger="focus"/>
-                                </div>
+                                           tabindex="0"  data-toggle="popover" data-trigger="focus"/>
                             </div>
-                            <label class="col-lg-2 control-label"></label>
-                            <div class="col-lg-9">
-                                <div class="col-lg-8" style="padding: 0 0 0 0">
-                                    <input size="16" id="i_note" type="text" value="" placeholder="规格"
-                                           class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                           tabindex="0"
-                                           data-toggle="popover" data-trigger="focus"/>
-                                </div>
-                                <div class="col-lg-4" style="padding: 0 0 0 0">
-                                    <input size="16" id="i_ref_time" type="text" value="" placeholder="参考用时/数量"
-                                           class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                           tabindex="0"
-                                           data-toggle="popover" data-trigger="focus"/>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">分钟单价</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="i_unit_price" type="text" value="" placeholder="分钟单价（元）"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0" data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">工艺规格</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="i_note" type="text" value="" placeholder="规格"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0" data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">参考用时</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="i_ref_time" type="text" value="" placeholder="参考用时（分钟）"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0" data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
                     </form>

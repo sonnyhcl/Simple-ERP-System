@@ -8,6 +8,7 @@ from webapp import app
 from db.db_user import *
 from db.db_community import *
 from auth.login_required import login_required
+
 __author__ = 'sonnyhcl'
 
 
@@ -53,7 +54,7 @@ def get_users_by_cid():
     d = {'root': u"主管理员", 'admin': u"管理员", 'user': u"员工"}
     if status == "Success":
         _ = [ret['data'].append({'u_id': i[0], 'u_name': i[1], "u_role": i[2],
-                                "u_phone": i[4], 'c_id': i[5]}) for i in info]
+                                 "u_phone": i[4], 'c_id': i[5]}) for i in info]
         for r in ret['data']:
             r['c_name'] = community.get_community_by_cid(r['c_id'])[1][0][1]
             r['u_role'] = d[r['u_role']]
@@ -87,7 +88,8 @@ def modify_user():
     :param cid:
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO 修改权限的时候也要修改community表
+    # TODO 如果这里是将用户设置为某个社区管理员
+    # 则应该先检查那个社区有没有管理员
     u_name = request.form.get("u_name")
     u_phone = request.form.get("u_phone")
     u_role = request.form.get("u_role")
