@@ -190,7 +190,7 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO item(i_name, i_unit_price, i_ref_time, p_id)
-    VALUES  ('产品A的工艺1',  10,  100, 1), ('产品A的工艺2',  20, 200, 1),
+    VALUES  ('产品A的工艺1',  10,  100, 1), ('产品A的工艺1',  20, 200, 1),
             ('产品B的工艺2',  30,  300, 2), ('产品B的工艺2',  40, 400, 2);
     """
 )
