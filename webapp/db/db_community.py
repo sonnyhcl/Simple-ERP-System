@@ -2,16 +2,15 @@
 """
 社区页面的所有数据库操作
 """
-
 import sqlite3
 from flask import session
 from webapp.mylog import log
+
 __author__ = 'sonnyhcl'
 
 
 class Community(object):
-
-    def add_community(self, c_name, u_id = 0):
+    def add_community(self, c_name, u_id=0):
         """
         
         :param c_name: 
@@ -23,7 +22,8 @@ class Community(object):
         conn = sqlite3.connect("demo.db")
         try:
             param = (c_name, u_id,)
-            conn.execute('INSERT INTO community(c_name, u_id) VALUES (?, ?);', param)
+            conn.execute('INSERT INTO community(c_name, u_id) VALUES (?, ?);',
+                         param)
         except Exception:
             conn.close()
             return "Fail", Exception
@@ -42,10 +42,11 @@ class Community(object):
         conn = sqlite3.connect("demo.db")
         # check if there is any users belonging to this community
         param = (c_id,)
-        response = conn.execute('select * from user where c_id = ?;', param)
+        response = conn.execute('SELECT * FROM user WHERE c_id = ?;', param)
         response = response.fetchall()
-        if (response is not None) :
-            return "Fail", "There are still users belonging to community %s" % c_id
+        if (response is not None):
+            return "Fail", "There are still users belonging to community %s" \
+                   % c_id
         try:
             param = (c_id,)
             conn.execute('DELETE FROM community WHERE c_id = ?;', param)
@@ -58,17 +59,15 @@ class Community(object):
 
     def update_community(self, c_id, new_c_name, u_id):
         """
-        
-        :param c_id: 
-        :param new_c_name: 
-        :param u_id: 
+        update_community
         :return: 'Success', '' or 'Fail', 'error_msg' 
         """
         log("%s: update community: %s %s %s"
-            % (session['u_name'], c_id, new_c_name ,u_id))
+            % (session['u_name'], c_id, new_c_name, u_id))
         conn = sqlite3.connect("demo.db")
         param = (new_c_name, u_id, c_id,)
-        conn.execute('UPDATE community SET c_name = ?, u_id = ? WHERE c_id = ?;',
+        conn.execute('UPDATE community '
+                     'SET c_name = ?, u_id = ? WHERE c_id = ?;',
                      param)
         conn.commit()
         conn.close()
@@ -85,8 +84,6 @@ class Community(object):
     def add_community_admin(self, c_id, u_id):
         """
         给当前未分配管理员的社区分配管理员，通常这一步伴随add community一起做
-        :param c_id: 
-        :param u_id: 
         :return: 'Success', '' or 'Fail', 'error_msg' 
         """
         # TODO 返回格式status, msg = ..... 以及异常处理
@@ -110,22 +107,9 @@ class Community(object):
         conn.close()
         return "Success", ""
 
-    # def get_community(self, c_id):
-    #     conn = sqlite3.connect("demo.db")
-    #     param = (c_id,)
-    #     if c_id == 0:
-    #         response = conn.execute('SELECT * FROM community;')
-    #     else:
-    #         response = conn.execute('SELECT * FROM community WHERE c_id = ?;',
-    #                                 param)
-    #     response = response.fetchall()
-    #     conn.close()
-    #     return "Success", response
-
-    def get_community_by_cid(self, c_id = 0):
+    def get_community_by_cid(self, c_id=0):
         """
-        
-        :param c_id: 
+        get_community_by_cid
         :return: 'Success', <response> or 'Fail', 'error_msg' 
         """
         # TODO 返回格式status, msg = ..... 以及异常处理
@@ -133,30 +117,24 @@ class Community(object):
         try:
             if c_id == 0:
                 response = conn.execute(
-                'SELECT community.c_id, community.c_name, '
-                'user.u_name, user.u_phone, user.u_id '
-                'FROM community, user '
-                'WHERE user.u_id = community.u_id;')
+                    'SELECT community.c_id, community.c_name, '
+                    'user.u_name, user.u_phone, user.u_id '
+                    'FROM community, user '
+                    'WHERE user.u_id = community.u_id;')
             else:
                 param = (c_id,)
                 response = conn.execute(
-                'SELECT community.c_id, community.c_name, '
-                'user.u_name, user.u_phone, user.u_id '
-                'FROM community, user '
-                'WHERE community.c_id = ? AND user.u_id = community.u_id;', param)
+                    'SELECT community.c_id, community.c_name, '
+                    'user.u_name, user.u_phone, user.u_id '
+                    'FROM community, user '
+                    'WHERE community.c_id = ? AND user.u_id = community.u_id;',
+                    param)
         except Exception:
             conn.close()
             return "Fail", Exception
         response = response.fetchall()
         conn.close()
         return "Success", response
-
-    # def get_all(self):
-    #     conn = sqlite3.connect("demo.db")
-    #     response = conn.execute('SELECT * FROM community;')
-    #     response = response.fetchall()
-    #     conn.close()
-    #     return "Success", response
 
 
 community = Community()

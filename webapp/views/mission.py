@@ -7,11 +7,11 @@ from auth.login_required import login_required
 
 __author__ = 'sonnyhcl'
 
+
 @app.route('/mission', methods=['GET'])
 @login_required
 def mission_index():
     return render_template('mission.html')
-
 
 
 @app.route('/mission/table', methods=['POST'])
@@ -71,4 +71,3 @@ def delete_mission():
     # TODO status, info = missions.delete_mission(m_id)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
-

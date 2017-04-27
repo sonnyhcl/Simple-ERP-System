@@ -7,6 +7,7 @@ from flask import render_template, session, request
 from webapp import app
 from db.db_community import *
 from auth.login_required import login_required
+
 __author__ = 'sonnyhcl'
 
 
@@ -29,8 +30,9 @@ def get_community_by_cid(c_id):
     status, info = community.get_community_by_cid(c_id)
     ret = {"data": [], "status": status, "msg": ""}
     if status == "Success":
-        _ = [ret['data'].append({'c_id': i[0], 'c_name':i[1], 'u_id': i[4],
-                                 'u_name': i[2], 'u_phone': i[3]}) for i in info]
+        _ = [ret['data'].append({'c_id': i[0], 'c_name': i[1], 'u_id': i[4],
+                                 'u_name': i[2], 'u_phone': i[3]}) for i in
+             info]
     else:
         ret['msg'] = info
     return json.dumps(ret, ensure_ascii=False)
@@ -47,7 +49,7 @@ def get_all_admin():
     # TODO 返回所有admin以及root权限的人的{u_id, u_name}
     # status, response = community.get_all_admin()
     response = {'data': [{'u_id': 0, 'u_name': 'hcl'},
-                {'u_id': 1, 'u_name': 'admin'}],
+                         {'u_id': 1, 'u_name': 'admin'}],
                 'status': 'Success', 'msg': "error_msg"}
     return json.dumps(response, ensure_ascii=False)
 

@@ -220,7 +220,7 @@
             var raw_products = ret.data;
             var products = [], temp = {};
             for (var i = 0; i < raw_products.length; i++) {
-                if(!temp[raw_products[i].p_name]){
+                if (!temp[raw_products[i].p_name]) {
                     products.push(raw_products[i]);
                     temp[raw_products[i].p_name] = !0;
                 }

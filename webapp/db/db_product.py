@@ -3,12 +3,14 @@
 产品页面所有数据库的相关操作
 涉及到产品表和工艺表
 """
-__author__ = 'sonnyhcl'
 import sqlite3
+
+__author__ = 'sonnyhcl'
 
 
 class Product(object):
-    def add_item_for_product(self, p_id, i_name,i_unit_price, i_ref_time, i_note):
+    def add_item_for_product(self, p_id, i_name, i_unit_price, i_ref_time,
+                             i_note):
         pass
 
     def delete_item_for_product(self, p_id, i_id):
@@ -116,5 +118,6 @@ class Product(object):
             return "Fail", traceback.print_exc()
         conn.close()
         return "Success", response
+
 
 products = Product()

@@ -7,6 +7,7 @@ from db.db_product import *
 from db.db_community import *
 from db.db_item import *
 from db.db_transaction import *
+
 __author__ = 'sonnyhcl'
 
 
@@ -25,7 +26,7 @@ def test():
     print flag, response
     flag, response = community.add_community(c_name='fuck community')
     print flag, response
-    flag, response = community.delete_community(c_id = 1)
+    flag, response = community.delete_community(c_id=1)
     print flag, response
     flag = community.add_community_admin(c_id=1, u_id=111)
     print flag
@@ -48,15 +49,3 @@ def test():
     # flag, response = transactions.get_all()
     # print flag, response
     return render_template('test.html')
-
-
-@app.route('/task')
-@login_required
-def task_index():
-    return render_template('task.html')
-
-
-@app.route('/order')
-@login_required
-def order_index():
-    return "helloworld"

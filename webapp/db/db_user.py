@@ -12,11 +12,6 @@ class User(object):
     def add_user(self, u_name, u_role, u_password, u_phone, c_id):
         """
         add_user
-        :param u_name:
-        :param u_role:
-        :param u_password:
-        :param u_phone:
-        :param c_id:
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
         # TODO 名字判重
@@ -25,7 +20,8 @@ class User(object):
         conn = sqlite3.connect("demo.db")
         param = (u_name, u_role, u_password, u_phone, c_id,)
         conn.execute(
-            'INSERT INTO user(u_name, u_role, u_password, u_phone, c_id) VALUES (?, ?, ?, ?, ?);',
+            'INSERT INTO user(u_name, u_role, u_password, u_phone, c_id) '
+            'VALUES (?, ?, ?, ?, ?);',
             param)
         conn.commit()
         conn.close()
@@ -34,7 +30,6 @@ class User(object):
     def delete_user(self, u_id):
         """
         delete_user
-        :param u_id:
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
         log("%s: delete_user: %s" % (session['u_name'], u_id))
@@ -49,17 +44,10 @@ class User(object):
                     u_password=None, u_phone=None, c_id=None):
         """
         update_user
-        :param u_id:
-        :param u_name:
-        :param u_role:
-        :param u_password:
-        :param u_phone:
-        :param c_id:
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
-        log("%s: update_user: %s %s %s %s %s %s" %
-            (session['u_name'], u_id, u_name, u_role, u_password, u_phone,
-            c_id))
+        log("%s: update_user: %s %s %s %s %s %s" % (
+            session['u_name'], u_id, u_name, u_role, u_password, u_phone, c_id))
         conn = sqlite3.connect("demo.db")
         param = (u_id,)
         response = conn.execute('SELECT * FROM user WHERE u_id = ?;', param)
@@ -78,7 +66,10 @@ class User(object):
 
         param = tuple(origin) + (u_id,)
         conn.execute(
-            'UPDATE user SET u_id = ?, u_name = ?, u_role = ?, u_password = ?, u_phone = ?, c_id = ? WHERE u_id = ?;',
+            'UPDATE user '
+            'SET u_id = ?, u_name = ?, u_role = ?, u_password = ?, '
+            'u_phone = ?, c_id = ? '
+            'WHERE u_id = ?;',
             param)
         conn.commit()
         conn.close()
@@ -86,8 +77,7 @@ class User(object):
 
     def get_user_by_uid(self, u_id):
         """
-
-        :param u_id:
+        get_user_by_uid
         :return: 'Success', <response> or 'Fail', 'error_msg'
         """
         conn = sqlite3.connect("demo.db")
@@ -100,7 +90,6 @@ class User(object):
     def get_user_by_cid(self, c_id):
         """
         get_user_by_cid
-        :param c_id:
         :return: 'Success', <response> or 'Fail', 'error_msg'
         """
         conn = sqlite3.connect("demo.db")
@@ -115,7 +104,7 @@ class User(object):
 
     def get_all_user_info(self):
         """
-
+        get_all_user_info
         :return: 'Success', <response> or 'Fail', 'error_msg'
         """
         conn = sqlite3.connect("demo.db")

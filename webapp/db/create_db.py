@@ -48,7 +48,6 @@ conn.execute(
 )
 print "item info table created Successfully!"
 
-
 """
 社区（社区编号，社区名，管理员编号）
 """
@@ -65,7 +64,6 @@ conn.execute(
     '''
 )
 print "community info table created Successfully!"
-
 
 """
 用户（用户编号，用户名，身份，密码，联系方式，社区编号）
@@ -87,7 +85,6 @@ conn.execute(
 )
 print "user info table created Successfully!"
 
-
 """
 订单（订单编号，数量, 开单时间，金额，订单备注, 产品编号)
 #TODO 最后交付时间先不放
@@ -108,7 +105,6 @@ conn.execute(
     '''
 )
 print "orders info table created Successfully!"
-
 
 """
 任务（任务编号，用户编号，工艺编号，订单编号，分配数量，任务备注）
@@ -132,7 +128,6 @@ conn.execute(
 )
 print "mission info table created Successfully!"
 
-
 """
 流水（流水编号，数量，交付日期，流水备注，任务编号）
 """
@@ -151,7 +146,6 @@ conn.execute(
     '''
 )
 print "transactions info table created Successfully!"
-
 
 ##################################################
 """
