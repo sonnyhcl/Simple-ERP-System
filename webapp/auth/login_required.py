@@ -10,4 +10,5 @@ def login_required(f):
         if not session.get('logged_in'):
             return redirect(url_for('login', next=request.url))
         return f(*args, **kwargs)
+
     return decorated_function

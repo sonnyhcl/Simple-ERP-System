@@ -48,7 +48,6 @@ conn.execute(
 )
 print "item info table created Successfully!"
 
-
 """
 社区（社区编号，社区名，管理员编号）
 """
@@ -58,14 +57,13 @@ conn.execute(
         (
             c_id            INTEGER     PRIMARY KEY    AUTOINCREMENT,
             c_name          char(30)    NOT NULL,
-            u_id            INT,
+            u_id            INT         NOT NULL,
             FOREIGN KEY     (u_id)      REFERENCES   user(u_id)
         )
         ;
     '''
 )
 print "community info table created Successfully!"
-
 
 """
 用户（用户编号，用户名，身份，密码，联系方式，社区编号）
@@ -87,7 +85,6 @@ conn.execute(
 )
 print "user info table created Successfully!"
 
-
 """
 订单（订单编号，数量, 开单时间，金额，订单备注, 产品编号)
 #TODO 最后交付时间先不放
@@ -102,13 +99,12 @@ conn.execute(
             o_timestamp     DATETIME    DEFAULT(datetime('now', 'localtime')),
             o_notes         CHAR(50)    DEFAULT('无'),
             p_id            INT         NOT NULL,
-            FOREIGN KEY     (p_id)      REFERENCES   job(p_id)
+            FOREIGN KEY     (p_id)      REFERENCES   product(p_id)
         )
         ;
     '''
 )
 print "orders info table created Successfully!"
-
 
 """
 任务（任务编号，用户编号，工艺编号，订单编号，分配数量，任务备注）
@@ -120,18 +116,17 @@ conn.execute(
             m_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
             m_amount        INT,
             m_notes         CHAR(50)    DEFAULT('无'),
-            u_id            INT,
-            i_id            INT,
-            o_id            INT,
+            u_id            INT         NOT NULL,
+            i_id            INT         NOT NULL,
+            o_id            INT         NOT NULL,
             FOREIGN KEY     (u_id)      REFERENCES   user(u_id),
-            FOREIGN KEY     (i_id)      REFERENCES   user(i_id),
-            FOREIGN KEY     (o_id)      REFERENCES   user(o_id)
+            FOREIGN KEY     (i_id)      REFERENCES   item(i_id),
+            FOREIGN KEY     (o_id)      REFERENCES   orders(o_id)
         )
         ;
     '''
 )
 print "mission info table created Successfully!"
-
 
 """
 流水（流水编号，数量，交付日期，流水备注，任务编号）
@@ -141,7 +136,7 @@ conn.execute(
         CREATE TABLE transactions
         (
             t_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
-            t_amount        INT,
+            t_amount        INT         NOT NULL,
             t_timestamp     DATETIME    DEFAULT(datetime('now', 'localtime')),
             t_notes         CHAR(50)    DEFAULT('无'),
             m_id            INT         NOT NULL,
@@ -151,7 +146,6 @@ conn.execute(
     '''
 )
 print "transactions info table created Successfully!"
-
 
 ##################################################
 """

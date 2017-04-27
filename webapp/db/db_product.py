@@ -3,11 +3,19 @@
 产品页面所有数据库的相关操作
 涉及到产品表和工艺表
 """
-__author__ = 'sonnyhcl'
 import sqlite3
+
+__author__ = 'sonnyhcl'
 
 
 class Product(object):
+    def add_item_for_product(self, p_id, i_name, i_unit_price, i_ref_time,
+                             i_note):
+        pass
+
+    def delete_item_for_product(self, p_id, i_id):
+        pass
+
     def add_product(self, p_name, i_name, i_unit_price, i_ref_time, i_note,
                     p_author):
         conn = sqlite3.connect("demo.db")
@@ -57,7 +65,6 @@ class Product(object):
             param = (p_id,)
             response = conn.execute('SELECT * FROM product WHERE p_id = ?;',
                                     param)
-            print response.fetchall()
             origin = response.fetchall()[0]
             origin = list(origin)
             if p_name is not None:
@@ -79,9 +86,9 @@ class Product(object):
                 origin[2] = i_unit_price
             if i_ref_time is not None:
                 origin[3] = i_ref_time
-            param = tuple(origin) + (i_id,)
+            param = tuple(origin[:-1]) + (i_id,)
             conn.execute(
-                'UPDATE item SET i_id = ?, i_name = ?, i_unit_price = ?, i_ref_time = ? WHERE i_id = ?;',
+                'UPDATE item SET i_id = ?, i_name = ?, i_unit_price = ?, i_ref_time = ?, i_note = ? WHERE i_id = ?;',
                 param)
         except Exception:
             conn.close()
@@ -111,5 +118,6 @@ class Product(object):
             return "Fail", traceback.print_exc()
         conn.close()
         return "Success", response
+
 
 products = Product()

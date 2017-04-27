@@ -61,4 +61,3 @@ def delete_transaction():
     # TODO status, info = transactions.delete_transaction(m_id)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
-

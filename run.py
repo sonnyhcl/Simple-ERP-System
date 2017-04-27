@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 from webapp import app
 from werkzeug.serving import run_simple
-__author__ = 'sonnyhcl'
 
+__author__ = 'sonnyhcl'
 
 if __name__ == '__main__':
     run_simple(hostname='0.0.0.0',

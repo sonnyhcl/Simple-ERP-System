@@ -40,7 +40,7 @@ def add_order_for_cid():
     :return: {"status": "Success", "msg":"error_msg"}
     """
     # TODO status, info = orders.add_order(o_amount, o_money, p_id)
-    info = {"status": "Success", "msg":"error_msg"}
+    info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
 
@@ -52,7 +52,7 @@ def modify_order():
     :return: {"status": "Success", "msg":"error_msg"}
     """
     # TODO status, info = orders.modify_order(o_amount, o_money, p_id)
-    info = {"status": "Success", "msg":"error_msg"}
+    info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
 
@@ -64,6 +64,5 @@ def delete_order():
     :return: {"status": "Success", "msg":"error_msg"}
     """
     # TODO status, info = orders.delete_order(i_id)
-    info = {"status": "Success", "msg":"error_msg"}
+    info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
-
