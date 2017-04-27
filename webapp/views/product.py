@@ -64,10 +64,8 @@ def add_item_for_product():
     i_ref_time = request.form.get('i_ref_time')
     i_note = request.form.get('i_note')
     # TODO 给指定产品增加一项工艺
-    ret['status'], ret['msg'] = products.add_item_for_product(p_id, i_name,
-                                                              i_unit_price,
-                                                              i_ref_time,
-                                                              i_note)
+    ret['status'], ret['msg'] = products.add_item_for_product(i_name, i_unit_price, i_ref_time,
+                                                          i_note, p_id)
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -83,7 +81,7 @@ def delete_item_for_product():
     p_id = request.form.get('p_id')
     i_id = request.form.get('i_id')
     # TODO 删除指定产品中的某一项工艺
-    ret['status'], ret['msg'] = products.add_item_for_product(p_id, i_id)
+    ret['status'], ret['msg'] = products.delete_item_for_product(p_id, i_id)
     return json.dumps(ret, ensure_ascii=False)
 
 
