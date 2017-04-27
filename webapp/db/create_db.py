@@ -20,7 +20,7 @@ conn.execute(
         (
             p_id          INTEGER     PRIMARY KEY    AUTOINCREMENT,
             p_name        char(60)    NOT NULL,
-            p_author      char(10)
+            p_author      char(10)    DEFAULT 'hcl'
         )
         ;
     '''
@@ -37,9 +37,9 @@ conn.execute(
         (
             i_id            INTEGER     PRIMARY KEY    AUTOINCREMENT,
             i_name          char(90)    NOT NULL,
-            i_unit_price    FLOAT       NOT NULL,
-            i_ref_time      INT         NOT NULL,
-            i_note          INT         DEFAULT('无'),
+            i_unit_price    FLOAT       DEFAULT 0,
+            i_ref_time      INT         DEFAULT 0,
+            i_note          INT         DEFAULT '无',
             p_id            INT         NOT NULL,
             FOREIGN KEY     (p_id)      REFERENCES      product(p_id)
         )
@@ -56,8 +56,8 @@ conn.execute(
         CREATE TABLE community
         (
             c_id            INTEGER     PRIMARY KEY    AUTOINCREMENT,
-            c_name          char(30)    NOT NULL,
-            u_id            INT         NOT NULL,
+            c_name          char(30)    UNIQUE NOT NULL,
+            u_id            INT         DEFAULT 0,
             FOREIGN KEY     (u_id)      REFERENCES   user(u_id)
         )
         ;
@@ -73,7 +73,7 @@ conn.execute(
         CREATE TABLE user
         (
             u_id            INTEGER     PRIMARY KEY    AUTOINCREMENT,
-            u_name          char(30)    NOT NULL,
+            u_name          char(30)    UNIQUE NOT NULL,
             u_role          char(10)    NOT NULL,
             u_password      char(30)    NOT NULL,
             u_phone         char(30)    NOT NULL,
@@ -94,10 +94,10 @@ conn.execute(
         CREATE TABLE orders
         (
             o_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
-            o_amount        INT         NOT NULL,
-            o_money         FLOAT       NOT NULL,
-            o_timestamp     DATETIME    DEFAULT(datetime('now', 'localtime')),
-            o_notes         CHAR(50)    DEFAULT('无'),
+            o_amount        INT         DEFAULT 0,
+            o_money         FLOAT       DEFAULT 0,
+            o_timestamp     DATETIME    DEFAULT (datetime('now', 'localtime')),
+            o_notes         CHAR(50)    DEFAULT '无',
             p_id            INT         NOT NULL,
             FOREIGN KEY     (p_id)      REFERENCES   product(p_id)
         )
@@ -114,8 +114,8 @@ conn.execute(
         CREATE TABLE mission
         (
             m_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
-            m_amount        INT,
-            m_notes         CHAR(50)    DEFAULT('无'),
+            m_amount        INT         DEFAULT 0,
+            m_notes         CHAR(50)    DEFAULT '无',
             u_id            INT         NOT NULL,
             i_id            INT         NOT NULL,
             o_id            INT         NOT NULL,
@@ -136,9 +136,9 @@ conn.execute(
         CREATE TABLE transactions
         (
             t_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
-            t_amount        INT         NOT NULL,
-            t_timestamp     DATETIME    DEFAULT(datetime('now', 'localtime')),
-            t_notes         CHAR(50)    DEFAULT('无'),
+            t_amount        INT         DEFAULT 0,
+            t_timestamp     DATETIME    DEFAULT (datetime('now', 'localtime')),
+            t_notes         CHAR(50)    DEFAULT '无',
             m_id            INT         NOT NULL,
             FOREIGN KEY     (m_id)      REFERENCES   mission(m_id)
         )
@@ -154,8 +154,8 @@ print "transactions info table created Successfully!"
 """
 conn.execute(
     """
-    INSERT INTO community(c_id, c_name, u_id)
-    VALUES  (0, '彩虹桥', 0), (1, '社区A',   0), ( 2, '社区B',  0);
+    INSERT INTO community(c_id, c_name)
+    VALUES  (0, '彩虹桥'), (1, '社区A'), ( 2, '社区B');
     """
 )
 
@@ -190,8 +190,8 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO item(i_name, i_unit_price, i_ref_time, p_id)
-    VALUES  ('产品A的工艺1',  10,  100, 1), ('产品A的工艺1',  20, 200, 1),
-            ('产品B的工艺2',  30,  300, 2), ('产品B的工艺2',  40, 400, 2);
+    VALUES  ('产品A的工艺1',  10,  100, 1), ('产品A的工艺2',  20, 200, 1),
+            ('产品B的工艺1',  30,  300, 2), ('产品B的工艺2',  40, 400, 2);
     """
 )
 

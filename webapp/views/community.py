@@ -35,6 +35,7 @@ def get_community_by_cid(c_id):
              info]
     else:
         ret['msg'] = info
+
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -52,6 +53,7 @@ def get_all_admin():
         _ = [ret['data'].append({'u_id': i[0], 'u_name': i[1]}) for i in info]
     else:
         ret['msg'] = info
+
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -62,11 +64,12 @@ def add_community():
     根据传入的{c_name, u_id}添加一个社区信息
     :return: {"status": "Success", "msg":"error_msg"}
     """
+    ret = {}
     c_name = request.form.get('c_name')
     u_id = request.form.get('u_id')
-    # status, msg = community.add_community(c_name, u_id)
-    status = community.add_community(c_name, u_id)
-    return json.dumps({"status": status, "msg": "error_msg"})
+    ret['status'], ret['msg'] = community.add_community(c_name, u_id)
+
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/community/modify', methods=['POST'])
@@ -95,5 +98,5 @@ def delete_community():
     ret = {}
     c_id = request.form.get('c_id')
     ret['status'], ret['msg'] = community.delete_community(c_id)
-    print ret
+
     return json.dumps(ret, ensure_ascii=False)

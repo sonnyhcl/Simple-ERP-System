@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import json
 from flask import render_template, request, session, \
     url_for, redirect, make_response
 from webapp import app
@@ -71,20 +72,24 @@ def login():
     http://localhost:5000/login?next=http%3A%2F%2Flocalhost%3A5000%2Ferror
     :return: templates
     """
-    error_msg = None
     next_url = request.args.get('next', 'index')
-    return render_template('login.html', error=error_msg, next=next_url)
+    return render_template('login.html', error=None, next=next_url)
 
 
 @app.route('/reset_password', methods=["POST"])
 def reset_password():
-    old_passwd = request.form.get('old_password')
-    new_passwd = request.form.get('new_password')
+    ret = {}
+    old_pass = request.form.get('old_password')
+    new_pass = request.form.get('new_password')
     u_name = request.form.get('username')
-    status, info = validate_user(u_name, old_passwd)
-    u_id = info[0]
-    if status:
-        status = user.update_user(u_id, u_name=u_name, u_password=new_passwd)
-        return status
+    ret["status"], ret["msg"] = validate_user(u_name, old_pass)
 
-    return "Fail"
+    if ret["status"]:
+        u_id = ret["msg"][0]
+        ret["status"], ret["msg"] = \
+            user.update_user(u_id, u_name=u_name, u_password=new_pass)
+    else:
+        ret["status"] = "False"
+        ret["msg"] = "Validate Error"
+
+    return json.dumps(ret, ensure_ascii=False)

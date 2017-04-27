@@ -20,11 +20,10 @@ def get_all_products_detail():
     ret = {"data": [], "status": 'Success', "msg": ""}
     status, info = products.get_all()
     if status == "Success":
-        _ = [ret['data'].append({'p_id': i[0], 'p_name': i[1],
-                                 "p_author_name": i[2], "i_id": i[3],
-                                 "i_name": i[4], "i_unit_price": i[5],
-                                 "i_ref_time": i[6], "i_note": i[7]})
-             for i in info]
+        _ = [ret['data'].append(
+            {'p_id': i[0], 'p_name': i[1], "p_author_name": i[2],
+             "i_id": i[3], "i_name": i[4], "i_unit_price": i[5],
+             "i_ref_time": i[6], "i_note": i[7]}) for i in info]
     else:
         ret['msg'] = str(info)
 
@@ -83,7 +82,6 @@ def delete_item_for_product():
     ret = {}
     p_id = request.form.get('p_id')
     i_id = request.form.get('i_id')
-    # TODO 删除指定产品中的某一项工艺
     ret['status'], ret['msg'] = products.delete_item_for_product(p_id, i_id)
 
     return json.dumps(ret, ensure_ascii=False)

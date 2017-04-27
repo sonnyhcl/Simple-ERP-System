@@ -31,6 +31,7 @@ def index_index():
     if status == 'Success':
         user_info = {'u_name': info[0][0], 'u_role': d[info[0][1]],
                      'c_name': info[0][2], 'u_phone': info[0][3]}
+
     return render_template('index.html', user_info=user_info)
 
 

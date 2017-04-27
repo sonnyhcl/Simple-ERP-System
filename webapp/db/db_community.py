@@ -42,10 +42,9 @@ class Community(object):
         param = (c_id,)
         response = conn.execute('SELECT * FROM user WHERE c_id = ?;', param)
         response = response.fetchall()
-        print response
         if not response == []:
-            return "Fail", "There are still users belonging to community %s" \
-                   % c_id
+            return "Fail", \
+                   "There are still users belonging to community %s" % c_id
         try:
             param = (c_id,)
             conn.execute('DELETE FROM community WHERE c_id = ?;', param)
@@ -91,6 +90,7 @@ class Community(object):
 
     def add_community_admin(self, c_id, u_id):
         """
+        TODO 给这个函数找个地方用
         给当前未分配管理员的社区分配管理员，通常这一步伴随add community一起做
         :return: 'Success', '' or 'Fail', 'error_msg' 
         """
