@@ -26,5 +26,5 @@ app.logger.addHandler(handler)
 
 from mylog import log
 from webapp import views
-from webapp import auth
-from webapp import db
+# from webapp import auth
+# from webapp import db
