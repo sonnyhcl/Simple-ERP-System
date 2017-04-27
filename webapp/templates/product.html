@@ -4,6 +4,8 @@
 
 {% block content %}
 <div class="container">
+
+    {% if session['u_role'] == 'root' %}
     <!-- 增加、修改 产品/工艺弹窗 -->
     <div class="modal fade" id="alterProduct"
          role="dialog" aria-labelledby="myModalLabel_prod" aria-hidden="true">
@@ -76,9 +78,7 @@
             </div>
         </div>
     </div>
-
     <!--删除弹窗模板-->
-    {% if session['u_role'] == 'root' %}
     <!--删除产品-->
     <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_prod" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">

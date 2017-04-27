@@ -19,16 +19,16 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">订单编号</label>
                             <div class="col-lg-6">
-                                <input size="16" id="o_id" type="text" value="" placeholder="产品名称"
+                                <input size="16" id="o_id" type="text" value="" placeholder="订单编号"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
                                        tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">产品名</label>
+                            <label class="col-lg-3 control-label">产品名称</label>
                             <div class="col-lg-6">
-                                <input size="16" id="p_name" type="text" value="" placeholder="设计师"
+                                <input size="16" id="p_name_order" type="text" value="" placeholder="产品名称"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
                                        tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
@@ -45,15 +45,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">金额</label>
-                            <div class="col-lg-6">
-                                <input size="16" id="o_money" type="text" value="" placeholder="金额"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                       tabindex="0"
-                                       data-toggle="popover" data-trigger="focus"/>
-                            </div>
-                        </div>
                     </form>
                 </div>
 
@@ -65,14 +56,9 @@
         </div>
     </div>
 
-    <!--修改工艺弹窗-->
-    <div class="modal fade" id="alterItem">
-
-    </div>
-
     <!--删除弹窗模板-->
     {% if session['u_role'] == 'root' %}
-    <!-- 删除产品 -->
+    <!-- 删除订单 -->
     <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_prod" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel_prod">
         <div class="modal-dialog" role="document">
@@ -196,6 +182,7 @@
             }, 'json');
     });
 
+
     function check_value(name, designer) {
         if (name === "") {
             $('#p_name').popover('show');
@@ -208,11 +195,13 @@
         return (true);
     }
 
+
     function add_order() {
         console.log("add product");
         $("#myModalLabel_order").text("增加订单信息");
         $("#yes_btn_prod").attr('onclick', 'confirm_add_member_prod()');
     }
+
 
     function confirm_add_member_prod() {
         console.log('confirm_add_member_prod');
@@ -228,6 +217,7 @@
 //        });
     }
 
+
     function modify_order(id) {
         console.log("modify product:" + id);
         $("#myModalLabel_order").text("修改订单信息");
@@ -240,6 +230,7 @@
 //            $("#yes_btn_prod").attr('onclick', 'confirm_modify_member_prod(' + id + ')');
 //        }, 'json');
     }
+
 
     function confirm_modify_member_prod(id) {
         console.log("confirm_modify_member_prod:" + id);
@@ -256,10 +247,12 @@
 //        });
     }
 
+
     function delete_order(id) {
         console.log("delete product");
         $('#confirm-del-button_prod').attr('onclick', 'confirm_del_member_prod(' + id + ')');
     }
+
 
     function confirm_del_member_prod(id) {
         console.log("confirm_del_member_prod:" + id);
