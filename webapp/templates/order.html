@@ -114,15 +114,9 @@
             <!-- 标题 -->
             <h3 id="product_manage_title">订单管理系统</h3>
             <br>
-            <!-- 修改按钮 -->
-            <!--<a id="modify_product" href="#modifyProduct" role="button" data-toggle="modal"-->
-            <!--onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>修改订单</a>-->
             <!-- 添加按钮 -->
             <a id="add_order" href="#alterProduct" role="button" data-toggle="modal"
                onclick="add_order()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加订单</a>
-            <!-- 删除按钮 -->
-            <!--<a id="del_product" href="#confirmDeleteModal_prod" role="button" data-toggle="modal"-->
-            <!--onclick="delete_prod()" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i>删除订单</a>-->
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="o_table" width="100%">
@@ -144,11 +138,13 @@
             function (ret) {
                 doc_table = $('#o_table').dataTable({
                     "aoColumns": [
-                        {"sTitle": "订单号"},
+                        {
+                            "sTitle": "订单号",
+                            "width": "10%"
+                        },
+                        {"sTitle": "开单日期"},
                         {"sTitle": "产品名"},
                         {"sTitle": "数量"},
-//                      TODO  {"sTitle": "最后交付时间"},
-                        {"sTitle": "金额"},
                         {"sTitle": "备注"},
                         {
                             "width": "12%",
@@ -185,9 +181,9 @@
                     console.log(orders[i]);
                     doc_table.fnAddData([
                         orders[i].o_id,
+                        orders[i].o_time,
                         orders[i].p_name,
                         orders[i].o_amount,
-                        orders[i].o_money,
                         orders[i].o_note,
                         //修改按钮
                         "<button href='#alterProduct' data-toggle='modal' onclick='modify_order(" +

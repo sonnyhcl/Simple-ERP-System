@@ -334,15 +334,15 @@
     function delete_prod() {
         console.log("delete product");
         $('#del_title_prod').text("选择要删除的产品");
-        pid = $('#p_products').val();
-        $('#confirm-del-button_prod').attr('onclick', 'confirm_del_product(' + pid + ')');
+        $('#confirm-del-button_prod').attr('onclick', 'confirm_del_product()');
     }
 
 
-    function confirm_del_product(id) {
-        console.log("confirm_del_product:" + id);
+    function confirm_del_product() {
+        p_id = $("#p_products").val();
+        console.log("confirm_del_product:" + p_id);
         $.post("/product/delete", {
-            'p_id': id
+            'p_id': p_id
         }, function (ret) {
             console.log(ret);
             location.href = '/product';
@@ -376,8 +376,8 @@
         if (!check_value(1, 1, $("#i_name").val(), $("#i_unit_price").val(), $("i_ref_time").val())) {
             return;
         }
-        //TODO: /additem还没做，也许可以从/add改，json多传一个p_id，多一个判断产品id的过程
-        $.post("/product/additem", {
+
+        $.post("/product/add_item", {
             'p_id': p_id,
             'i_name': $("#i_name").val(),
             'i_unit_price': $("#i_unit_price").val(),
