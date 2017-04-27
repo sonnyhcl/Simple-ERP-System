@@ -124,8 +124,8 @@ conn.execute(
             i_id            INT,
             o_id            INT,
             FOREIGN KEY     (u_id)      REFERENCES   user(u_id),
-            FOREIGN KEY     (i_id)      REFERENCES   user(i_id),
-            FOREIGN KEY     (o_id)      REFERENCES   user(o_id)
+            FOREIGN KEY     (i_id)      REFERENCES   item(i_id),
+            FOREIGN KEY     (o_id)      REFERENCES   orders(o_id)
         )
         ;
     '''
