@@ -132,12 +132,12 @@
             <h3 id="product_manage_title">产品管理系统</h3>
             <br><!-- 添加按钮 -->
             <a id="add_product" href="#alterProduct" role="button" data-toggle="modal"
-               onclick="add_prod()" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加产品</a>
+               onclick="add_prod()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加产品</a>
             <!-- 删除按钮 -->
             <a id="del_product" href="#confirmDeleteModal_prod" role="button" data-toggle="modal"
-               onclick="delete_prod()" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i>删除产品</a>
+               onclick="delete_prod()" class="btn  btn-sm btn-danger"><i class="fa fa-trash fa-fw"></i>删除产品</a>
             <!-- 表格 -->
-            <table class="table table-bordered table-striped table-hover" cellspacing="0"
+            <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="product_table" width="100%">
             </table>
         </div>
@@ -163,7 +163,7 @@
                         {"sTitle": "参考用时"},
                         {"sTitle": "规格"},
                         {
-                            "width": "23%",
+                            "width": "18%",
                             "sTitle": "操作",
                             "bSortable": false
                         }
@@ -176,7 +176,7 @@
                             "sLast": "最后一页"
                         },
                         "sZeroRecords": "似乎来到了一块没有数据的荒原...",
-                        "sInfo": "共 _PAGES_ 页，从第 _START_ 页到第 _END_ 页，共 _TOTAL_ 条 ",
+                        "sInfo": "共 _PAGES_ 页，显示 第 _START_ 条到第 _END_ 条，共 _TOTAL_ 条 ",
                         "sInfoEmpty": "0 条记录",
                         "sInfoFiltered": "",
                         "sLengthMenu": "显示 _MENU_ 条",
@@ -193,25 +193,25 @@
                 });
 
                 var items = ret.data;
-                for (var ij in items) {
+                for (var i in items) {
                     doc_table.fnAddData([
-                        items[ij].p_name,
-                        items[ij].p_author_name,
-                        items[ij].i_name,
-                        items[ij].i_unit_price,
-                        items[ij].i_ref_time,
-                        items[ij].i_note,
+                        items[i].p_name,
+                        items[i].p_author_name,
+                        items[i].i_name,
+                        items[i].i_unit_price,
+                        items[i].i_ref_time,
+                        items[i].i_note,
                         //修改按钮
-                        "<button href='#alterProduct' data-toggle='modal' id='modify-item-btn_" + items[ij].i_id + "' " +
-                        "onclick='modify_prod(" + items[ij].p_id + ", " + items[ij].i_id + ")' class='btn btn-default' " +
+                        "<button href='#alterProduct' data-toggle='modal' id='modify-item-btn_" + items[i].i_id + "' " +
+                        "onclick='modify_prod(" + items[i].p_id + ", " + items[i].i_id + ")' class='btn btn-sm btn-default' " +
                         "type='button'><i class='fa fa-pencil fa-fw'></i>修改</button>" + " " +
                         //增加按钮
-                        "<button href='#alterProduct' data-toggle='modal' id='add-item-btn_" + items[ij].i_id + "' " +
-                        "onclick='add_item(" + items[ij].p_id + ", " + items[ij].i_id + ")' class='btn btn-default' " +
+                        "<button href='#alterProduct' data-toggle='modal' id='add-item-btn_" + items[i].i_id + "' " +
+                        "onclick='add_item(" + items[i].p_id + ", " + items[i].i_id + ")' class='btn btn-sm btn-default' " +
                         "type='button'><i class='fa fa-plus-square fa-fw'></i>增加</button>" + " " +
                         //删除按钮
                         "<button href='#confirmDeleteModal' data-toggle='modal' onclick='delete_item( " +
-                        items[ij].i_id + ")' class='btn btn-danger' type='button'>" +
+                        items[i].i_id + ")' class='btn btn-sm btn-danger' type='button'>" +
                         "<i class='fa fa-trash fa-fw'></i>删除</button>"
                     ])
                 }
@@ -225,9 +225,9 @@
                     temp[raw_products[i].p_name] = !0;
                 }
             }
-            for (var ij in products) {
-                console.log(products[ij]);
-                $('#p_products').append('<option value="' + products[ij].p_id + '">' + products[ij].p_name + '</option>');
+            for (var i in products) {
+                console.log(products[i]);
+                $('#p_products').append('<option value="' + products[i].p_id + '">' + products[i].p_name + '</option>');
             }
         }, 'json')
     });

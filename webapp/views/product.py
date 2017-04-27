@@ -22,9 +22,8 @@ def get_all_products_detail():
     if status == "Success":
         _ = [ret['data'].append({'p_id': i[0], 'p_name': i[1],
                                  "p_author_name": i[2], "i_id": i[3],
-                                 "i_name": i[4],
-                                 "i_unit_price": i[5], "i_ref_time": i[6],
-                                 "i_note": i[7]})
+                                 "i_name": i[4], "i_unit_price": i[5],
+                                 "i_ref_time": i[6], "i_note": i[7]})
              for i in info]
     else:
         ret['msg'] = str(info)

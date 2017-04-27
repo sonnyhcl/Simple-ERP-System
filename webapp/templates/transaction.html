@@ -91,9 +91,9 @@
             <br>
             <!-- 添加按钮 -->
             <a id="add_user" href="#alterUser" role="button" data-toggle="modal"
-               onclick="add_it()" class="btn btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加流水</a>
+               onclick="add_it()" class="btn btn-sm btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加流水</a>
             <!-- 表格 -->
-            <table class="table table-bordered table-striped table-hover" cellspacing="0"
+            <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="t_table" width="100%">
             </table>
         </div>
@@ -134,7 +134,7 @@
                         {"sTitle": "制作人"},
                         {"sTitle": "备注"},
                         {
-                            "width": "8%",
+                            "width": "7%",
                             "sTitle": "操作",
                             "bSortable": false
                         }
@@ -147,7 +147,7 @@
                             "sLast": "最后一页"
                         },
                         "sZeroRecords": "似乎来到了一块没有数据的荒原...",
-                        "sInfo": "共 _PAGES_ 页，从第 _START_ 页到第 _END_ 页，共 _TOTAL_ 条 ",
+                        "sInfo": "共 _PAGES_ 页，显示 第 _START_ 条到第 _END_ 条，共 _TOTAL_ 条 ",
                         "sInfoEmpty": "0 条记录",
                         "sInfoFiltered": "",
                         "sLengthMenu": "显示 _MENU_ 条",
@@ -181,7 +181,7 @@
                         transactions[i].u_id + ")' class='btn btn-sm btn-default' type='button'> " +
                         "<i class='fa fa-pencil'></i></button>" + "  " +
                         "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_it( " +
-                        transactions[i].u_id + ")' class='btn btn-xs btn-danger' type='button'>" +
+                        transactions[i].u_id + ")' class='btn btn-sm btn-danger' type='button'>" +
                         "<i class='fa fa-trash'></i></button>"
                     ])
                 }

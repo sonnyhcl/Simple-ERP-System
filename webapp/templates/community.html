@@ -68,9 +68,9 @@
             <br>
             <!-- 添加按钮 -->
             <a id="add_community" href="#alterCommunity" role="button" data-toggle="modal"
-               onclick="add_comm()" class="btn btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加社区</a>
+               onclick="add_comm()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加社区</a>
             <!-- 表格 -->
-            <table class="table table-bordered table-striped table-hover" cellspacing="0"
+            <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="community_table" width="100%">
             </table>
         </div>
@@ -114,7 +114,7 @@
                             "sLast": "最后一页"
                         },
                         "sZeroRecords": "似乎来到了一块没有数据的荒原...",
-                        "sInfo": "共 _PAGES_ 页，从第 _START_ 页到第 _END_ 页，共 _TOTAL_ 条 ",
+                        "sInfo": "共 _PAGES_ 页，显示 第 _START_ 条到第 _END_ 条，共 _TOTAL_ 条 ",
                         "sInfoEmpty": "0 条记录",
                         "sInfoFiltered": "",
                         "sLengthMenu": "显示 _MENU_ 条",
@@ -138,9 +138,11 @@
                         communities[ij].u_name,
                         communities[ij].u_phone,
                         "<button href='#alterCommunity' data-toggle='modal' onclick='modify_comm(" +
-                        communities[ij].c_id + ")' class='btn btn-default' type='button'>修改</button>" + "  " +
+                        communities[ij].c_id + ")' class='btn  btn-sm btn-default' type='button'>" +
+                        "<i class='fa fa-pencil fa-fw'></i>修改</button>" + "  " +
                         "<button href='#confirmDeleteModal_comm' data-toggle='modal' onclick='delete_comm( " +
-                        communities[ij].c_id + ")' class='btn btn-danger' type='button'>删除</button>"
+                        communities[ij].c_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
+                        "<i class='fa fa-trash fa-fw'></i>删除</button>"
                     ])
                 }
             }, 'json');
