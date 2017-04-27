@@ -3,6 +3,7 @@
 社区页面的所有数据库操作
 """
 import sqlite3
+import traceback
 from flask import session
 from webapp.mylog import log
 
@@ -16,8 +17,6 @@ class Community(object):
         :param c_name: 
         :return: 'Success', '' or 'Fail', 'error_msg' 
         """
-        # TODO: 社区名字判重
-        # TODO 返回格式status, msg = ..... 以及异常处理
         log("%s: add community: %s %s" % (session['u_name'], c_name, u_id))
         conn = sqlite3.connect("demo.db")
         try:
@@ -26,7 +25,7 @@ class Community(object):
                          param)
         except Exception:
             conn.close()
-            return "Fail", Exception
+            return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
         return "Success", ""
@@ -37,7 +36,6 @@ class Community(object):
         :param c_id: 
         :return: 'Success', '' or 'Fail', 'error_msg' 
         """
-        # TODO 返回格式status, msg = ..... 以及异常处理
         log("%s: delete community: %s" % (session['u_name'], c_id))
         conn = sqlite3.connect("demo.db")
         # check if there is any users belonging to this community
@@ -52,7 +50,7 @@ class Community(object):
             conn.execute('DELETE FROM community WHERE c_id = ?;', param)
         except Exception:
             conn.close()
-            return "Fail", Exception
+            return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
         return "Success", ""
@@ -71,29 +69,35 @@ class Community(object):
                      param)
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
     def get_all_admin(self):
         """
         返回所有权限为admin & root的人的信息
         :return: 'Success', <response> or 'Fail', 'error_msg' 
         """
-        # TODO
-        pass
+        conn = sqlite3.connect("demo.db")
+        try :
+            response = conn.execute('SELECT u_id, u_name from user'
+                     'WHERE u_role = root or u_role = admin;')
+            response = response.fetchall()
+        except Exception :
+            return "Fail", traceback.print_exc()
+        conn.commit()
+        conn.close()
+        return "Success", response
 
     def add_community_admin(self, c_id, u_id):
         """
         给当前未分配管理员的社区分配管理员，通常这一步伴随add community一起做
         :return: 'Success', '' or 'Fail', 'error_msg' 
         """
-        # TODO 返回格式status, msg = ..... 以及异常处理
         log("%s: add_community_admin: %s %s" % (session['u_name'], c_id, u_id))
         conn = sqlite3.connect("demo.db")
         param = (u_id,)
         response = conn.execute('SELECT u_role FROM user WHERE user.u_id = ?',
                                 param)
         response = response.fetchall()
-        # TODO 这一步不应该出现错误,由community.get_all_admin()保证
         if (len(response) == 0) or response[0][0] != 'admin':
             conn.close()
             return "Fail", "%s is not root or admin" % u_id
@@ -102,7 +106,7 @@ class Community(object):
             conn.execute('UPDATE community SET u_id = ? WHERE c_id = ?;', param)
         except Exception:
             conn.close()
-            return "Fail", Exception
+            return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
         return "Success", ""
@@ -112,7 +116,6 @@ class Community(object):
         get_community_by_cid
         :return: 'Success', <response> or 'Fail', 'error_msg' 
         """
-        # TODO 返回格式status, msg = ..... 以及异常处理
         conn = sqlite3.connect("demo.db")
         try:
             if c_id == 0:
@@ -131,7 +134,7 @@ class Community(object):
                     param)
         except Exception:
             conn.close()
-            return "Fail", Exception
+            return "Fail", traceback.print_exc()
         response = response.fetchall()
         conn.close()
         return "Success", response
