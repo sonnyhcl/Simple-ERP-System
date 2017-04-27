@@ -8,28 +8,32 @@ import sqlite3
 
 
 class Product(object):
-    def add_product(self, p_name, i_name, i_unit_price, i_ref_time,
-                    author_name="", ):
+    def add_product(self, p_name, i_name, i_unit_price, i_ref_time, i_note,
+                    p_author):
         conn = sqlite3.connect("demo.db")
         try:
-            param = (p_name, author_name,)
-            conn.execute('INSERT INTO product VALUES (p_name, author_name);',
+            param = (p_name, p_author,)
+            conn.execute('INSERT INTO product(p_name, p_author)'
+                         'VALUES (?, ?);',
                          param)
             response = conn.execute(
-                'SELECT p_id FROM product WHERE p_name = ? AND author_name = ?;',
+                'SELECT p_id FROM product WHERE p_name = ? AND p_author = ?;',
                 param)
             response = response.fetchall()
             p_id = response[0][0]
-            param = (i_name, i_unit_price, i_ref_time, p_id,)
+            param = (i_name, i_unit_price, i_ref_time, p_id, i_note)
             conn.execute(
-                'INSERT INTO item VALUES (i_name = ?, i_unit_price = ?, i_ref_time = ?, p_id = ?);',
+                'INSERT INTO item(i_name, i_unit_price, i_ref_time, p_id, '
+                'i_note)'
+                'VALUES (?,?,?,?,?);',
                 param)
         except Exception:
             conn.close()
-            return "Fail", Exception
+            import traceback
+            return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
     def delete_product(self, p_id):
         conn = sqlite3.connect("demo.db")
@@ -39,10 +43,11 @@ class Product(object):
             conn.execute('DELETE FROM product WHERE p_id = ?;', param)
         except Exception:
             conn.close()
-            return "Fail", Exception
+            import traceback
+            return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
     def update_product(self, p_id, i_id, p_name=None, author=None,
                        i_name=None, i_unit_price=None, i_ref_time=None,
@@ -52,6 +57,7 @@ class Product(object):
             param = (p_id,)
             response = conn.execute('SELECT * FROM product WHERE p_id = ?;',
                                     param)
+            print response.fetchall()
             origin = response.fetchall()[0]
             origin = list(origin)
             if p_name is not None:
@@ -79,7 +85,8 @@ class Product(object):
                 param)
         except Exception:
             conn.close()
-            return "Fail", Exception
+            import traceback
+            return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
         return "Success", ""
@@ -100,7 +107,8 @@ class Product(object):
                 'SELECT * FROM product, item WHERE product.p_id = item.p_id;')
             response = response.fetchall()
         except Exception:
-            return "Fail", Exception
+            import traceback
+            return "Fail", traceback.print_exc()
         conn.close()
         return "Success", response
 

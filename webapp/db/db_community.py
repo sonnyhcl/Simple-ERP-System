@@ -135,9 +135,7 @@ class Community(object):
                 response = conn.execute(
                 'SELECT community.c_id, community.c_name, '
                 'user.u_name, user.u_phone, user.u_id '
-                'FROM'
-                ' '
-                'community, user '
+                'FROM community, user '
                 'WHERE user.u_id = community.u_id;')
             else:
                 param = (c_id,)

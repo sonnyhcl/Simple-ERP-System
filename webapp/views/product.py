@@ -41,16 +41,14 @@ def add_product():
     """
     ret = {}
     p_name = request.form.get('p_name')
-    p_author = request.form.get('p_author_name')
+    p_author = request.form.get('p_author')
     i_name = request.form.get('i_name')
     i_unit_price = request.form.get('i_unit_price')
     i_ref_time = request.form.get('i_ref_time')
     i_note = request.form.get('i_note')
-
     #TODO: db的add_product参数还没调好，无法增加
-    ret["status"], ret['msg'] = products.add_product(p_name, p_author, i_name,
-                            i_unit_price, i_ref_time, i_note)
-
+    ret["status"], ret['msg'] = products.add_product(p_name, i_name,
+            i_unit_price, i_ref_time, i_note, p_author)
     return json.dumps(ret, ensure_ascii=False)
 
 
