@@ -86,7 +86,7 @@ def delete_item_for_product():
 
 @app.route('/product/modify', methods=['POST'])
 @login_required
-def modify_product_and_one_item():
+def modify_product_and_its_one_item():
     """
     每次修改只针对一个产品和它的一个工艺
     :return: {"status": "Success", "msg":"error_msg"}

@@ -58,7 +58,7 @@ conn.execute(
         (
             c_id            INTEGER     PRIMARY KEY    AUTOINCREMENT,
             c_name          char(30)    NOT NULL,
-            u_id            INT,
+            u_id            INT         NOT NULL,
             FOREIGN KEY     (u_id)      REFERENCES   user(u_id)
         )
         ;
@@ -102,7 +102,7 @@ conn.execute(
             o_timestamp     DATETIME    DEFAULT(datetime('now', 'localtime')),
             o_notes         CHAR(50)    DEFAULT('无'),
             p_id            INT         NOT NULL,
-            FOREIGN KEY     (p_id)      REFERENCES   job(p_id)
+            FOREIGN KEY     (p_id)      REFERENCES   product(p_id)
         )
         ;
     '''
@@ -120,9 +120,9 @@ conn.execute(
             m_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
             m_amount        INT,
             m_notes         CHAR(50)    DEFAULT('无'),
-            u_id            INT,
-            i_id            INT,
-            o_id            INT,
+            u_id            INT         NOT NULL,
+            i_id            INT         NOT NULL,
+            o_id            INT         NOT NULL,
             FOREIGN KEY     (u_id)      REFERENCES   user(u_id),
             FOREIGN KEY     (i_id)      REFERENCES   item(i_id),
             FOREIGN KEY     (o_id)      REFERENCES   orders(o_id)
@@ -141,7 +141,7 @@ conn.execute(
         CREATE TABLE transactions
         (
             t_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
-            t_amount        INT,
+            t_amount        INT         NOT NULL,
             t_timestamp     DATETIME    DEFAULT(datetime('now', 'localtime')),
             t_notes         CHAR(50)    DEFAULT('无'),
             m_id            INT         NOT NULL,

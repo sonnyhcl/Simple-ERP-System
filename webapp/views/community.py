@@ -13,10 +13,6 @@ __author__ = 'sonnyhcl'
 @app.route('/community', methods=['GET'])
 @login_required
 def community_index():
-    """
-    返回社区页面
-    :return: 
-    """
     return render_template('community.html')
 
 
@@ -31,10 +27,10 @@ def get_community_by_cid(c_id):
                 "status": status, "msg":""}
     """
     status, info = community.get_community_by_cid(c_id)
-    ret = {"data": [], "status": status, "msg":""}
+    ret = {"data": [], "status": status, "msg": ""}
     if status == "Success":
-        _ = [ret['data'].append({'c_id':i[0], 'c_name':i[1], 'u_id': i[4],
-                                 'u_name': i[2],'u_phone': i[3]}) for i in info]
+        _ = [ret['data'].append({'c_id': i[0], 'c_name':i[1], 'u_id': i[4],
+                                 'u_name': i[2], 'u_phone': i[3]}) for i in info]
     else:
         ret['msg'] = info
     return json.dumps(ret, ensure_ascii=False)
@@ -45,17 +41,15 @@ def get_community_by_cid(c_id):
 def get_all_admin():
     """
     返回所有权限为admin & root的人的信息
-    
     :return: {"data": [{'u_id':, 'u_name':}], 
                 "status": status, "msg":""}
     """
     # TODO 返回所有admin以及root权限的人的{u_id, u_name}
     # status, response = community.get_all_admin()
-    response = {'data': [{'u_id':0, 'u_name':'hcl'},
-                     {'u_id':1, 'u_name':'admin'}],
-                'status': 'Success', 'msg': "error_msg" }
+    response = {'data': [{'u_id': 0, 'u_name': 'hcl'},
+                {'u_id': 1, 'u_name': 'admin'}],
+                'status': 'Success', 'msg': "error_msg"}
     return json.dumps(response, ensure_ascii=False)
-
 
 
 @app.route('/community/add', methods=['POST'])
@@ -70,7 +64,7 @@ def add_community():
     # TODO 修改返回格式和传入参数
     # status, msg = community.add_community(c_name, u_id)
     status = community.add_community(c_name, u_id)
-    return json.dumps({"status": status, "msg":"error_msg"})
+    return json.dumps({"status": status, "msg": "error_msg"})
 
 
 @app.route('/community/modify', methods=['POST'])
@@ -86,7 +80,7 @@ def modify_community():
     # TODO 修改返回格式
     # status， msg = community.update_community(c_id, c_name, u_id)
     status = community.update_community(c_id, c_name, u_id)
-    return json.dumps({"status": status, "msg":"error_msg"})
+    return json.dumps({"status": status, "msg": "error_msg"})
 
 
 @app.route('/community/delete', methods=['POST'])
@@ -97,8 +91,7 @@ def delete_community():
     :return: {"status": "Success", "msg":"error_msg"}
     """
     c_id = request.form.get('c_id')
-    # TODO 就不应该有社区删除操作，待商榷
+    # TODO 只能删除没有人的社区以及没有订单的社区，也就是刚刚新建什么操作都没有做的社区
+    # 订单的操作可以等开始做订单页面了再搞
     status = community.delete_community(c_id)
-    return json.dumps({"status": status, "msg":"error_msg"})
-
-
+    return json.dumps({"status": status, "msg": "error_msg"})

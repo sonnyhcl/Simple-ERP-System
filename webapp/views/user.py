@@ -14,11 +14,8 @@ __author__ = 'sonnyhcl'
 @app.route('/user', methods=['GET'])
 @login_required
 def user_index():
-    """
-    返回用户管理页面
-    :return: templates
-    """
     return render_template('user.html')
+
 
 @app.route('/user/<int:u_id>', methods=['POST'])
 @login_required
@@ -31,11 +28,11 @@ def get_user_by_uid(u_id):
                        'c_id': info[0][5] }], "status": status, "msg":""}
     """
     status, info = user.get_user_by_uid(u_id)
-    ret = {"data": [], "status": status, "msg":""}
+    ret = {"data": [], "status": status, "msg": ""}
     if status == "Success":
         ret['data'] = {'u_id': info[0][0], 'u_name': info[0][1],
                        "u_role": info[0][2], "u_phone": info[0][4],
-                       'c_id': info[0][5] }
+                       'c_id': info[0][5]}
     else:
         ret['msg'] = info
     return json.dumps(ret, ensure_ascii=False)
@@ -48,24 +45,17 @@ def get_users_by_cid():
     人员管理页面
     cid=0意味着查询所有社区的人员信息，否则就是返回该c_id社区的人员信息
     :return: {"data": [{'u_id':i[0], 'u_name':i[1], "u_role":i[2],
-                            "u_phone": i[4], 'c_id': i[5] }], "status": status, "msg":""}
+              "u_phone": i[4], 'c_id': i[5] }], "status": status, "msg": ""}
     """
     cid = session['c_id']
     status, info = user.get_user_by_cid(cid)
-    ret = {"data": [], "status": status, "msg":""}
-    d = {'root': u"主管理员", 'admin': u"社区管理员", 'user': u"员工"}
+    ret = {"data": [], "status": status, "msg": ""}
+    d = {'root': u"主管理员", 'admin': u"管理员", 'user': u"员工"}
     if status == "Success":
-        _ = [ret['data'].append({'u_id':i[0], 'u_name':i[1], "u_role":i[2],
-                            "u_phone": i[4], 'c_id': i[5] })  for i in info]
-        # 将社区id转换成社区名字，人员角色转换为中文对应表述
+        _ = [ret['data'].append({'u_id': i[0], 'u_name': i[1], "u_role": i[2],
+                                "u_phone": i[4], 'c_id': i[5]}) for i in info]
         for r in ret['data']:
-            #  community.get_community_by_cid(r['c_id'])
-            # => ('Success', [(0, u'彩虹桥', u'hcl', u'12345678910')])
-            # => u'彩虹桥'
             r['c_name'] = community.get_community_by_cid(r['c_id'])[1][0][1]
-            # 'root'=>主管理员
-            # 'admin'=>管理员
-            # 'user'=>员工
             r['u_role'] = d[r['u_role']]
     else:
         ret['msg'] = info
