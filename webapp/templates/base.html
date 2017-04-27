@@ -178,6 +178,17 @@
 <!-- jquery.datatables -->
 <script src="http://cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
 
+<!--设置readonly操作-->
+<script type="text/javascript">
+    function set_readOnly(id){
+        document.getElementById(id).readOnly=true;
+    }
+
+    function unset_readOnly(id){
+        document.getElementById(id).readOnly=false;
+    }
+</script>
+
 <!-- 修改密码 -->
 <script type="text/javascript">
     function check_password(name, old_password, new_password, confirm_new_password) {

@@ -7,6 +7,7 @@ from db.db_product import products
 
 __author_name__ = 'sonnyhcl'
 
+#TODO: /add_item, /delete_item.
 
 @app.route('/product', methods=['GET'])
 @login_required
@@ -22,7 +23,7 @@ def get_all_products_detail():
     status, info = products.get_all()
     if status == "Success":
         _ = [ret['data'].append({'p_id': i[0], 'p_name': i[1],
-            "p_author_name": i[2], "i_name": i[3], "i_id": i[4],
+            "p_author_name": i[2], "i_id": i[3], "i_name": i[4],
             "i_unit_price": i[5], "i_ref_time": i[6], "i_note": i[7]})
              for i in info]
     else:
@@ -40,11 +41,13 @@ def add_product():
     """
     ret = {}
     p_name = request.form.get('p_name')
-    p_author = request.form.get('p_author')
+    p_author = request.form.get('p_author_name')
     i_name = request.form.get('i_name')
     i_unit_price = request.form.get('i_unit_price')
     i_ref_time = request.form.get('i_ref_time')
     i_note = request.form.get('i_note')
+
+    #TODO: db的add_product参数还没调好，无法增加
     ret["status"], ret['msg'] = products.add_product(p_name, p_author, i_name,
                             i_unit_price, i_ref_time, i_note)
 

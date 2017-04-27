@@ -10,7 +10,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="cancel_prod">×
+                    </button>
                     <h4 class="modal-title" id="myModalLabel_prod">标题</h4>
                 </div>
 
@@ -70,7 +71,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" id="no-btn-prod" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" id="no-btn-prod" class="btn btn-primary" data-dismiss="modal" onclick="">取消
+                    </button>
                     <button type="button" id="yes_btn_prod" class="btn btn-danger" onclick="">确定</button>
                 </div>
             </div>
@@ -89,8 +91,14 @@
                     <h4 class="modal-title" id="del_title_prod">确认删除标题</h4>
                 </div>
                 <div class="modal-body">
-                    <!--TODO: 下拉单-->
-
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">产品</label>
+                        <div class="col-lg-8">
+                            <select id="p_products" class="form-control input-sm" style="color:#666666">
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
                     <button id='confirm-del-button_prod' autofocus type="button" class="btn btn-danger" onclick="">确认
                     </button>
@@ -109,7 +117,7 @@
                 </div>
                 <div class="modal-body">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='confirm-del-BUTTON' autofocus type="button" class="btn btn-danger" onclick="">确认
+                    <button id='confirm-del-button' autofocus type="button" class="btn btn-danger" onclick="">确认
                     </button>
                 </div>
             </div>
@@ -184,30 +192,44 @@
                     "bStateSave": true
                 });
 
-                var products = ret.data;
-                for (var ij in products) {
+                var items = ret.data;
+                for (var ij in items) {
                     doc_table.fnAddData([
-                        products[ij].p_name,
-                        products[ij].p_author_name,
-                        products[ij].i_name,
-                        products[ij].i_unit_price,
-                        products[ij].i_ref_time,
-                        products[ij].i_note,
+                        items[ij].p_name,
+                        items[ij].p_author_name,
+                        items[ij].i_name,
+                        items[ij].i_unit_price,
+                        items[ij].i_ref_time,
+                        items[ij].i_note,
                         //修改按钮
-                        "<button href='#alterProduct' data-toggle='modal' id='modify-item-btn_" + products[ij].i_id + "' " +
-                        "onclick='modify_prod(" + products[ij].i_id + ")' class='btn btn-default' type='button'>" +
+                        "<button href='#alterProduct' data-toggle='modal' id='modify-item-btn_" + items[ij].i_id + "' " +
+                        "onclick='modify_prod(" + items[ij].i_id + ")' class='btn btn-default' type='button'>" +
                         "<i class='fa fa-pencil fa-fw'></i>修改</button>" + " " +
                         //增加按钮
-                        "<button href='#alterProduct' data-toggle='modal' id='add-item-btn_" + products[ij].i_id + "' " +
-                        "onclick='add_item(" + products[ij].i_id + ")' class='btn btn-default' type='button'>" +
+                        "<button href='#alterProduct' data-toggle='modal' id='add-item-btn_" + items[ij].i_id + "' " +
+                        "onclick='add_item(" + items[ij].i_id + ")' class='btn btn-default' type='button'>" +
                         "<i class='fa fa-plus-square fa-fw'></i>增加</button>" + " " +
                         //删除按钮
                         "<button href='#confirmDeleteModal' data-toggle='modal' onclick='delete_item( " +
-                        products[ij].i_id + ")' class='btn btn-danger' type='button'>" +
+                        items[ij].i_id + ")' class='btn btn-danger' type='button'>" +
                         "<i class='fa fa-trash fa-fw'></i>删除</button>"
                     ])
                 }
             }, 'json');
+        $.post('/product/table', function (ret) {
+            var raw_products = ret.data;
+            var products = [], temp = {};
+            for (var i = 0; i < raw_products.length; i++) {
+                if(!temp[raw_products[i].p_name]){
+                    products.push(raw_products[i]);
+                    temp[raw_products[i].p_name] = !0;
+                }
+            }
+            for (var ij in products) {
+                console.log(products[ij]);
+                $('#p_products').append('<option value="' + products[ij].p_id + '">' + products[ij].p_name + '</option>');
+            }
+        }, 'json')
     });
 
 
@@ -242,17 +264,18 @@
         console.log("modify product:" + i_id);
         pname = $('#modify-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[0].innerText;
         pauthor = $('#modify-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[1].innerText;
-        iname = $('#modify-item-btn_'+i_id).parents("tr")[0].getElementsByTagName('td')[2].innerText;
-        unitprice = $('#modify-item-btn_'+i_id).parents("tr")[0].getElementsByTagName('td')[3].innerText;
-        reftime = $('#modify-item-btn_'+i_id).parents("tr")[0].getElementsByTagName('td')[4].innerText;
+        iname = $('#modify-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[2].innerText;
+        unitprice = $('#modify-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[3].innerText;
+        reftime = $('#modify-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[4].innerText;
+        inote = $('#modify-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[5].innerText;
         $("#myModalLabel_prod").text("修改产品及工艺信息");
         $("#p_name").val(pname);
         $("#p_author_name").val(pauthor);
         $("#i_name").val(iname);
+        $("#i_note").val(inote);
         $("#i_unit_price").val(unitprice);
         $("#i_ref_time").val(reftime);
         $("#yes_btn_prod").attr('onclick', 'confirm_modify_product(' + i_id + ')');
-
     }
 
 
@@ -286,7 +309,8 @@
 
     function confirm_add_product() {
         console.log('confirm_add_product');
-        if (!check_value($("#p_name").val(), $("#p_author_name").val(), $('#i_name').val(), $('#i_unit_price').val(), $('#i_ref_time').val())) {
+        if (!check_value($("#p_name").val(), $("#p_author_name").val(),
+                $('#i_name').val(), $('#i_unit_price').val(), $('#i_ref_time').val())) {
             return;
         }
         $.post("/product/add", {
@@ -294,7 +318,8 @@
             'p_author_name': $('#p_author_name').val(),
             'i_name': $('#i_name').val(),
             'i_unit_price': $('#i_unit_price').val(),
-            'i_ref_time': $('i_ref_time').val()
+            'i_ref_time': $('i_ref_time').val(),
+            'i_note': $('i_note').val()
         }, function (ret) {
             console.log(ret);
             location.href = '/product';
@@ -303,11 +328,11 @@
 
 
     //删除产品
-    function delete_prod(id) {
+    function delete_prod() {
         console.log("delete product");
         $('#del_title_prod').text("选择要删除的产品");
-
-        $('#confirm-del-button_prod').attr('onclick', 'confirm_del_product(' + id + ')');
+        pid = $('#p_products').val();
+        $('#confirm-del-button_prod').attr('onclick', 'confirm_del_product(' + pid + ')');
     }
 
 
@@ -323,16 +348,23 @@
 
 
     /***** 针对工艺的操作 *****/
-    //TODO: exists some bug when clicking.
     //增加工艺
     function add_item(i_id) {
         $("#myModalLabel_prod").text("添加工艺信息");
         console.log("add item");
         pname = $('#add-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[0].innerText;
-        pauther = $('#add-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[1].innerText;
+        pauthor = $('#add-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[1].innerText;
         $("#p_name").val(pname);
-        $("#p_author_name").val(pauther);
-        $("#yes_btn_prod").attr('onclick', 'confirm_add_item(' + i_id + ')');
+        $("#p_author_name").val(pauthor);
+
+        //lock readonly
+        set_readOnly('p_name');
+        set_readOnly('p_author_name');
+        //unlock readonly
+        $('#cancel_prod').attr('onclick', 'unset_readOnly(\'p_name\');' + 'unset_readOnly(\'p_author_name\')');
+        $('#yes_btn_prod').attr('onclick', 'unset_readOnly(\'p_name\');' + 'unset_readOnly(\'p_author_name\');'
+            + 'confirm_add_item(' + i_id + ')');
+        $('#no-btn-prod').attr('onclick', 'unset_readOnly(\'p_name\');' + 'unset_readOnly(\'p_author_name\')');
     }
 
 
@@ -341,6 +373,7 @@
         if (!check_value(1, 1, $("#i_name").val(), $("#i_unit_price").val(), $("i_ref_time").val())) {
             return;
         }
+        //TODO: /additem还没做，也许可以从/add改，json多传一个p_id，多一个判断产品id的过程
         $.post("/product/additem", {
             'i_name': $("#i_name").val(),
             'i_unit_price': $("#i_unit_price").val(),
@@ -362,6 +395,7 @@
 
     function confirm_del_item(id) {
         console.log("confirm_del_item:" + id);
+        //TODO: /delete_item
         $.post("/product/delete_item", {
             'i_id': id
         }, function (ret) {
