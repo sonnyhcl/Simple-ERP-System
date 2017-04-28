@@ -36,13 +36,13 @@ class Order(object):
         conn.close()
         return "Success", ""
 
-    def update_order(self, o_id, o_amount, o_money, p_id, c_id):
+    def update_order(self, o_id, o_amount, p_id, c_id):
         conn = sqlite3.connect("demo.db")
         try:
-            param = (o_amount, o_money, p_id, o_id, c_id,)
+            param = (o_amount, p_id, o_id, c_id,)
             conn.execute(
                 'UPDATE orders '
-                'SET o_amount = ?, o_money = ?, p_id = ? ,c_id = ?'
+                'SET o_amount = ?, p_id = ? ,c_id = ?'
                 'WHERE o_id = ?;',
                 param)
         except Exception:
@@ -57,9 +57,16 @@ class Order(object):
         param = (c_id,)
         try:
             if c_id == 0:
-                response = conn.execute('SELECT * FROM orders')
+                response = conn.execute('SELECT * '
+                                        'FROM orders, product, community '
+                                        'WHERE orders.p_id = product.p_id '
+                                        'AND orders.c_id = community.c_id')
             else:
-                response = conn.execute('SELECT * FROM orders WHERE c_id = ?;', param)
+                response = conn.execute('SELECT * '
+                                        'FROM orders, product, community '
+                                        'WHERE orders.p_id = product.p_id '
+                                        'AND orders.c_id = community.c_id '
+                                        'AND orders.c_id = ?', param)
             response = response.fetchall()
         except Exception:
             conn.close()

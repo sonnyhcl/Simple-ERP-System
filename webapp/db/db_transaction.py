@@ -23,7 +23,19 @@ class Transactions(object):
         conn.close()
         return "Success"
 
-    def delete_transactions(self, t_id, amount=None, timestamp=None, notes=None, m_id=None):
+    def delete_transactions(self, m_id):
+        conn = sqlite3.connect("demo.db")
+        param = (m_id,)
+        try:
+            conn.execute('DELETE FROM transactions WHERE m_id = ?;', param)
+        except Exception:
+            conn.close()
+            return "Fail", traceback.print_exc()
+        conn.commit()
+        conn.close()
+        return "Success", ""
+
+    def update_transactions(self, t_id, amount=None, timestamp=None, notes=None, m_id=None):
         conn = sqlite3.connect("demo.db")
         param = (t_id,)
         try:
