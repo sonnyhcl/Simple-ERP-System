@@ -2,13 +2,15 @@
 """
 任务页面所有的数据库操作
 """
-__author__ = 'sonnyhcl'
 import sqlite3
 import traceback
 from flask import session
 from webapp.mylog import log
 
-class Mission(object) :
+__author__ = 'sonnyhcl'
+
+
+class Mission(object):
     def add_mission(self, u_id, i_id, o_id, m_amount):
         conn = sqlite3.connect("demo.db")
         param = (u_id, i_id, o_id, m_amount,)
@@ -34,7 +36,7 @@ class Mission(object) :
         conn.close()
         return "Success", ""
 
-    def update_mission(self, m_id, amount = None, notes = None, u_id = None, i_id = None, o_id = None):
+    def update_mission(self, m_id, amount=None, notes=None, u_id=None, i_id=None, o_id=None):
         conn = sqlite3.connect("demo.db")
         param = (m_id,)
         try:
@@ -55,7 +57,7 @@ class Mission(object) :
             param = tuple(origin) + (m_id,)
             conn.execute(
                 'UPDATE mission '
-                'SET m_id = ?, amount = ?, m_notes = ?, u_id = ?, i_id = ?, o_id = ?'
+                'SET m_id = ?, m_amount = ?, m_notes = ?, u_id = ?, i_id = ?, o_id = ?'
                 'WHERE m_id = ?;',
                 param)
         except Exception:
@@ -83,3 +85,5 @@ class Mission(object) :
 
         conn.close()
         return "Success", response
+
+mission = Mission()
