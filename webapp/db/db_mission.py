@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-订单页面所有的数据库操作
+任务页面所有的数据库操作
 """
 __author__ = 'sonnyhcl'
 import sqlite3
@@ -8,12 +8,12 @@ import traceback
 from flask import session
 from webapp.mylog import log
 
-class Order(object) :
-    def add_order(self, o_amount, o_money, p_id):
+class Mission(object) :
+    def add_mission(self, u_name, i_name, m_amount):
         conn = sqlite3.connect("demo.db")
         param = (o_amount, o_money, p_id,)
         try:
-            conn.execute('INSERT INTO orders(o_amount, o_money, p_id)'
+            conn.execute('INSERT INTO order(o_amount, o_money, p_id)'
                          'VALUES (?, ?, ?);', param)
         except Exception:
             conn.close()
@@ -22,11 +22,11 @@ class Order(object) :
         conn.close()
         return "Success", ""
 
-    def delete_order(self, i_id):
+    def delete_mission(self, o_id):
         conn = sqlite3.connect("demo.db")
-        param = (i_id,)
+        param = (o_id,)
         try:
-            conn.execute('DELETE FROM orders WHERE i_id = ?;', param)
+            conn.execute('DELETE FROM order WHERE o_id = ?;', param)
         except Exception:
             conn.close()
             return "Fail", traceback.print_exc()
@@ -34,29 +34,20 @@ class Order(object) :
         conn.close()
         return "Success", ""
 
-    def update_order(self, o_id, o_amount, p_id):
-        conn = sqlite3.connect("demo.db")
-        try:
-            param = (o_amount, p_id, o_id)
-            conn.execute(
-                'UPDATE orders SET o_amount = ?, p_id = ? '
-                'WHERE o_id = ?;',
-                param)
-        except Exception:
-            conn.close()
-            return "Fail", traceback.print_exc()
-        conn.commit()
-        conn.close()
-        return "Success", ""
+    def update_mission(self, o_id, p_id, c_id, amount):
+        pass
 
-    def get_order_by_cid(self, c_id):
+    def get_mission_by_cid(self, c_id):
         conn = sqlite3.connect("demo.db")
         param = (c_id,)
         try:
             if c_id == 0:
-                response = conn.execute('SELECT * FROM orders')
+                response = conn.execute('SELECT * FROM mission;')
             else:
-                response = conn.execute('SELECT * FROM orders WHERE c_id = ?;', param)
+                response = conn.execute('SELECT * FROM mission '
+                                        'WHERE u_id IN '
+                                        '(SELECT u_id FROM user '
+                                        'WHERE c_id = ?);', param)
             response = response.fetchall()
         except Exception:
             conn.close()

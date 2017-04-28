@@ -4,7 +4,7 @@
 涉及到产品表和工艺表
 """
 import sqlite3
-
+import traceback
 __author__ = 'sonnyhcl'
 
 
@@ -12,8 +12,12 @@ class Product(object):
     def add_item_for_product(self, i_name, i_ref_time, i_unit_price, i_note, p_id):
         conn = sqlite3.connect("demo.db")
         param = (i_name, i_ref_time, i_unit_price, i_note, p_id)
-        conn.execute('INSERT INTO item(i_name, i_unit_price, i_ref_time, i_note, p_id)'
-                     'VALUES (?, ?, ?, ?, ?);', param)
+        try:
+            conn.execute('INSERT INTO item(i_name, i_unit_price, i_ref_time, i_note, p_id)'
+                         'VALUES (?, ?, ?, ?, ?);', param)
+        except Exception:
+            conn.close()
+            return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
         return "Success", ""
@@ -53,7 +57,7 @@ class Product(object):
                 param)
         except Exception:
             conn.close()
-            import traceback
+
             return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
@@ -67,7 +71,6 @@ class Product(object):
             conn.execute('DELETE FROM product WHERE p_id = ?;', param)
         except Exception:
             conn.close()
-            import traceback
             return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
@@ -108,7 +111,6 @@ class Product(object):
                 param)
         except Exception:
             conn.close()
-            import traceback
             return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
@@ -130,7 +132,7 @@ class Product(object):
                 'SELECT * FROM product, item WHERE product.p_id = item.p_id;')
             response = response.fetchall()
         except Exception:
-            import traceback
+            conn.close()
             return "Fail", traceback.print_exc()
         conn.close()
         return "Success", response

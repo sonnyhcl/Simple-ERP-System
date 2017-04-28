@@ -23,7 +23,6 @@ def get_mission_by_cid():
     :return: 
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    # TODO status, info = mission.get_mission_by_cid()
     ret['data'] = [
         {'o_id': 1, 'p_name': "产品A", 'i_name': '产品A的工艺1',
          'u_name': 'hcl', 'm_amount': 10, 'm_note': '无'},
