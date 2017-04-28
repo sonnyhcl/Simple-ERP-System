@@ -15,16 +15,15 @@ class User(object):
         add_user
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
-        # TODO 名字判重 --> use unique
-        log("%s: add_user: %s %s %s %s %s"
-            % (session['u_name'], u_name, u_role, u_password, u_phone, c_id))
+        log("add_user: %s %s %s %s %s"
+            % (u_name, u_role, u_password, u_phone, c_id))
         conn = sqlite3.connect("demo.db")
         param = (u_name, u_role, u_password, u_phone, c_id,)
-        try :
+        try:
             conn.execute(
-            'INSERT INTO user(u_name, u_role, u_password, u_phone, c_id) '
-            'VALUES (?, ?, ?, ?, ?);',
-            param)
+                'INSERT INTO user(u_name, u_role, u_password, u_phone, c_id) '
+                'VALUES (?, ?, ?, ?, ?);',
+                param)
         except Exception:
             conn.close()
             return "Fail", traceback.print_exc()
@@ -37,7 +36,7 @@ class User(object):
         delete_user
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
-        log("%s: delete_user: %s" % (session['u_name'], u_id))
+        log("delete_user: %s" % (u_id))
         conn = sqlite3.connect("demo.db")
         param = (u_id,)
         try:
@@ -55,8 +54,8 @@ class User(object):
         update_user
         :return: 'Success', '' or 'Fail', 'error_msg'
         """
-        log("%s: update_user: %s %s %s %s %s %s" % (
-            session['u_name'], u_id, u_name, u_role, u_password, u_phone, c_id))
+        log("update_user: %s %s %s %s %s %s" %
+            (u_id, u_name, u_role, u_password, u_phone, c_id))
         conn = sqlite3.connect("demo.db")
         param = (u_id,)
         try:
@@ -64,8 +63,8 @@ class User(object):
                 param = (c_id,)
                 response = conn.execute('SELECT u_id FROM community WHERE c_id = ?', param)
                 response = response.fetchall()[0][0]
-                if response is not None :
-                    return "Fail", "Community %s already has an administrator." %c_id
+                if response is not None:
+                    return "Fail", "Community %s already has an administrator." % c_id
             response = conn.execute('SELECT * FROM user WHERE u_id = ?;', param)
             origin = response.fetchall()[0]
             origin = list(origin)

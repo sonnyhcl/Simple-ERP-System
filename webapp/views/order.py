@@ -1,15 +1,16 @@
 # -*- coding: UTF-8 -*-
 import json
-from flask import render_template
+from flask import render_template, request
 from webapp import app
 from auth.login_required import login_required
+from db.db_order import *
 
 __author__ = 'sonnyhcl'
 
 
 @app.route('/order', methods=['GET'])
 @login_required
-def order():
+def order_index():
     return render_template('order.html')
 
 
@@ -22,29 +23,19 @@ def get_orders_by_cid():
     :return: {"data": [], "status": 'Success', "msg": ""}
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    ret['data'] = [
-        {
-            'o_id': 1,
-            'o_time': '2017-04-27',
-            'p_name': '产品A',
-            'p_author': '设计师A',
-            'c_name': '社区A',
-            'o_amount': 10,
-            'o_money': 1000,
-            'o_note': '无'
-        },
-        {
-            'o_id': 2,
-            'o_time': '2017-04-27',
-            'p_name': '产品B',
-            'p_author': '设计师B',
-            'c_name': '社区B',
-            'o_amount': 20,
-            'o_money': 2000,
-            'o_note': '无'
-        },
-    ]
-    return json.dumps(ret)
+    c_id = request.form.get('c_id')
+
+    # TODO 这里要返回产品名、设计师名和社区名，而不是id
+    status, info = order.get_order_by_cid(c_id)
+    if ret['status'] == 'Success':
+        _ = [ret['data'].append(
+            {'o_id': i[0], 'o_amount': i[1], "o_money": i[2],
+             "o_timestamp": i[3], "o_note": i[4], 'p_name': i[5],
+             'p_author': 'wtf', "c_name": i[6]}) for i in info]
+    else:
+        ret['msg'] = info
+
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/order/add', methods=['POST'])
@@ -54,8 +45,15 @@ def add_order_for_cid():
     为社区c_id添加一个订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    info = {"status": "Success", "msg": "error_msg"}
-    return json.dumps(info, ensure_ascii=False)
+
+    ret = {"status": "Success", "msg": "error_msg"}
+    o_amount = request.form.get('o_amount')
+    p_id = request.form.get('p_id')
+    c_id = request.form.get('c_id')
+    ret['status'], ret['msg'] = \
+        order.add_order(o_amount, p_id, c_id)
+
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/order/modify', methods=['POST'])
@@ -65,8 +63,16 @@ def modify_order():
     修改社区c_id的订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    info = {"status": "Success", "msg": "error_msg"}
-    return json.dumps(info, ensure_ascii=False)
+    ret = {"status": "Success", "msg": "error_msg"}
+    o_id = request.form.get('o_id')
+    o_amount = request.form.get('o_amount')
+    o_money = request.form.get('o_money')
+    p_id = request.form.get('p_id')
+    c_id = request.form.get('c_id')
+    ret['status'], ret['msg'] = \
+        order.update_order(o_id, o_amount, o_money, p_id, c_id)
+
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/order/delete', methods=['POST'])
@@ -76,5 +82,8 @@ def delete_order():
     删除社区c_id的订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    info = {"status": "Success", "msg": "error_msg"}
-    return json.dumps(info, ensure_ascii=False)
+    ret = {"status": "Success", "msg": "error_msg"}
+    o_id = request.form.get('o_id')
+    ret['status'], ret['msg'] = order.delete_order(o_id)
+
+    return json.dumps(ret, ensure_ascii=False)

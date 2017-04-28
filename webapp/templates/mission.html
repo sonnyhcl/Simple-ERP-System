@@ -121,7 +121,7 @@
             <h3 id="product_manage_title">任务管理系统</h3>
             <br>
             <!-- 修改按钮 -->
-            <a id="modify_product" href="#modifyProduct" role="button" data-toggle="modal"
+            <a id="modify_product" href="#modifyMission" role="button" data-toggle="modal"
                onclick="add_prod()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa-fw"></i>修改任务</a>
             <!-- 添加按钮 -->
             <a id="add_product" href="#alterProduct" role="button" data-toggle="modal"
@@ -137,6 +137,9 @@
     </div>
 </div>
 
+<!-- cid -->
+<input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">
+
 {% endblock content %}
 
 {% block script %}
@@ -144,8 +147,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var doc_table;
+        var cid = $("#get_c_id").attr("value");
         console.log('document ready');
-        $.post('/mission/table',
+        $.post('/mission/table',{"c_id": cid},
             function (ret) {
                 doc_table = $('#o_table').dataTable({
                     "aoColumns": [

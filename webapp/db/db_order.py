@@ -2,16 +2,18 @@
 """
 订单页面所有的数据库操作
 """
-__author__ = 'sonnyhcl'
 import sqlite3
 import traceback
 from flask import session
 from webapp.mylog import log
 
-class Order(object) :
+__author__ = 'sonnyhcl'
+
+
+class Order(object):
     def add_order(self, o_amount, o_money, p_id, c_id):
         conn = sqlite3.connect("demo.db")
-        param = (o_amount, o_money, p_id, c_id, )
+        param = (o_amount, o_money, p_id, c_id,)
         try:
             conn.execute('INSERT INTO orders(o_amount, o_money, p_id, c_id)'
                          'VALUES (?, ?, ?, ?);', param)
@@ -22,11 +24,11 @@ class Order(object) :
         conn.close()
         return "Success", ""
 
-    def delete_order(self, i_id):
+    def delete_order(self, o_id):
         conn = sqlite3.connect("demo.db")
-        param = (i_id,)
+        param = (o_id,)
         try:
-            conn.execute('DELETE FROM orders WHERE i_id = ?;', param)
+            conn.execute('DELETE FROM orders WHERE o_id = ?;', param)
         except Exception:
             conn.close()
             return "Fail", traceback.print_exc()
@@ -34,12 +36,13 @@ class Order(object) :
         conn.close()
         return "Success", ""
 
-    def update_order(self, o_id, o_amount, p_id, c_id):
+    def update_order(self, o_id, o_amount, o_money, p_id, c_id):
         conn = sqlite3.connect("demo.db")
         try:
-            param = (o_amount, p_id, o_id, c_id, )
+            param = (o_amount, o_money, p_id, o_id, c_id,)
             conn.execute(
-                'UPDATE orders SET o_amount = ?, p_id = ? ,c_id = ?'
+                'UPDATE orders '
+                'SET o_amount = ?, o_money = ?, p_id = ? ,c_id = ?'
                 'WHERE o_id = ?;',
                 param)
         except Exception:
@@ -64,3 +67,6 @@ class Order(object) :
 
         conn.close()
         return "Success", response
+
+
+order = Order()

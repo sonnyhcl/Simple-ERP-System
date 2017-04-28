@@ -17,15 +17,6 @@
                 <div class="modal-body" id="myModalBody_order">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">订单编号</label>
-                            <div class="col-lg-6">
-                                <input size="16" id="o_id" type="text" value="" placeholder="订单编号"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                       tabindex="0"
-                                       data-toggle="popover" data-trigger="focus"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-lg-3 control-label">产品名称</label>
                             <div class="col-lg-6">
                                 <!-- 表格 -->
@@ -106,6 +97,9 @@
     </div>
 </div>
 
+<!-- cid -->
+<input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">
+
 {% endblock content %}
 
 {% block script %}
@@ -115,16 +109,17 @@
     var cid = $("#get_c_id").attr("value");
     $(document).ready(function () {
         var doc_table;
+        var cid = $("#get_c_id").attr("value");
         console.log('document ready');
-        $.post('/order/table',
+        $.post('/order/table', {c_id: cid},
             function (ret) {
                 doc_table = $('#o_table').dataTable({
                     "aoColumns": [
+                        {"sTitle": "开单日期"},
                         {
                             "sTitle": "订单号",
                             "width": "10%"
                         },
-                        {"sTitle": "开单日期"},
                         {"sTitle": "产品名称"},
                         {"sTitle": "设计师"},
                         {"sTitle": "社区"},
@@ -164,8 +159,8 @@
                 for (var i in orders) {
                     console.log(orders[i]);
                     doc_table.fnAddData([
+                        orders[i].o_timestamp.substring(0, 10),
                         orders[i].o_id,
-                        orders[i].o_time,
                         orders[i].p_name,
                         orders[i].p_author,
                         orders[i].c_name,
@@ -207,11 +202,7 @@
     });
 
 
-    function check_value(o_id, p_name, p_author, c_name, amount) {
-        if (o_id === "") {
-            $('#o_id').popover('show');
-            return (false);
-        }
+    function check_value(p_name, p_author, c_name, amount) {
         if (p_name === "") {
             $('#p_name_order').popover('show');
             return (false);
@@ -235,7 +226,6 @@
     function add_order() {
         console.log("add product");
         $("#myModalLabel_order").text("增加订单信息");
-        $('#o_id').val("");
         $('#o_amount').val("");
         $('#o_note').val("");
         $("#yes_btn_order").attr('onclick', 'confirm_add_order()');
@@ -244,13 +234,12 @@
 
     function confirm_add_order() {
         console.log('confirm_add_order');
-        if (!check_value($("#o_id").val(), $("#p_name_order").val(), $("#p_author_name_order").val(),
+        if (!check_value($("#p_name_order").val(), $("#p_author_name_order").val(),
                 $('#o_c_name_table').val(), $('#o_amount').val())) {
             return;
         }
 
         $.post("/order/add", {
-            'o_id': $('#o_id').val(),
             'p_id': $('#o_p_name_table').val(),
             'c_id': $('#o_c_name_table').val(),
             'o_amount': $('#o_amount').val()
@@ -263,11 +252,10 @@
 
     function modify_order(id) {
         console.log("modify product:" + id);
-        oid = $('#modify-order-btn_' + id).parents("tr")[0].getElementsByTagName('td')[0].innerText;
+        oid = $('#modify-order-btn_' + id).parents("tr")[0].getElementsByTagName('td')[1].innerText;
         oamount = $('#modify-order-btn_' + id).parents("tr")[0].getElementsByTagName('td')[5].innerText;
         onote = $('#modify-order-btn_' + id).parents('tr')[0].getElementsByTagName('td')[6].innerText;
         $("#myModalLabel_order").text("修改订单信息");
-        $('#o_id').val(oid);
         $('#o_amount').val(oamount);
         $('#o_note').val(onote);
         $('#yes_btn_order').attr('onclick', 'confirm_modify_order(' + id + ')');
@@ -276,7 +264,7 @@
 
     function confirm_modify_order(id) {
         console.log("confirm_modify_order:" + id);
-        if (!check_value($("#o_id").val(), $("#p_name_order").val(), $("#p_author_name_order").val(),
+        if (!check_value($("#p_name_order").val(), $("#p_author_name_order").val(),
                 $('#o_c_name_table').val(), $('#o_amount').val())) {
             return;
         }

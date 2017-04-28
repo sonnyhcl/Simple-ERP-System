@@ -36,7 +36,7 @@ def log_out():
     登出，立刻跳转到首页(此时会被重定向到登录页面)
     :return:
     """
-    log("%s log_out" % (session['u_name']))
+    log("log_out")
     session['logged_in'] = False
     session['u_id'] = -1
     session['u_name'] = 'guest'

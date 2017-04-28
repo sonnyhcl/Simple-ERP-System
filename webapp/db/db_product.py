@@ -5,6 +5,7 @@
 """
 import sqlite3
 import traceback
+
 __author__ = 'sonnyhcl'
 
 
@@ -26,7 +27,7 @@ class Product(object):
         conn = sqlite3.connect("demo.db")
 
         param = (p_id,)
-        response = conn.execute('SELECT count(*) from item WHERE p_id = ?;', param)
+        response = conn.execute('SELECT count(*) FROM item WHERE p_id = ?;', param)
         count = response.fetchall()
         if count[0] == 0:
             return "Fail", "you can not delete the last item of this product"

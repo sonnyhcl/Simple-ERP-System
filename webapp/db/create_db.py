@@ -74,10 +74,10 @@ conn.execute(
         (
             u_id            INTEGER     PRIMARY KEY    AUTOINCREMENT,
             u_name          char(30)    UNIQUE NOT NULL,
-            u_role          char(10)    NOT NULL,
-            u_password      char(30)    NOT NULL,
+            u_role          char(10)    DEFAULT 'user',
+            u_password      char(30)    DEFAULT '123456',
             u_phone         char(30)    NOT NULL,
-            c_id            INT         NOT NULL,
+            c_id            INT         DEFAULT 0,
             FOREIGN KEY     (c_id)      REFERENCES   community(c_id)
         )
         ;
@@ -99,8 +99,9 @@ conn.execute(
             o_timestamp     DATETIME    DEFAULT (datetime('now', 'localtime')),
             o_notes         CHAR(50)    DEFAULT '无',
             p_id            INT         NOT NULL,
-            c_id            INT         NOT NULL,
-            FOREIGN KEY     (p_id)      REFERENCES   product(p_id)
+            c_id            INT         DEFAULT 0,
+            FOREIGN KEY     (p_id)      REFERENCES   product(p_id),
+            FOREIGN KEY     (c_id)      REFERENCES   community(c_id)
         )
         ;
     '''

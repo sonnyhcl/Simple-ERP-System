@@ -17,7 +17,7 @@ class Community(object):
         :param c_name: 
         :return: 'Success', '' or 'Fail', 'error_msg' 
         """
-        log("%s: add community: %s %s" % (session['u_name'], c_name, u_id))
+        log("add community: %s %s" % (c_name, u_id))
         conn = sqlite3.connect("demo.db")
         try:
             param = (c_name, u_id,)
@@ -36,7 +36,7 @@ class Community(object):
         :param c_id: 
         :return: 'Success', '' or 'Fail', 'error_msg' 
         """
-        log("%s: delete community: %s" % (session['u_name'], c_id))
+        log("delete community: %s" % (c_id))
         conn = sqlite3.connect("demo.db")
         # check if there is any users belonging to this community
         param = (c_id,)
@@ -60,8 +60,8 @@ class Community(object):
         update_community
         :return: 'Success', '' or 'Fail', 'error_msg' 
         """
-        log("%s: update community: %s %s %s"
-            % (session['u_name'], c_id, new_c_name, u_id))
+        log("update community: %s %s %s"
+            % (c_id, new_c_name, u_id))
         conn = sqlite3.connect("demo.db")
         param = (new_c_name, u_id, c_id,)
         conn.execute('UPDATE community '
@@ -94,7 +94,7 @@ class Community(object):
         给当前未分配管理员的社区分配管理员，通常这一步伴随add community一起做
         :return: 'Success', '' or 'Fail', 'error_msg' 
         """
-        log("%s: add_community_admin: %s %s" % (session['u_name'], c_id, u_id))
+        log("add_community_admin: %s %s" % (c_id, u_id))
         conn = sqlite3.connect("demo.db")
         param = (u_id,)
         response = conn.execute('SELECT u_role FROM user WHERE user.u_id = ?',
@@ -140,6 +140,5 @@ class Community(object):
         response = response.fetchall()
         conn.close()
         return "Success", response
-
 
 community = Community()
