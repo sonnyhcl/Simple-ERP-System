@@ -111,7 +111,7 @@
         var doc_table;
         var cid = $("#get_c_id").attr("value");
         console.log('document ready');
-        $.post('/order/table', {c_id: cid},
+        $.post('/order/table', {'c_id': cid},
             function (ret) {
                 doc_table = $('#o_table').dataTable({
                     "aoColumns": [

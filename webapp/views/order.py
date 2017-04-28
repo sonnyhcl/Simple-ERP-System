@@ -30,8 +30,8 @@ def get_orders_by_cid():
     if ret['status'] == 'Success':
         _ = [ret['data'].append(
             {'o_id': i[0], 'o_amount': i[1], "o_money": i[2],
-             "o_timestamp": i[3], "o_note": i[4], 'p_name': i[5],
-             'p_author': 'wtf', "c_name": i[6]}) for i in info]
+             "o_timestamp": i[3], "o_note": i[4], 'p_name': u"产品名",
+             'p_author': u"设计者", "c_name": u"社区名"}) for i in info]
     else:
         ret['msg'] = info
 
@@ -64,7 +64,7 @@ def modify_order():
     修改社区c_id的订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    #TODO: 去掉金额
+    # TODO: 去掉金额
     ret = {"status": "Success", "msg": "error_msg"}
     o_id = request.form.get('o_id')
     o_amount = request.form.get('o_amount')
