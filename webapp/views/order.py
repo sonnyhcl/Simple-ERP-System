@@ -63,6 +63,7 @@ def modify_order():
     修改社区c_id的订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
+    #TODO: 去掉金额
     ret = {"status": "Success", "msg": "error_msg"}
     o_id = request.form.get('o_id')
     o_amount = request.form.get('o_amount')

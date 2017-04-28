@@ -268,7 +268,6 @@
                 $('#o_c_name_table').val(), $('#o_amount').val())) {
             return;
         }
-
         $.post("/order/modify", {
             'o_id': id,
             'p_id': $('#o_p_name_table').val(),
