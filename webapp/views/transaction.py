@@ -17,7 +17,6 @@ def transaction():
 @login_required
 def get_transaction_by_uid():
     ret = {"data": [], "status": 'Success', "msg": ""}
-    # TODO status, info = transaction.get_transaction_by_cid()
     ret['data'] = [
         {'o_timestamp': '2017-04-25 11:38:35', 'o_id': 1, 'c_name': '社区A',
          'p_name': "产品A", 'i_name': '产品A的工艺1', 'i_note': '无',
@@ -34,7 +33,6 @@ def add_transaction():
 
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = transactions.add_transaction(u_name, i_name, m_amount)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 

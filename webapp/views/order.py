@@ -22,7 +22,6 @@ def get_orders_by_cid():
     :return: {"data": [], "status": 'Success', "msg": ""}
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    # TODO status, info = orders.get_orders_by_cid()
     ret['data'] = [
         {'o_id': 1, 'o_time': '2017-04-27', 'p_name': '产品A', 'o_amount': 10, 'o_money': 1000,
          'o_note': '无'},
@@ -39,7 +38,6 @@ def add_order_for_cid():
     为社区c_id添加一个订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = orders.add_order(o_amount, o_money, p_id)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
@@ -51,7 +49,6 @@ def modify_order():
     修改社区c_id的订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = orders.modify_order(o_amount, o_money, p_id)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
@@ -63,6 +60,5 @@ def delete_order():
     删除社区c_id的订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = orders.delete_order(i_id)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)

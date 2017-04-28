@@ -75,7 +75,6 @@ def add_user():
     u_role = request.form.get("u_role")
     c_id = request.form.get("c_id")
     u_password = '123456'
-    # TODO 返回格式status, msg = .....
     status = user.add_user(u_name, u_role, u_password, u_phone, c_id)
     return json.dumps(status)
 
@@ -88,14 +87,12 @@ def modify_user():
     :param cid:
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO 如果这里是将用户设置为某个社区管理员
-    # 则应该先检查那个社区有没有管理员
+
     u_name = request.form.get("u_name")
     u_phone = request.form.get("u_phone")
     u_role = request.form.get("u_role")
     c_id = request.form.get("c_id")
     u_id = request.form.get("u_id")
-    # TODO 返回格式status, msg = .....
     status = user.update_user(u_id=u_id, u_name=u_name, u_role=u_role,
                               u_phone=u_phone, c_id=c_id)
     return json.dumps(status)
@@ -111,6 +108,5 @@ def delete_user():
     u_id = request.form.get('u_id')
     if u_id == session['u_id']:
         return "Fail"
-    # TODO 返回格式status, msg = .....
     status = user.delete_user(u_id)
     return json.dumps(status)

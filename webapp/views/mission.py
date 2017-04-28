@@ -23,7 +23,6 @@ def get_mission_by_cid():
     :return: 
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    # TODO status, info = mission.get_mission_by_cid()
     ret['data'] = [
         {'o_id': 1, 'p_name': "产品A", 'i_name': '产品A的工艺1',
          'u_name': 'hcl', 'm_amount': 10, 'm_note': '无'},
@@ -44,7 +43,6 @@ def add_mission():
 
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = missions.add_mission(u_name, i_name, m_amount)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
@@ -56,7 +54,6 @@ def modify_mission():
 
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = missions.modify_mission(u_name, i_name, m_amount)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
@@ -68,6 +65,5 @@ def delete_mission():
 
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = missions.delete_mission(m_id)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)

@@ -20,13 +20,13 @@ def get_all_products_detail():
     ret = {"data": [], "status": 'Success', "msg": ""}
     status, info = products.get_all()
     if status == "Success":
-        _ = [ret['data'].append({'p_id': i[0], 'p_name': i[1],
-                                 "p_author_name": i[2], "i_id": i[3],
-                                 "i_name": i[4], "i_unit_price": i[5],
-                                 "i_ref_time": i[6], "i_note": i[7]})
-             for i in info]
+        _ = [ret['data'].append(
+            {'p_id': i[0], 'p_name': i[1], "p_author_name": i[2],
+             "i_id": i[3], "i_name": i[4], "i_unit_price": i[5],
+             "i_ref_time": i[6], "i_note": i[7]}) for i in info]
     else:
         ret['msg'] = str(info)
+
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -45,9 +45,10 @@ def add_product():
     i_unit_price = request.form.get('i_unit_price')
     i_ref_time = request.form.get('i_ref_time')
     i_note = request.form.get('i_note')
-    ret["status"], ret['msg'] = products.add_product(p_name, i_name,
-                                                     i_unit_price, i_ref_time,
-                                                     i_note, p_author)
+    ret["status"], ret['msg'] = \
+        products.add_product(p_name, i_name, i_unit_price,
+                             i_ref_time, i_note, p_author)
+
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -63,9 +64,10 @@ def add_item_for_product():
     i_unit_price = request.form.get('i_unit_price')
     i_ref_time = request.form.get('i_ref_time')
     i_note = request.form.get('i_note')
-    # TODO 给指定产品增加一项工艺
-    ret['status'], ret['msg'] = products.add_item_for_product(i_name, i_unit_price, i_ref_time,
-                                                          i_note, p_id)
+    ret['status'], ret['msg'] = \
+        products.add_item_for_product(i_name, i_unit_price,
+                                      i_ref_time, i_note, p_id)
+
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -80,8 +82,8 @@ def delete_item_for_product():
     ret = {}
     p_id = request.form.get('p_id')
     i_id = request.form.get('i_id')
-    # TODO 删除指定产品中的某一项工艺
     ret['status'], ret['msg'] = products.delete_item_for_product(p_id, i_id)
+
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -101,10 +103,9 @@ def modify_product_and_its_one_item():
     i_unit_price = request.form.get('i_unit_price')
     i_ref_time = request.form.get('i_ref_time')
     i_note = request.form.get('i_note')
-    ret["status"], ret['msg'] = products.update_product(p_id, i_id, p_name,
-                                                        p_author, i_name,
-                                                        i_unit_price,
-                                                        i_ref_time, i_note)
+    ret["status"], ret['msg'] = \
+        products.update_product(p_id, i_id, p_name, p_author,
+                                i_name, i_unit_price, i_ref_time, i_note)
 
     return json.dumps(ret, ensure_ascii=False)
 
@@ -119,4 +120,5 @@ def delete_product():
     ret = {}
     p_id = request.form.get('p_id')
     ret["status"], ret["msg"] = products.delete_product(p_id)
+
     return json.dumps(ret, ensure_ascii=False)
