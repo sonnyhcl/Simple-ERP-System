@@ -33,7 +33,6 @@ def add_transaction():
 
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = transactions.add_transaction(u_name, i_name, m_amount)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 

@@ -99,6 +99,7 @@ conn.execute(
             o_timestamp     DATETIME    DEFAULT (datetime('now', 'localtime')),
             o_notes         CHAR(50)    DEFAULT '无',
             p_id            INT         NOT NULL,
+            c_id            INT         NOT NULL,
             FOREIGN KEY     (p_id)      REFERENCES   product(p_id)
         )
         ;

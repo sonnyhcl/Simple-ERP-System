@@ -14,12 +14,12 @@ class Transactions(object):
 
     # def __init__(self) :
     #     self.__counter = 0
-    def add_transactions(self, u_id, c_id, p_id, i_id, amount=0):
+    def add_transactions(self, m_id, amount=0):
         conn = sqlite3.connect("demo.db");
-        param = (None, u_id, c_id, p_id, i_id, amount,)
+        param = (None, m_id, amount,)
         try:
             conn.execute(
-                'INSERT INTO transactions(t_id, u_id, c_id, p_id, i_id, amount) VALUES (?, ?, ?, ?, ?, ?);',
+                'INSERT INTO transactions(m_id, t_amount) VALUES (?, ?);',
                 param)
         except Exception:
             conn.close()
@@ -28,48 +28,34 @@ class Transactions(object):
         conn.close()
         return "Success"
 
-    def delete_transactions(self, t_id):
-        conn = sqlite3.connect("demo.db");
-
+    def delete_transactions(self, t_id, amount = None, timestamp = None, notes = None, m_id = None):
+        conn = sqlite3.connect("demo.db")
         param = (t_id,)
         try:
-            conn.execute('DELETE FROM transactions WHERE t_id = ?;', param)
-        except Exception:
-            conn.close()
-            return "Fail", traceback.print_exc()
-        conn.commit()
-        conn.close()
-        return "Success"
-
-    def update_transactions(self, t_id, u_id=None, c_id=None, p_id=None,
-                            i_id=None):
-        conn = sqlite3.connect("demo.db");
-
-        param = (t_id,)
-        try:
-            response = conn.execute('SELECT * FROM transactions WHERE t_id = ?;',
-                                    param)
+            response = conn.execute('SELECT * FROM transactions WHERE t_id = ?;', param)
             origin = response.fetchall()[0]
             origin = list(origin)
-            if u_id is not None:
-                origin[1] = u_id
-            if c_id is not None:
-                origin[2] = c_id
-            if p_id is not None:
-                origin[3] = p_id
-            if i_id is not None:
-                origin[4] = i_id
+            if amount is not None:
+                origin[1] = amount
+            if timestamp is not None:
+                origin[2] = timestamp
+            if notes is not None:
+                origin[3] = notes
+            if m_id is not None:
+                origin[4] = m_id
 
             param = tuple(origin) + (t_id,)
             conn.execute(
-                'UPDATE transactions SET t_id = ?, u_id =  ?, c_id =  ?, p_id =  ?, i_id = ? WHERE t_id = ?;',
+                'UPDATE transactions '
+                'SET t_id = ?, t_amount = ?, t_timestamp = ?, t_notes = ?, m_id = ?'
+                'WHERE t_id = ?;',
                 param)
         except Exception:
             conn.close()
             return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
     def get_transactions(self, t_id):
         conn = sqlite3.connect("demo.db");

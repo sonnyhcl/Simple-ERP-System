@@ -38,7 +38,6 @@ def add_order_for_cid():
     为社区c_id添加一个订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = orders.add_order(o_amount, o_money, p_id)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
@@ -50,7 +49,6 @@ def modify_order():
     修改社区c_id的订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = orders.modify_order(o_amount, o_money, p_id)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 

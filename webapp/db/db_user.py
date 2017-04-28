@@ -60,7 +60,7 @@ class User(object):
         conn = sqlite3.connect("demo.db")
         param = (u_id,)
         try:
-            if c_id is not None :
+            if c_id is not None and u_role == 'admin':
                 param = (c_id,)
                 response = conn.execute('SELECT u_id FROM community WHERE c_id = ?', param)
                 response = response.fetchall()[0][0]

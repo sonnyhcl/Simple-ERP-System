@@ -43,7 +43,6 @@ def add_mission():
 
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = missions.add_mission(u_name, i_name, m_amount)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
@@ -55,7 +54,6 @@ def modify_mission():
 
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = missions.modify_mission(u_name, i_name, m_amount)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
 
@@ -67,6 +65,5 @@ def delete_mission():
 
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = missions.delete_mission(m_id)
     info = {"status": "Success", "msg": "error_msg"}
     return json.dumps(info, ensure_ascii=False)
