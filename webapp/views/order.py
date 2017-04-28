@@ -23,10 +23,26 @@ def get_orders_by_cid():
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
     ret['data'] = [
-        {'o_id': 1, 'o_time': '2017-04-27', 'p_name': '产品A', 'o_amount': 10, 'o_money': 1000,
-         'o_note': '无'},
-        {'o_id': 2, 'o_time': '2017-04-27', 'p_name': '产品B', 'o_amount': 20, 'o_money': 20000,
-         'o_note': '无'},
+        {
+            'o_id': 1,
+            'o_time': '2017-04-27',
+            'p_name': '产品A',
+            'p_author': '设计师A',
+            'c_name': '社区A',
+            'o_amount': 10,
+            'o_money': 1000,
+            'o_note': '无'
+        },
+        {
+            'o_id': 2,
+            'o_time': '2017-04-27',
+            'p_name': '产品B',
+            'p_author': '设计师B',
+            'c_name': '社区B',
+            'o_amount': 20,
+            'o_money': 2000,
+            'o_note': '无'
+        },
     ]
     return json.dumps(ret)
 

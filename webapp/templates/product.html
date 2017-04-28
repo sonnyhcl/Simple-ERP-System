@@ -306,6 +306,12 @@
     function add_prod() {
         console.log("add product");
         $("#myModalLabel_prod").text("添加产品信息");
+        $("#p_name").val("");
+        $("#p_author_name").val("");
+        $("#i_name").val("");
+        $("#i_note").val("");
+        $("#i_unit_price").val("");
+        $("#i_ref_time").val("");
         $("#yes_btn_prod").attr('onclick', 'confirm_add_product()');
     }
 

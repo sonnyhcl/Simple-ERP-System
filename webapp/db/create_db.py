@@ -201,8 +201,8 @@ conn.execute(
 """
 conn.execute(
     """
-    INSERT INTO orders(o_amount, o_money, p_id)
-    VALUES (10, 1000, 1), (20, 20000, 2);
+    INSERT INTO orders(o_amount, o_money, p_id, c_id)
+    VALUES (10, 1000, 1, 0),(20, 20000, 2, 0);
 """
 )
 
