@@ -5,7 +5,7 @@
 import os
 import sqlite3
 
-filename = 'demo.db'
+filename = '../../demo.db'
 if os.path.exists(filename):
     os.remove(filename)
 conn = sqlite3.connect(filename)

@@ -46,7 +46,7 @@ def add_order_for_cid():
     """
     ret = {"status": "Success", "msg": "error_msg"}
     o_amount = request.form.get('o_amount')
-    o_money = request.form.get('o_money')
+    o_money = 0 # request.form.get('o_money')
     p_id = request.form.get('p_id')
     c_id = request.form.get('c_id')
     ret['status'], ret['msg'] = \
@@ -65,7 +65,7 @@ def modify_order():
     ret = {"status": "Success", "msg": "error_msg"}
     o_id = request.form.get('o_id')
     o_amount = request.form.get('o_amount')
-    o_money = request.form.get('o_money')
+    o_money = 0 # request.form.get('o_money')
     p_id = request.form.get('p_id')
     c_id = request.form.get('c_id')
     ret['status'], ret['msg'] = \
