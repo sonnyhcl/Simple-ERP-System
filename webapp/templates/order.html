@@ -131,6 +131,9 @@
     </div>
 </div>
 
+<!-- cid -->
+<input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">
+
 {% endblock content %}
 
 {% block script %}
@@ -139,16 +142,19 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var doc_table;
+        var cid = $("#get_c_id").attr("value");
         console.log('document ready');
-        $.post('/order/table',
+        $.post('/order/table', {c_id: cid},
             function (ret) {
                 doc_table = $('#o_table').dataTable({
                     "aoColumns": [
+                        {"sTitle": "开单时间"},
                         {"sTitle": "订单号"},
+                        {"sTitle": "社区名"},
                         {"sTitle": "产品名"},
                         {"sTitle": "数量"},
+{#                        {"sTitle": "金额"},#}
 //                      TODO  {"sTitle": "最后交付时间"},
-                        {"sTitle": "金额"},
                         {"sTitle": "备注"},
                         {
                             "width": "12%",
@@ -184,9 +190,11 @@
                 for (var i in orders) {
                     console.log(orders[i]);
                     doc_table.fnAddData([
+                        orders[i].o_timestamp.substring(0, 10),
                         orders[i].o_id,
+                        orders[i].c_name,
                         orders[i].p_name,
-                        orders[i].o_amount,
+{#                        orders[i].o_amount,#}
                         orders[i].o_money,
                         orders[i].o_note,
                         //修改按钮

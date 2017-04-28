@@ -1,15 +1,16 @@
 # -*- coding: UTF-8 -*-
 import json
-from flask import render_template
+from flask import render_template, request
 from webapp import app
 from auth.login_required import login_required
+from db.db_order import *
 
 __author__ = 'sonnyhcl'
 
 
 @app.route('/order', methods=['GET'])
 @login_required
-def order():
+def order_index():
     return render_template('order.html')
 
 
@@ -22,13 +23,26 @@ def get_orders_by_cid():
     :return: {"data": [], "status": 'Success', "msg": ""}
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    ret['data'] = [
-        {'o_id': 1, 'p_name': '产品A', 'o_amount': 10, 'o_money': 1000,
-         'o_note': '无'},
-        {'o_id': 2, 'p_name': '产品B', 'o_amount': 20, 'o_money': 20000,
-         'o_note': '无'},
-    ]
-    return json.dumps(ret)
+    c_id = request.form.get('c_id')
+    print c_id
+    status, info = order.get_order_by_cid(c_id)
+    print info
+    if ret['status'] == 'Success':
+        _ = [ret['data'].append(
+            {'o_id': i[0], 'o_amount': i[1], "o_money": i[2],
+             "o_timestamp": i[3], "o_note": i[4], 'p_name': i[5],
+             "c_name": i[6]}) for i in info]
+    else:
+        ret['msg'] = info
+    print ret
+    # ret['data'] = [
+    #     {'o_id': 1, 'p_name': '产品A', 'o_amount': 10, 'o_money': 1000,
+    #      'o_note': '无'},
+    #     {'o_id': 2, 'p_name': '产品B', 'o_amount': 20, 'o_money': 20000,
+    #      'o_note': '无'},
+    # ]
+
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/order/add', methods=['POST'])
