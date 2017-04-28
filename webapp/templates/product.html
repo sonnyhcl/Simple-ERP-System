@@ -4,6 +4,8 @@
 
 {% block content %}
 <div class="container">
+
+    {% if session['u_role'] == 'root' %}
     <!-- 增加、修改 产品/工艺弹窗 -->
     <div class="modal fade" id="alterProduct"
          role="dialog" aria-labelledby="myModalLabel_prod" aria-hidden="true">
@@ -76,9 +78,7 @@
             </div>
         </div>
     </div>
-
     <!--删除弹窗模板-->
-    {% if session['u_role'] == 'root' %}
     <!--删除产品-->
     <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_prod" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
@@ -306,6 +306,12 @@
     function add_prod() {
         console.log("add product");
         $("#myModalLabel_prod").text("添加产品信息");
+        $("#p_name").val("");
+        $("#p_author_name").val("");
+        $("#i_name").val("");
+        $("#i_note").val("");
+        $("#i_unit_price").val("");
+        $("#i_ref_time").val("");
         $("#yes_btn_prod").attr('onclick', 'confirm_add_product()');
     }
 
@@ -334,15 +340,15 @@
     function delete_prod() {
         console.log("delete product");
         $('#del_title_prod').text("选择要删除的产品");
-        pid = $('#p_products').val();
-        $('#confirm-del-button_prod').attr('onclick', 'confirm_del_product(' + pid + ')');
+        $('#confirm-del-button_prod').attr('onclick', 'confirm_del_product()');
     }
 
 
-    function confirm_del_product(id) {
-        console.log("confirm_del_product:" + id);
+    function confirm_del_product() {
+        p_id = $("#p_products").val();
+        console.log("confirm_del_product:" + p_id);
         $.post("/product/delete", {
-            'p_id': id
+            'p_id': p_id
         }, function (ret) {
             console.log(ret);
             location.href = '/product';
@@ -376,7 +382,7 @@
         if (!check_value(1, 1, $("#i_name").val(), $("#i_unit_price").val(), $("i_ref_time").val())) {
             return;
         }
-        //TODO: /additem还没做，也许可以从/add改，json多传一个p_id，多一个判断产品id的过程
+
         $.post("/product/add_item", {
             'p_id': p_id,
             'i_name': $("#i_name").val(),

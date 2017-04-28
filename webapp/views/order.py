@@ -24,13 +24,14 @@ def get_orders_by_cid():
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
     c_id = request.form.get('c_id')
-    # TODO 这里要返回产品名和社区名，而不是id
+
+    # TODO 这里要返回产品名、设计师名和社区名，而不是id
     status, info = order.get_order_by_cid(c_id)
     if ret['status'] == 'Success':
         _ = [ret['data'].append(
             {'o_id': i[0], 'o_amount': i[1], "o_money": i[2],
              "o_timestamp": i[3], "o_note": i[4], 'p_name': i[5],
-             "c_name": i[6]}) for i in info]
+             'p_author': 'wtf', "c_name": i[6]}) for i in info]
     else:
         ret['msg'] = info
 
@@ -44,13 +45,14 @@ def add_order_for_cid():
     为社区c_id添加一个订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
+
     ret = {"status": "Success", "msg": "error_msg"}
     o_amount = request.form.get('o_amount')
     o_money = 0 # request.form.get('o_money')
     p_id = request.form.get('p_id')
     c_id = request.form.get('c_id')
     ret['status'], ret['msg'] = \
-        order.add_order(o_amount, o_money, p_id, c_id)
+        order.add_order(o_amount, p_id, c_id)
 
     return json.dumps(ret, ensure_ascii=False)
 
@@ -62,6 +64,7 @@ def modify_order():
     修改社区c_id的订单
     :return: {"status": "Success", "msg":"error_msg"}
     """
+    #TODO: 去掉金额
     ret = {"status": "Success", "msg": "error_msg"}
     o_id = request.form.get('o_id')
     o_amount = request.form.get('o_amount')

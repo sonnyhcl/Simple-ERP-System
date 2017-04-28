@@ -106,6 +106,7 @@
                 {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
                 <li><a href="transaction">
                     <font color="{% if selected_menu == 'transaction' %}orange{% endif %}">流水</font></a></li>
+
                 <li><a href="mission"><font color="{% if selected_menu == 'mission' %}orange{% endif %}">任务</font></a></li>
                 <li><a href="order"><font color="{% if selected_menu == 'order' %}orange{% endif %}">订单</font></a></li>
                 <li><a href="user"><font color="{% if selected_menu == 'user' %}orange{% endif %}">人员</font></a></li>
@@ -132,8 +133,10 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#resetPassword" data-toggle="modal"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i> 修改密码</a></li>
-                        <li><a href="/log_out"><i class="fa fa-times-circle-o fa-fw" aria-hidden="true"></i> 退出登录</a></li>
+                        <li><a href="#resetPassword" data-toggle="modal"><i class="fa fa-pencil fa-fw"
+                                                                            aria-hidden="true"></i> 修改密码</a></li>
+                        <li><a href="/log_out"><i class="fa fa-times-circle-o fa-fw" aria-hidden="true"></i> 退出登录</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -147,6 +150,8 @@
 <div id="content" align="center">
     {% block content %}
     {% endblock %}
+    <!-- cid -->
+    <input type="hidden" id="get_c_id" value="{{ session['c_id'] }}">
 </div>
 
 <!-- Footer -->
