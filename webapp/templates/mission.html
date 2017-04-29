@@ -5,59 +5,59 @@
 {% block content %}
 <div class="container">
     <!-- 增加弹窗 -->
-    <div class="modal fade" id="alterProduct"
-         role="dialog" aria-labelledby="myModalLabel_prod" aria-hidden="true">
+    <div class="modal fade" id="alterMission"
+         role="dialog" aria-labelledby="myModalLabel_miss" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel_prod">标题</h4>
+                    <h4 class="modal-title" id="myModalLabel_miss">标题</h4>
                 </div>
 
-                <div class="modal-body" id="myModalBody_prod">
+                <div class="modal-body" id="myModalBody_miss">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">订单名称</label>
-                            <div class="col-lg-9">
-                                <input size="16" id="p_name" type="text" value="" placeholder="产品名称"
+                            <label class="col-lg-3 control-label">选择订单</label>
+                            <div class="col-lg-6">
+                                <!-- 表格 -->
+                                <select id="m_order_table" onchange="getItems(this.options[this.selectedIndex].value)"
+                                        class="form-control input-sm" style="color:#666666"
+                                        data-content="不能为空"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">选择工艺</label>
+                            <div class="col-lg-6">
+                                <!-- 表格 -->
+                                <select id="m_item_table" class="form-control input-sm"
+                                        style="color:#666666" data-content="不能为空">
+                                    <option value="请选择">- 请选择 -</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">选择用户</label>
+                            <div class="col-lg-6">
+                                <!-- 表格 -->
+                                <select id="m_user_table" class="form-control input-sm" style="color:#666666"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">填写数量</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="m_amount" type="text" value="" placeholder="数量"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
                                        tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">设计师</label>
-                            <div class="col-lg-9">
-                                <input size="16" id="p_designer" type="text" value="" placeholder="设计师"
+                            <label class="col-lg-3 control-label">填写备注</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="m_note" type="text" value="" placeholder="备注"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
                                        tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">添加工艺</label>
-                            <div class="col-lg-9">
-                                <div class="col-lg-5" style="padding: 0 0 0 0">
-                                    <input size="16" id="i_name" type="text" value="" placeholder="工艺名"
-                                           class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                           tabindex="0"
-                                           data-toggle="popover" data-trigger="focus"/>
-                                </div>
-                                <div class="col-lg-3" style="padding: 0 1 0 0">
-                                    <input size="16" id="i_unit" type="text" value="" placeholder="分钟单价"
-                                           class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                           tabindex="0"
-                                           data-toggle="popover" data-trigger="focus"/>
-                                </div>
-                                <div class="col-lg-3" style="padding: 0 0 0 0">
-                                    <input size="16" id="i_time" type="text" value="" placeholder="参考用时"
-                                           class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
-                                           tabindex="0"
-                                           data-toggle="popover" data-trigger="focus"/>
-                                </div>
-                                <div class="col-lg-1" style="padding: 0 0 0 0">
-                                    <i class="fa fa-plus-circle fa-fw fa-2x" href="#" onclick=""></i>
-                                </div>
                             </div>
                         </div>
                     </form>
@@ -65,48 +65,26 @@
 
                 <div class="modal-footer">
                     <button type="button" id="no-btn-prod" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="yes_btn_prod" class="btn btn-danger" onclick="">确定</button>
+                    <button type="button" id="yes_btn_miss" class="btn btn-danger" onclick="">确定</button>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!--修改工艺弹窗-->
-    <div class="modal fade" id="alterItem">
-
     </div>
 
     <!--删除弹窗模板-->
     {% if session['u_role'] == 'root' %}
-    <!-- 删除产品 -->
-    <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_prod" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel_prod">
+    <!-- 删除任务 -->
+    <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_miss" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel_miss">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="del_title_prod">确认删除该产品信息？</h4>
+                    <h4 class="modal-title" id="del_title_miss">确认删除该任务信息？</h4>
                 </div>
                 <div class="modal-body">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='confirm-del-button_prod' autofocus type="button" class="btn btn-danger" onclick="">确认
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--删除工艺-->
-    <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_item" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel_item">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="del_title_item">确认删除该工艺信息？</h4>
-                </div>
-                <div class="modal-body">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='confirm-del-button_item' autofocus type="button" class="btn btn-danger" onclick="">确认
+                    <button id='confirm-del-button_miss' autofocus type="button" class="btn btn-danger" onclick="">确认
                     </button>
                 </div>
             </div>
@@ -120,18 +98,12 @@
             <!-- 标题 -->
             <h3 id="product_manage_title">任务管理系统</h3>
             <br>
-            <!-- 修改按钮 -->
-            <a id="modify_product" href="#modifyMission" role="button" data-toggle="modal"
-               onclick="add_prod()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa-fw"></i>修改任务</a>
             <!-- 添加按钮 -->
-            <a id="add_product" href="#alterProduct" role="button" data-toggle="modal"
-               onclick="add_prod()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加任务</a>
-            <!-- 删除按钮 -->
-            <a id="del_product" href="#confirmDeleteModal_prod" role="button" data-toggle="modal"
-               onclick="delete_prod()" class="btn  btn-sm btn-danger"><i class="fa fa-trash fa-fw"></i>删除任务</a>
+            <a id="add_mission" href="#alterMission" role="button" data-toggle="modal"
+               onclick="add_miss()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加任务</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
-                   id="o_table" width="100%">
+                   id="m_table" width="100%">
             </table>
         </div>
     </div>
@@ -145,22 +117,25 @@
 {% block script %}
 {{ super() }}
 <script type="text/javascript">
+    var cid = $("#get_c_id").attr("value");
     $(document).ready(function () {
         var doc_table;
-        var cid = $("#get_c_id").attr("value");
         console.log('document ready');
-        $.post('/mission/table',{"c_id": cid},
+        $.post('/mission/table', {"c_id": cid},
             function (ret) {
-                doc_table = $('#o_table').dataTable({
+                doc_table = $('#m_table').dataTable({
                     "aoColumns": [
-                        {"sTitle": "订单号"},
+                        {
+                            "sTitle": "订单号",
+                            "width": "10%"
+                        },
                         {"sTitle": "产品名"},
                         {"sTitle": "工艺名"},
                         {"sTitle": "用户名"},
                         {"sTitle": "数量"},
                         {"sTitle": "备注"},//其实就是备注
                         {
-                            "width": "18%",
+                            "width": "12%",
                             "sTitle": "操作",
                             "bSortable": false
                         }
@@ -200,160 +175,171 @@
                         missions[i].m_amount,
                         missions[i].m_note,
                         //修改按钮
-                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
-                        missions[i].i_id + ")' class='btn  btn-sm btn-default' type='button'>" +
-                        "<i class='fa fa-pencil fa-fw'></i>修改</button>" + " " +
-                        //增加按钮
-                        "<button href='#alterProduct' data-toggle='modal' onclick='modify_it(" +
-                        missions[i].i_id + ")' class='btn  btn-sm btn-default' type='button'>" +
-                        "<i class='fa fa-plus-square fa-fw'></i>增加</button>" + " " +
+                        "<button href='#alterMission' data-toggle='modal' " + "id='modify-mission-btn_" + missions[i].m_id + "' " +
+                        "onclick='modify_miss(" + missions[i].m_id + ")' class='btn  btn-sm btn-default' type='button'>" +
+                        "<i class='fa fa-pencil fa-fw'></i>修改</button>" +
                         //删除按钮
-                        "<button href='#confirmDeleteModal_item' data-toggle='modal' onclick='delete_it( " +
-                        missions[i].i_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
+                        "<button href='#confirmDeleteModal_miss' data-toggle='modal' onclick='delete_miss( " +
+                        missions[i].m_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
                         "<i class='fa fa-trash fa-fw'></i>删除</button>"
                     ])
                 }
             }, 'json');
+
+        $.post('/user/table', function (ret) {
+            var users = ret.data;
+            for (var i in users) {
+                console.log(users[i]);
+                $('#m_user_table').append('<option value="' + users[i].u_id + '">' + users[i].u_name + '</option>');
+            }
+        }, 'json');
+
+        $.post('/order/table', {'c_id': cid}, function (ret) {
+            var orders = ret.data;
+            $('#m_order_table').append('<option value="请选择">- 请选择 -</option>');
+            for (var i in orders) {
+                console.log(orders[i]);
+                $('#m_order_table').append('<option value="' + orders[i].o_id + '">' +
+                    orders[i].o_id + '-' + orders[i].p_name + '</option>');
+            }
+        }, 'json');
     });
 
-    function check_value(name, designer) {
-        if (name === "") {
-            $('#p_name').popover('show');
+
+    function getItems(oid) {
+        //clear
+        var target = document.getElementById('m_item_table');
+        target.options.length = 0;
+        if (oid == '请选择') {
+            target.options.add(new Option('- 请选择 -', '请选择'));
+        }
+        var raw_items, items = [];
+        var orders;
+        var cid = $("#get_c_id").attr("value");
+        var pid = 0;
+
+        $.post('/product/table', function (ret) {
+            raw_items = ret.data;
+            $.post('/order/table', {'c_id': cid}, function (ret) {
+                orders = ret.data;
+                //根据oid获取pid
+                for (var ri = 0; ri < orders.length; ri++) {
+                    if (orders[ri].o_id == oid) {
+                        pid = orders[ri].p_name;
+                    }
+                }
+                //根据pid获取工艺信息
+                for (var ii = 0; ii < raw_items.length; ii++) {
+                    if (pid == raw_items[ii].p_id) {
+                        items.push(raw_items[ii]);
+                    }
+                }
+                //动态加载工艺
+                for (var ki = 0; ki < items.length; ki++) {
+                    target.options.add(new Option(items[ki].i_name, items[ki].i_id));
+                }
+            }, 'json');
+        }, 'json');
+
+    }
+
+
+    function check_value(order, item, user, amount) {
+        if (order === "请选择") {
+            $('#m_order_table').popover('show');
             return (false);
         }
-        if (designer === "") {
-            $('#p_designer').popover('show');
+        if (item === "请选择") {
+            $('#m_item_table').popover('show');
+            return (false);
+        }
+        if (user === "") {
+            $('#m_user_table').popover('show');
+            return (false);
+        }
+        if (amount === "") {
+            $('#m_amount').popover('show');
             return (false);
         }
         return (true);
     }
 
+
     /***** 针对产品的操作 *****/
-    function add_prod() {
+    function add_miss() {
         console.log("add product");
-        $("#myModalLabel_prod").text("添加产品信息");
-        $("#yes_btn_prod").attr('onclick', 'confirm_add_member_prod()');
+        $("#myModalLabel_miss").text("添加任务信息");
+        $("#yes_btn_miss").attr('onclick', 'confirm_add_miss()');
     }
 
-    function confirm_add_member_prod() {
-        console.log('confirm_add_member_prod');
-        if (!check_value($("#p_name").val(), $("#p_designer").val())) {
+
+    function confirm_add_miss() {
+        console.log('confirm_add_miss');
+        if (!check_value($("#m_order_table").val(), $("#m_item_table").val(),
+                $('#m_user_table').val(), $('#m_amount').val())) {
             return;
         }
-//        TODO
-//        $.post("/product/add", {
-//            'c_name': $("#t_name").val()
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        });
+        $.post("/mission/add", {
+            'u_id': $('#m_user_table').val(),
+            'o_id': $('#m_order_table').val(),
+            'i_id': $('#m_item_table').val(),
+            'm_note': $('#m_note').val(),
+            'm_amount': $('#m_amount').val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/mission';
+        });
     }
 
-    function modify_prod(id) {
-        console.log("modify product:" + id);
-//        TODO
-//        $.post("/product/" + id, function (ret) {
-//            console.log(ret);
-//            data = ret.data[0];
-//            $("#t_name").val(data.c_name);
-//            $("#myModalLabel_prod").text("修改产品信息");
-//            $("#yes_btn_prod").attr('onclick', 'confirm_modify_member_prod(' + id + ')');
-//        }, 'json');
+
+    function modify_miss(id) {
+        console.log("modify mission:" + id);
+        var muser, mnote, mamount;
+        muser = $('#modify-mission-btn_' + id).parents("tr")[0].getElementsByTagName('td')[3].innerText;
+        mamount = $('#modify-mission-btn_' + id).parents('tr')[0].getElementsByTagName('td')[4].innerText;
+        mnote = $('#modify-mission-btn_' + id).parents('tr')[0].getElementsByTagName('td')[5].innerText;
+        $("#myModalLabel_miss").text("修改订单信息");
+        $('#m_amount').val(mamount);
+        $('#m_note').val(mnote);
+        $('#m_user_table').value = muser;
+        $('#yes_btn_miss').attr('onclick', 'confirm_modify_miss(' + id + ')');
     }
 
-    function confirm_modify_member_prod(id) {
-        console.log("confirm_modify_member_prod:" + id);
-//        TODO
-//        if (!check_value($("#t_name").val())) {
-//            return;
-//        }
-//        $.post("/product/modify", {
-//            'c_id': id,
-//            'c_name': $("#t_name").val()
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        });
-    }
 
-    function delete_prod(id) {
-        console.log("delete product");
-        $('#confirm-del-button_prod').attr('onclick', 'confirm_del_member_prod(' + id + ')');
-    }
-
-    function confirm_del_member_prod(id) {
-        console.log("confirm_del_member_prod:" + id);
-//        TODO
-//        $.post("/product/delete", {
-//            'c_id': id
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        })
-    }
-
-    /***** 针对工艺的操作 *****/
-    function add_item() {
-        console.log("add item");
-        $("#myModalLabel_item").text("添加工艺信息");
-        $("#yes_btn_item").attr('onclick', 'confirm_add_member_item()');
-    }
-
-    function confirm_add_member_item() {
-        console.log('confirm_add_member_item');
-        if (!check_value($("#p_name").val(), $("#p_designer").val())) {
+    function confirm_modify_miss(id) {
+        console.log("confirm_modify_miss:" + id);
+        if (!check_value($("#m_order_table").val(), $("#m_item_table").val(),
+                $('#m_user_table').val(), $('#m_amount').val())) {
             return;
         }
-//        TODO
-//        $.post("/product/add", {
-//            'c_name': $("#t_name").val()
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        });
+        $.post("/mission/modify", {
+            'm_id': id,
+            'o_id': $('#m_order_table').val(),
+            'u_id': $('#m_user_table').val(),
+            'i_id': $('#m_item_table').val(),
+            'm_note': $('#m_note').val(),
+            'm_amount': $('#m_amount').val()
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/mission';
+        });
     }
 
-    function modify_item(id) {
-        console.log("modify item:" + id);
-//        TODO
-//        $.post("/product/" + id, function (ret) {
-//            console.log(ret);
-//            data = ret.data[0];
-//            $("#t_name").val(data.c_name);
-//            $("#myModalLabel_prod").text("修改产品信息");
-//            $("#yes_btn_prod").attr('onclick', 'confirm_modify_member_prod(' + id + ')');
-//        }, 'json');
+
+    function delete_miss(id) {
+        console.log("delete mission");
+        $('#confirm-del-button_miss').attr('onclick', 'confirm_del_miss(' + id + ')');
     }
 
-    function confirm_modify_member_item(id) {
-        console.log("confirm_modify_member_item:" + id);
-//        TODO
-//        if (!check_value($("#t_name").val())) {
-//            return;
-//        }
-//        $.post("/product/modify", {
-//            'c_id': id,
-//            'c_name': $("#t_name").val()
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        });
-    }
 
-    function delete_item(id) {
-        console.log("delete item");
-        $('#confirm-del-button_item').attr('onclick', 'confirm_del_member_item(' + id + ')');
-    }
-
-    function confirm_del_member_item(id) {
-        console.log("confirm_del_member_item:" + id);
-//        TODO
-//        $.post("/product/delete", {
-//            'c_id': id
-//        }, function (ret) {
-//            console.log(ret);
-//            location.href = '/product';
-//        })
+    function confirm_del_miss(id) {
+        console.log("confirm_del_miss:" + id);
+        $.post("/mission/delete", {
+            'm_id': id
+        }, function (ret) {
+            console.log(ret);
+            location.href = '/mission';
+        })
     }
 </script>
 

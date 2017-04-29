@@ -25,13 +25,13 @@ def get_mission_by_cid():
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
     ret['data'] = [
-        {'o_id': 1, 'p_name': "产品A", 'i_name': '产品A的工艺1',
+        {'m_id': 0, 'o_id': 1, 'p_name': "产品A", 'i_name': '产品A的工艺1',
          'u_name': 'hcl', 'm_amount': 10, 'm_note': '无'},
-        {'o_id': 2, 'p_name': "产品A", 'i_name': '产品A的工艺2',
+        {'m_id': 1, 'o_id': 2, 'p_name': "产品A", 'i_name': '产品A的工艺2',
          'u_name': 'hcl', 'm_amount': 20, 'm_note': '无'},
-        {'o_id': 3, 'p_name': "产品B", 'i_name': '产品B的工艺1',
+        {'m_id': 2, 'o_id': 3, 'p_name': "产品B", 'i_name': '产品B的工艺1',
          'u_name': 'hcl', 'm_amount': 30, 'm_note': '无'},
-        {'o_id': 4, 'p_name': "产品B", 'i_name': '产品B的工艺2',
+        {'m_id': 3, 'o_id': 4, 'p_name': "产品B", 'i_name': '产品B的工艺2',
          'u_name': 'hcl', 'm_amount': 40, 'm_note': '无'},
     ]
     # c_id = request.form.get('c_id')
@@ -59,6 +59,7 @@ def add_mission():
     i_id = request.form.get('i_id')
     o_id = request.form.get('o_id')
     m_amount = request.form.get('m_amount')
+    # TODO: m_note.
     ret['status'], ret['msg'] = mission.add_mission(u_id, i_id, o_id, m_amount)
 
     return json.dumps(ret, ensure_ascii=False)
@@ -72,6 +73,7 @@ def modify_mission():
     :return: {"status": "Success", "msg":"error_msg"}
     """
     ret = {"status": "Success", "msg": "error_msg"}
+
     m_id = request.form.get('m_id')
     m_amount = request.form.get('m_amount')
     m_note = request.form.get('m_note')

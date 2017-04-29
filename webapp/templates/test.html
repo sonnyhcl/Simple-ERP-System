@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>js全国省市二级联动下拉选择菜单</title>
+</head>
+<body>
+<script language="javascript" src="city.js"></script>
+<form action="" method=post name=form1>
+    <table width=300 border=0 cellspacing="0" cellpadding="1" !bgcolor=#FFFDE6>
+        <tr>
+            <td class="black_con9" align="right">省份：</td>
+            <td class="black_con9">
+                <select name="selectp" onChange="selectcityarea('selectp','selectc','form1');">
+                    <option value="0" selected>选择省份</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="black_con9" align="right">县/市：</td>
+            <td class="black_con9">
+                <select name="selectc">
+                    <option value="0" selected>选择城市</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+</form>
+<script language="javascript">
+    first("selectp", "selectc", "form1", 0, 0);
+</script>
+</body>
+</html>

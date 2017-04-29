@@ -25,7 +25,8 @@ def get_orders_by_cid():
     ret = {"data": [], "status": 'Success', "msg": ""}
     c_id = request.form.get('c_id')
 
-    # TODO 这里要返回产品名、设计师名和社区名，而不是id !!!
+    # TODO 更新TODO：增加返回pid供mission调用
+    # TODO 这里要返回 产品id 、产品名、设计师名和社区名，而不是id !!!
     status, info = order.get_order_by_cid(c_id)
     if ret['status'] == 'Success':
         _ = [ret['data'].append(
