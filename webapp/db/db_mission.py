@@ -76,7 +76,7 @@ class Mission(object):
             else:
                 response = conn.execute('SELECT * FROM mission '
                                         'WHERE o_id IN '
-                                        '(SELECT o_id FROM order '
+                                        '(SELECT o_id FROM orders '
                                         'WHERE c_id = ?);', param)
             response = response.fetchall()
         except Exception:

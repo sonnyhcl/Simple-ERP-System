@@ -24,27 +24,25 @@ def get_mission_by_cid():
     :return: 
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    # ret['data'] = [
-    #     {'o_id': 1, 'p_name': "产品A", 'i_name': '产品A的工艺1',
-    #      'u_name': 'hcl', 'm_amount': 10, 'm_note': '无'},
-    #     {'o_id': 2, 'p_name': "产品A", 'i_name': '产品A的工艺2',
-    #      'u_name': 'hcl', 'm_amount': 20, 'm_note': '无'},
-    #     {'o_id': 3, 'p_name': "产品B", 'i_name': '产品B的工艺1',
-    #      'u_name': 'hcl', 'm_amount': 30, 'm_note': '无'},
-    #     {'o_id': 4, 'p_name': "产品B", 'i_name': '产品B的工艺2',
-    #      'u_name': 'hcl', 'm_amount': 40, 'm_note': '无'},
-    # ]
-    c_id = request.form.get('c_id')
-    print c_id
-    # TODO mission表里并没有社区id啊
-    # 这里需要跨好几个表查询
-    status, info = mission.get_mission_by_cid(c_id)
-    print status, info
-    if status == "Success":
-        _ = [ret['data'].append({'o_id': i[0], 'p_name': i[1], "i_name": i[2],
-             "u_name": i[3], "m_amount": i[4], 'm_note': i[5]}) for i in info]
-    else:
-        ret['msg'] = info
+    ret['data'] = [
+        {'o_id': 1, 'p_name': "产品A", 'i_name': '产品A的工艺1',
+         'u_name': 'hcl', 'm_amount': 10, 'm_note': '无'},
+        {'o_id': 2, 'p_name': "产品A", 'i_name': '产品A的工艺2',
+         'u_name': 'hcl', 'm_amount': 20, 'm_note': '无'},
+        {'o_id': 3, 'p_name': "产品B", 'i_name': '产品B的工艺1',
+         'u_name': 'hcl', 'm_amount': 30, 'm_note': '无'},
+        {'o_id': 4, 'p_name': "产品B", 'i_name': '产品B的工艺2',
+         'u_name': 'hcl', 'm_amount': 40, 'm_note': '无'},
+    ]
+    # c_id = request.form.get('c_id')
+    # status, info = mission.get_mission_by_cid(c_id)
+    # print status, info
+    # if status == "Success":
+    #     _ = [ret['data'].append(
+    #         {'m_id': i[0], 'm_amount': i[1], 'm_notes': i[2],
+    #          'u_id': i[3], "i_id": i[4], "o_id": i[5]}) for i in info]
+    # else:
+    #     ret['msg'] = info
 
     return json.dumps(ret)
 
@@ -62,7 +60,7 @@ def add_mission():
     o_id = request.form.get('o_id')
     m_amount = request.form.get('m_amount')
     ret['status'], ret['msg'] = mission.add_mission(u_id, i_id, o_id, m_amount)
-    
+
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -82,7 +80,7 @@ def modify_mission():
     o_id = request.form.get('o_id')
     ret['status'], ret['msg'] = \
         mission.update_mission(m_id, m_amount, m_note, u_id, i_id, o_id)
-    
+
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -96,5 +94,5 @@ def delete_mission():
     ret = {"status": "Success", "msg": "error_msg"}
     m_id = request.form.get('m_id')
     ret['status'], ret['msg'] = mission.delete_mission(m_id)
-    
+
     return json.dumps(ret, ensure_ascii=False)

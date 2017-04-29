@@ -242,7 +242,8 @@
         $.post("/order/add", {
             'p_id': $('#o_p_name_table').val(),
             'c_id': $('#o_c_name_table').val(),
-            'o_amount': $('#o_amount').val()
+            'o_amount': $('#o_amount').val(),
+            'o_note': $("#o_note").val()
         }, function (ret) {
             console.log(ret);
             location.href = '/order';

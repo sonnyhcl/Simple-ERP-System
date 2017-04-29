@@ -11,11 +11,11 @@ __author__ = 'sonnyhcl'
 
 
 class Order(object):
-    def add_order(self, o_amount, o_money, p_id, c_id):
+    def add_order(self, o_amount, o_note, p_id, c_id):
         conn = sqlite3.connect("demo.db")
-        param = (o_amount, o_money, p_id, c_id,)
+        param = (o_amount, o_note, p_id, c_id,)
         try:
-            conn.execute('INSERT INTO orders(o_amount, o_money, p_id, c_id)'
+            conn.execute('INSERT INTO orders(o_amount, o_notes, p_id, c_id)'
                          'VALUES (?, ?, ?, ?);', param)
         except Exception:
             conn.close()
@@ -36,13 +36,13 @@ class Order(object):
         conn.close()
         return "Success", ""
 
-    def update_order(self, o_id, o_amount, p_id, c_id):
+    def update_order(self, o_id, o_amount, o_note, p_id, c_id):
         conn = sqlite3.connect("demo.db")
         try:
-            param = (o_amount, p_id, o_id, c_id,)
+            param = (o_amount, o_note, p_id, c_id, o_id)
             conn.execute(
                 'UPDATE orders '
-                'SET o_amount = ?, p_id = ? ,c_id = ?'
+                'SET o_amount = ?, o_notes = ?, p_id = ? ,c_id = ?'
                 'WHERE o_id = ?;',
                 param)
         except Exception:
