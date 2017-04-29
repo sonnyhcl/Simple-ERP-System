@@ -59,8 +59,7 @@ def add_mission():
     i_id = request.form.get('i_id')
     o_id = request.form.get('o_id')
     m_amount = request.form.get('m_amount')
-    # TODO: m_note.
-    ret['status'], ret['msg'] = mission.add_mission(u_id, i_id, o_id, m_amount)
+    ret['status'], ret['msg'] = mission.add_mission(u_id, i_id, o_id, m_amount, m_note)
 
     return json.dumps(ret, ensure_ascii=False)
 

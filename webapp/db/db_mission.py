@@ -11,12 +11,12 @@ __author__ = 'sonnyhcl'
 
 
 class Mission(object):
-    def add_mission(self, u_id, i_id, o_id, m_amount):
+    def add_mission(self, u_id, i_id, o_id, m_amount, m_note = "无"):
         conn = sqlite3.connect("demo.db")
-        param = (u_id, i_id, o_id, m_amount,)
+        param = (u_id, i_id, o_id, m_amount, m_note, )
         try:
-            conn.execute('INSERT INTO mission(u_id, i_id, o_id, m_amount)'
-                         'VALUES (?, ?, ?, ?);', param)
+            conn.execute('INSERT INTO mission(u_id, i_id, o_id, m_amount, m_note)'
+                         'VALUES (?, ?, ?, ?, ?);', param)
         except Exception:
             conn.close()
             return "Fail", traceback.print_exc()
@@ -72,12 +72,20 @@ class Mission(object):
         param = (c_id,)
         try:
             if c_id == 0:
-                response = conn.execute('SELECT * FROM mission;')
+                response = conn.execute('SELECT * '
+                                        'FROM mission, orders, product, item, user '
+                                        'WHERE mission.o_id = orders.o_id '
+                                        'AND mission.p_id = product.p_id '
+                                        'AND mission.u_id = user.u_id '
+                                        'AND mission.i_id = item.i_id ')
             else:
-                response = conn.execute('SELECT * FROM mission '
-                                        'WHERE o_id IN '
-                                        '(SELECT o_id FROM orders '
-                                        'WHERE c_id = ?);', param)
+                response = conn.execute('SELECT * '
+                                        'FROM mission, orders, product, item, user '
+                                        'WHERE mission.o_id = orders.o_id '
+                                        'AND mission.p_id = product.p_id '
+                                        'AND mission.u_id = user.u_id '
+                                        'AND mission.i_id = item.i_id '
+                                        'AND orders.c_id = ?', param)
             response = response.fetchall()
         except Exception:
             conn.close()
