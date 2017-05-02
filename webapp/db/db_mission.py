@@ -15,7 +15,7 @@ class Mission(object):
         conn = sqlite3.connect("demo.db")
         param = (u_id, i_id, o_id, m_amount, m_note, )
         try:
-            conn.execute('INSERT INTO mission(u_id, i_id, o_id, m_amount, m_notes)'
+            conn.execute('INSERT INTO mission(u_id, i_id, o_id, m_amount, m_note)'
                          'VALUES (?, ?, ?, ?, ?);', param)
         except Exception:
             conn.close()
@@ -36,7 +36,7 @@ class Mission(object):
         conn.close()
         return "Success", ""
 
-    def update_mission(self, m_id, amount=None, notes=None, u_id=None, i_id=None, o_id=None):
+    def update_mission(self, m_id, amount=None, note=None, u_id=None, i_id=None, o_id=None):
         conn = sqlite3.connect("demo.db")
         param = (m_id,)
         try:
@@ -45,8 +45,8 @@ class Mission(object):
             origin = list(origin)
             if amount is not None:
                 origin[1] = amount
-            if notes is not None:
-                origin[2] = notes
+            if note is not None:
+                origin[2] = note
             if u_id is not None:
                 origin[3] = u_id
             if i_id is not None:
@@ -57,7 +57,7 @@ class Mission(object):
             param = tuple(origin) + (m_id,)
             conn.execute(
                 'UPDATE mission '
-                'SET m_id = ?, m_amount = ?, m_notes = ?, u_id = ?, i_id = ?, o_id = ?'
+                'SET m_id = ?, m_amount = ?, m_note = ?, u_id = ?, i_id = ?, o_id = ?'
                 'WHERE m_id = ?;',
                 param)
         except Exception:

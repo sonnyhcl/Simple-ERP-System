@@ -15,7 +15,7 @@ class Order(object):
         conn = sqlite3.connect("demo.db")
         param = (o_amount, o_note, p_id, c_id,)
         try:
-            conn.execute('INSERT INTO orders(o_amount, o_notes, p_id, c_id)'
+            conn.execute('INSERT INTO orders(o_amount, o_note, p_id, c_id)'
                          'VALUES (?, ?, ?, ?);', param)
         except Exception:
             conn.close()
@@ -42,7 +42,7 @@ class Order(object):
             param = (o_amount, o_note, p_id, c_id, o_id)
             conn.execute(
                 'UPDATE orders '
-                'SET o_amount = ?, o_notes = ?, p_id = ? ,c_id = ?'
+                'SET o_amount = ?, o_note = ?, p_id = ? ,c_id = ?'
                 'WHERE o_id = ?;',
                 param)
         except Exception:

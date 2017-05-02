@@ -35,7 +35,7 @@ class Transactions(object):
         conn.close()
         return "Success", ""
 
-    def update_transactions(self, t_id, amount=None, timestamp=None, notes=None, m_id=None):
+    def update_transactions(self, t_id, amount=None, timestamp=None, note=None, m_id=None):
         conn = sqlite3.connect("demo.db")
         param = (t_id,)
         try:
@@ -46,15 +46,15 @@ class Transactions(object):
                 origin[1] = amount
             if timestamp is not None:
                 origin[2] = timestamp
-            if notes is not None:
-                origin[3] = notes
+            if note is not None:
+                origin[3] = note
             if m_id is not None:
                 origin[4] = m_id
 
             param = tuple(origin) + (t_id,)
             conn.execute(
                 'UPDATE transactions '
-                'SET t_id = ?, t_amount = ?, t_timestamp = ?, t_notes = ?, m_id = ?'
+                'SET t_id = ?, t_amount = ?, t_timestamp = ?, t_note = ?, m_id = ?'
                 'WHERE t_id = ?;',
                 param)
         except Exception:

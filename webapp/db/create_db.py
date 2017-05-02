@@ -97,7 +97,7 @@ conn.execute(
             o_amount        INT         DEFAULT 0,
             o_money         FLOAT       DEFAULT 0,
             o_timestamp     DATETIME    DEFAULT (datetime('now', 'localtime')),
-            o_notes         CHAR(50)    DEFAULT '无',
+            o_note          CHAR(50)    DEFAULT '无',
             p_id            INT         NOT NULL,
             c_id            INT         DEFAULT 0,
             FOREIGN KEY     (p_id)      REFERENCES   product(p_id),
@@ -117,7 +117,7 @@ conn.execute(
         (
             m_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
             m_amount        INT         DEFAULT 0,
-            m_notes         CHAR(50)    DEFAULT '无',
+            m_note          CHAR(50)    DEFAULT '无',
             u_id            INT         NOT NULL,
             i_id            INT         NOT NULL,
             o_id            INT         NOT NULL,
@@ -140,7 +140,7 @@ conn.execute(
             t_id            INTEGER     PRIMARY KEY AUTOINCREMENT,
             t_amount        INT         DEFAULT 0,
             t_timestamp     DATETIME    DEFAULT (datetime('now', 'localtime')),
-            t_notes         CHAR(50)    DEFAULT '无',
+            t_note          CHAR(50)    DEFAULT '无',
             m_id            INT         NOT NULL,
             FOREIGN KEY     (m_id)      REFERENCES   mission(m_id)
         )
@@ -172,7 +172,8 @@ conn.execute(
             (1, 'admin',   'admin',    'admin','12345678910',   1),
             (2, 'user',    'user',     'uer',  '12345678910',   1),
             (3, '管理员',   'admin',    'admin','12345678910',   2),
-            (4, '用户',     'user',     'user', '12345678910',   2);
+            (4, '用户',     'user',     'user', '12345678910',   2),
+            (5, 'root',    'root',     'root', 'rootphone',     0);
     """
 )
 
