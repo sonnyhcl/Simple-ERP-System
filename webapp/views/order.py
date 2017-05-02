@@ -29,11 +29,11 @@ def get_orders_by_cid():
     if ret['status'] == 'Success':
         _ = [ret['data'].append(
             {'o_id': i[0], 'o_amount': i[1], "o_money": i[2],
-             "o_timestamp": i[3], "o_note": i[4], 'p_name': i[5],
-             'p_author': i[6], "c_name": i[7]}) for i in info]
+             "o_timestamp": i[3], "o_note": i[4], 'p_id': i[7],
+             'p_name': i[8], 'p_author': i[9], "c_name": i[11]}) for i in info]
     else:
         ret['msg'] = info
-
+    print ret
     return json.dumps(ret, ensure_ascii=False)
 
 

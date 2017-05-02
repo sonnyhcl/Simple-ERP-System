@@ -196,7 +196,7 @@
 
         $.post('/order/table', {'c_id': cid}, function (ret) {
             var orders = ret.data;
-            $('#m_order_table').append('<option value="请选择">- 请选择 -</option>');
+            $('#m_order_table').append('<option value="请选择">- 请选择订单 -</option>');
             for (var i in orders) {
                 console.log(orders[i]);
                 $('#m_order_table').append('<option value="' + orders[i].o_id + '">' +
@@ -219,6 +219,7 @@
         var pid = 0;
 
         $.post('/product/table', function (ret) {
+            console.log(ret);
             raw_items = ret.data;
             $.post('/order/table', {'c_id': cid}, function (ret) {
                 orders = ret.data;

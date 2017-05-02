@@ -43,7 +43,7 @@ def get_mission_by_cid():
              'p_name': i[14], 'i_name': i[17]}) for i in info]
     else:
         ret['msg'] = info
-    print ret
+
     return json.dumps(ret)
 
 
@@ -59,6 +59,7 @@ def add_mission():
     i_id = request.form.get('i_id')
     o_id = request.form.get('o_id')
     m_amount = request.form.get('m_amount')
+    m_note = request.form.get('m_note')
     ret['status'], ret['msg'] = mission.add_mission(u_id, i_id, o_id, m_amount, m_note)
 
     return json.dumps(ret, ensure_ascii=False)
