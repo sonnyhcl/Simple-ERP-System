@@ -33,7 +33,6 @@ def get_orders_by_cid():
              'p_name': i[8], 'p_author': i[9], "c_name": i[11]}) for i in info]
     else:
         ret['msg'] = info
-    print ret
     return json.dumps(ret, ensure_ascii=False)
 
 

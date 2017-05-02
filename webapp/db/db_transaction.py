@@ -9,20 +9,21 @@ __author__ = 'sonnyhcl'
 
 
 class Transactions(object):
-    def add_transactions(self, m_id, amount=0):
+    def add_transactions(self, m_id, amount, t_note):
         # TODO
         conn = sqlite3.connect("demo.db")
-        param = (m_id, amount,)
+        param = (m_id, amount, t_note)
         try:
             conn.execute(
-                'INSERT INTO transactions(m_id, t_amount) VALUES (?, ?);',
+                'INSERT INTO transactions(m_id, t_amount, t_note) '
+                'VALUES (?, ?, ?);',
                 param)
         except Exception:
             conn.close()
             return "Fail", traceback.print_exc()
         conn.commit()
         conn.close()
-        return "Success"
+        return "Success", ""
 
     def delete_transactions(self, t_id):
         # TODO
@@ -84,10 +85,11 @@ class Transactions(object):
 
         param = (c_id,)
         try:
-            response = conn.execute('SELECT * FROM transactions, mission, orders '
-                                    ' WHERE transactions.m_id = mission.m_id '
-                                    ' AND mission.o_id = orders.o_id '
-                                    ' AND orders.c_id = ?;',
+            response = conn.execute('SELECT * '
+                                    'FROM transactions, mission, orders '
+                                    'WHERE transactions.m_id = mission.m_id '
+                                    'AND mission.o_id = orders.o_id '
+                                    'AND orders.c_id = ?;',
                                     param)
             response = response.fetchall()
         except Exception:

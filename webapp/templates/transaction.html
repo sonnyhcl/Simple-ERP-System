@@ -111,7 +111,7 @@
     $(document).ready(function () {
         console.log('document ready');
         var doc_table;
-        $.post('/transaction/table',
+        $.post('/transaction/get_cid_table',{'c_id': 0},
             function (ret) {
                 doc_table = $('#t_table').dataTable({
                     "aoColumns": [
@@ -193,7 +193,13 @@
             for (var i in communities) {
                 $('#t_community').append('<option value="' + communities[i].c_id + '">' + communities[i].c_name + '</option>');
             }
-        }, 'json')
+        }, 'json');
+
+        $.post('/transaction/get_cid_table',
+            {'t_id': 10, 'm_id': 1, 'c_id': 0,
+                't_amount': 1200, 't_note': '有'}, function (ret) {
+        });
+
     });
 
     function check_value(name, phone) {
