@@ -5,7 +5,7 @@
 import os
 import sqlite3
 
-filename = '../../demo.db'
+filename = os.path.join('..', '..', 'demo.db')
 if os.path.exists(filename):
     os.remove(filename)
 conn = sqlite3.connect(filename)
@@ -214,7 +214,7 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO mission(m_amount, u_id, i_id, o_id)
-    VALUES  (10, 1, 1, 1), (20, 2, 2, 1), (30, 1, 3, 2), (40, 2, 4, 2);
+    VALUES  (10, 1, 1, 1), (20, 2, 2, 1), (30, 3, 3, 2), (40, 4, 4, 2);
 """
 )
 
