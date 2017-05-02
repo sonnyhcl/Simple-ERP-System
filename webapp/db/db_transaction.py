@@ -79,6 +79,7 @@ class Transactions(object):
         return "Success", response
 
     def get_transactions_by_cid(self, c_id):
+        # TODO
         conn = sqlite3.connect("demo.db")
 
         param = (c_id,)
@@ -93,6 +94,7 @@ class Transactions(object):
         return "Success", response
 
     def get_transactions_by_uid(self, u_id):
+        # TODOg
         conn = sqlite3.connect("demo.db")
 
         param = (u_id,)
