@@ -24,26 +24,26 @@ def get_mission_by_cid():
     :return: 
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    ret['data'] = [
-        {'m_id': 0, 'o_id': 1, 'p_name': "产品A", 'i_name': '产品A的工艺1',
-         'u_name': 'hcl', 'm_amount': 10, 'm_note': '无'},
-        {'m_id': 1, 'o_id': 2, 'p_name': "产品A", 'i_name': '产品A的工艺2',
-         'u_name': 'hcl', 'm_amount': 20, 'm_note': '无'},
-        {'m_id': 2, 'o_id': 3, 'p_name': "产品B", 'i_name': '产品B的工艺1',
-         'u_name': 'hcl', 'm_amount': 30, 'm_note': '无'},
-        {'m_id': 3, 'o_id': 4, 'p_name': "产品B", 'i_name': '产品B的工艺2',
-         'u_name': 'hcl', 'm_amount': 40, 'm_note': '无'},
-    ]
-    # c_id = request.form.get('c_id')
-    # status, info = mission.get_mission_by_cid(c_id)
-    # print status, info
-    # if status == "Success":
-    #     _ = [ret['data'].append(
-    #         {'m_id': i[0], 'm_amount': i[1], 'm_notes': i[2],
-    #          'u_id': i[3], "i_id": i[4], "o_id": i[5]}) for i in info]
-    # else:
-    #     ret['msg'] = info
-
+    # ret['data'] = [
+    #     {'m_id': 0, 'o_id': 1, 'p_name': "产品A", 'i_name': '产品A的工艺1',
+    #      'u_name': 'hcl', 'm_amount': 10, 'm_note': '无'},
+    #     {'m_id': 1, 'o_id': 2, 'p_name': "产品A", 'i_name': '产品A的工艺2',
+    #      'u_name': 'hcl', 'm_amount': 20, 'm_note': '无'},
+    #     {'m_id': 2, 'o_id': 3, 'p_name': "产品B", 'i_name': '产品B的工艺1',
+    #      'u_name': 'hcl', 'm_amount': 30, 'm_note': '无'},
+    #     {'m_id': 3, 'o_id': 4, 'p_name': "产品B", 'i_name': '产品B的工艺2',
+    #      'u_name': 'hcl', 'm_amount': 40, 'm_note': '无'},
+    # ]
+    c_id = request.form.get('c_id')
+    status, info = mission.get_mission_by_cid(c_id)
+    if status == "Success":
+        _ = [ret['data'].append(
+            {'m_id': i[0], 'm_amount': i[1], 'm_note': i[2],
+             'u_id': i[3], "i_id": i[4], "o_id": i[5], 'u_name': i[23],
+             'p_name': i[14], 'i_name': i[17]}) for i in info]
+    else:
+        ret['msg'] = info
+    print ret
     return json.dumps(ret)
 
 

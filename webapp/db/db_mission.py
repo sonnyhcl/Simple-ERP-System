@@ -75,14 +75,14 @@ class Mission(object):
                 response = conn.execute('SELECT * '
                                         'FROM mission, orders, product, item, user '
                                         'WHERE mission.o_id = orders.o_id '
-                                        'AND mission.p_id = product.p_id '
+                                        'AND orders.p_id = product.p_id '
                                         'AND mission.u_id = user.u_id '
                                         'AND mission.i_id = item.i_id ')
             else:
                 response = conn.execute('SELECT * '
                                         'FROM mission, orders, product, item, user '
                                         'WHERE mission.o_id = orders.o_id '
-                                        'AND mission.p_id = product.p_id '
+                                        'AND orders.p_id = product.p_id '
                                         'AND mission.u_id = user.u_id '
                                         'AND mission.i_id = item.i_id '
                                         'AND orders.c_id = ?', param)
