@@ -11,11 +11,11 @@ __author__ = 'sonnyhcl'
 
 
 class Mission(object):
-    def add_mission(self, u_id, i_id, o_id, m_amount, m_note = "无"):
+    def add_mission(self, u_id, i_id, o_id, m_amount, m_note="无"):
         conn = sqlite3.connect("demo.db")
         param = (u_id, i_id, o_id, m_amount, m_note, )
         try:
-            conn.execute('INSERT INTO mission(u_id, i_id, o_id, m_amount, m_note)'
+            conn.execute('INSERT INTO mission(u_id, i_id, o_id, m_amount, m_notes)'
                          'VALUES (?, ?, ?, ?, ?);', param)
         except Exception:
             conn.close()
