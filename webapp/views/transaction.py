@@ -28,6 +28,7 @@ def get_transaction_by_uid():
          'm_amount': 10, 'i_unit_price': 100,
          't_timestamp': '2017-04-25 11:38:35', 'u_name': 'hcl', 't_note': '无'}
     ]
+    # TODO
     # u_id = request.form.get('u_id')
     # status, info = transaction.get_transaction_by_uid(u_id)
     # if status == "Success":
@@ -53,6 +54,7 @@ def get_transaction_by_cid():
          'm_amount': 10, 'i_unit_price': 100,
          't_timestamp': '2017-04-25 11:38:35', 'u_name': 'hcl', 't_note': '无'}
     ]
+    # TODO
     # c_id = request.form.get('c_id')
     # status, info = transaction.get_transaction_by_cid(c_id)
     # if status == "Success":
@@ -73,6 +75,7 @@ def add_transaction():
     ret = {"status": "Success", "msg": "error_msg"}
     m_id = request.form.get('m_id')
     t_amount = request.form.get('t_amount')
+    # TODO
     ret['status'], ret['msg'] = transaction.add_transaction(m_id, t_amount)
 
     return json.dumps(ret, ensure_ascii=False)
@@ -85,7 +88,7 @@ def modify_transaction():
 
     :return: {"status": "Success", "msg":"error_msg"}
     """
-    # TODO status, info = transactions.modify_transaction(u_name, i_name, m_amount)
+    # TODO
     ret = {"status": "Success", "msg": "error_msg"}
 
     t_id = request.form.get('t_id')

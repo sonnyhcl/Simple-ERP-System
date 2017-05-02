@@ -199,8 +199,8 @@
             $('#m_order_table').append('<option value="请选择">- 请选择订单 -</option>');
             for (var i in orders) {
                 console.log(orders[i]);
-                $('#m_order_table').append('<option value="' + orders[i].o_id + '">' +
-                    orders[i].o_id + '-' + orders[i].p_name + '</option>');
+                $('#m_order_table').append('<option value="' + orders[i].o_id + '">订单号' +
+                    orders[i].o_id + ' - ' + orders[i].p_name + '</option>');
             }
         }, 'json');
     });

@@ -175,7 +175,9 @@
         if (!check_value($("#c_name").val())) {
             return;
         }
-        // TODO 根据u_id添加管理员这一步，db部分暂时还没有做完
+        // TODO 添加社区管理员弹窗里默认为uid=0的用户，不需要这个选择了
+        // 添加了社区之后再在人员界面为该社区创建一个社区管理员账号
+        // 然后在社区页面把该社区管理员改为之前新增的那个
         $.post("/community/add", {
             'c_name': $("#c_name").val(),
             'u_id': $("#c_admin_table").val()
