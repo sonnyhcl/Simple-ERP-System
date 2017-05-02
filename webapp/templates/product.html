@@ -406,7 +406,6 @@
 
     function confirm_del_item(id) {
         console.log("confirm_del_item:" + id);
-        //TODO: /delete_item
         $.post("/product/delete_item", {
             'i_id': id
         }, function (ret) {
