@@ -269,6 +269,8 @@
     /***** 针对产品的操作 *****/
     function add_miss() {
         console.log("add product");
+        $('#m_amount').text('');
+        $('#m_note').text('');
         $("#myModalLabel_miss").text("添加任务信息");
         $("#yes_btn_miss").attr('onclick', 'confirm_add_miss()');
     }
