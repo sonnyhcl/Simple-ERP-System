@@ -86,9 +86,13 @@ class Transactions(object):
         param = (c_id,)
         try:
             response = conn.execute('SELECT * '
-                                    'FROM transactions, mission, orders '
+                                    'FROM transactions, mission, orders, product, user, community, item '
                                     'WHERE transactions.m_id = mission.m_id '
                                     'AND mission.o_id = orders.o_id '
+                                    'AND mission.u_id = user.o_id '
+                                    'AND mission.i_id = item.i_id '
+                                    'AND orders.p_id = product.p_id '
+                                    'AND orders.c_id = community.c_id '
                                     'AND orders.c_id = ?;',
                                     param)
             response = response.fetchall()
@@ -104,9 +108,15 @@ class Transactions(object):
 
         param = (u_id,)
         try:
-            response = conn.execute('SELECT * FROM transactions, mission '
-                                    ' WHERE transactions.m_id = mission.m_id '
-                                    ' AND mission.u_id = ?;',
+            response = conn.execute('SELECT * '
+                                    'FROM transactions, mission, orders, product, user, community, item '
+                                    'WHERE transactions.m_id = mission.m_id '
+                                    'AND mission.o_id = orders.o_id '
+                                    'AND mission.u_id = user.o_id '
+                                    'AND mission.i_id = item.i_id '
+                                    'AND orders.p_id = product.p_id '
+                                    'AND orders.c_id = community.c_id '
+                                    'AND user.u_id = ?;',
                                     param)
             response = response.fetchall()
         except Exception:
