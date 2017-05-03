@@ -10,7 +10,6 @@ __author__ = 'sonnyhcl'
 
 class Transactions(object):
     def add_transactions(self, m_id, amount, t_note):
-        # TODO
         conn = sqlite3.connect("demo.db")
         param = (m_id, amount, t_note)
         try:
@@ -26,7 +25,6 @@ class Transactions(object):
         return "Success", ""
 
     def delete_transactions(self, t_id):
-        # TODO
         conn = sqlite3.connect("demo.db")
         param = (t_id,)
         try:
@@ -38,7 +36,7 @@ class Transactions(object):
         conn.close()
         return "Success", ""
 
-    def update_transactions(self, t_id, t_amount=None, t_note=None, m_id=None):
+    def update_transactions(self, t_id, t_amount=None, t_note=None):
         conn = sqlite3.connect("demo.db")
         param = (t_id,)
         try:
@@ -50,8 +48,6 @@ class Transactions(object):
                 origin[1] = t_amount
             if t_note is not None:
                 origin[3] = t_note
-            if m_id is not None:
-                origin[4] = m_id
 
             param = tuple(origin) + (t_id,)
             conn.execute(

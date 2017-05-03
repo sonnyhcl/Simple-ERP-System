@@ -18,9 +18,10 @@
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="col-lg-3 control-label">选择人员</label>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6" >
                                 <!-- 表格 -->
                                 <select id="t_user_table" onchange="getMissions(this.options[this.selectedIndex].value)"
+                                        onfocus="getMissions(this.options[this.selectedIndex].value)" autofocus
                                         class="form-control input-sm" style="color:#666666"
                                         data-content="不能为空"></select>
                             </div>
@@ -343,7 +344,7 @@
         }, function (ret) {
             console.log(ret);
             location.href = '/transaction';
-        });
+        }, 'json');
     }
 
     function modify_trans(id) {
@@ -378,7 +379,7 @@
         }, function (ret) {
             console.log(ret);
             location.href = '/transaction';
-        });
+        }, 'json');
     }
 
 
@@ -395,7 +396,7 @@
         }, function (ret) {
             console.log(ret);
             location.href = '/transaction';
-        })
+        }, 'json')
     }
 </script>
 

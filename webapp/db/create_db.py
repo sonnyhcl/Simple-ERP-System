@@ -214,7 +214,8 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO mission(m_amount, u_id, i_id, o_id)
-    VALUES  (10, 1, 1, 1), (20, 2, 2, 1), (30, 3, 3, 2), (40, 4, 4, 2);
+    VALUES  (10, 1, 1, 1), (20, 2, 2, 1), (30, 3, 3, 2), (40, 4, 4, 2),
+            (11, 1, 2, 1), (22, 2, 1, 1), (33, 3, 4, 2), (44, 4, 3, 2);
 """
 )
 
@@ -224,7 +225,8 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO transactions(t_amount, m_id)
-    VALUES  (10, 1), (20, 2), (30, 3), (40, 4);
+    VALUES  (10, 1), (20, 2), (30, 3), (40, 4),
+            (11, 5), (22, 6), (33, 7), (44, 8);
     """
 )
 

@@ -30,14 +30,13 @@ def get_transaction_table():
         status, info = transaction.get_transactions_by_cid(c_id)
         if status == "Success":
             # TODO 前端数据不够再加
-
             _ = [ret['data'].append(
                 {'t_id': i[0],
                  't_amount': i[1],
                  't_timestamp': i[2],
                  't_note': i[3],
                  'm_id': i[5],
-                 'm_amount': i[6], # TODO t_amount 而不是 m_amount
+                 'm_amount': i[6],
                  'm_note': i[7],
                  'o_id': i[11],
                  'o_amount': i[12],
@@ -103,11 +102,11 @@ def modify_transaction():
 
     # TODO: 流水的人员与任务信息不可修改，前端传回的参数只有t_id, t_amount, t_note
     t_id = request.form.get('t_id')
-    m_id = request.form.get('m_id')
+    # m_id = request.form.get('m_id')
     t_amount = request.form.get('t_amount')
     t_note = request.form.get('t_note')
     ret['status'], ret['msg'] = \
-        transaction.update_transactions(t_id, t_amount, t_note, m_id)
+        transaction.update_transactions(t_id, t_amount, t_note)
 
     return json.dumps(ret, ensure_ascii=False)
 
