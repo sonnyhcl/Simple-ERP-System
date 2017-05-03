@@ -24,7 +24,7 @@ def get_mission_by_cid():
     :return: 
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    c_id = request.form.get('c_id')
+    c_id = session.get('c_id')
     status, info = mission.get_mission_by_cid(c_id)
     if status == "Success":
         _ = [ret['data'].append(
@@ -50,7 +50,8 @@ def add_mission():
     o_id = request.form.get('o_id')
     m_amount = request.form.get('m_amount')
     m_note = request.form.get('m_note')
-    ret['status'], ret['msg'] = mission.add_mission(u_id, i_id, o_id, m_amount, m_note)
+    ret['status'], ret['msg'] = \
+        mission.add_mission(u_id, i_id, o_id, m_amount, m_note)
 
     return json.dumps(ret, ensure_ascii=False)
 

@@ -61,10 +61,12 @@ class User(object):
         try:
             if c_id is not None and u_role == 'admin':
                 param = (c_id,)
-                response = conn.execute('SELECT u_id FROM community WHERE c_id = ?', param)
+                response = conn.execute(
+                    'SELECT u_id FROM community WHERE c_id = ?', param)
                 response = response.fetchall()[0][0]
                 if response is not None:
-                    return "Fail", "Community %s already has an administrator." % c_id
+                    return "Fail", \
+                           "Community %s already has an administrator." % c_id
             response = conn.execute('SELECT * FROM user WHERE u_id = ?;', param)
             origin = response.fetchall()[0]
             origin = list(origin)
@@ -120,7 +122,8 @@ class User(object):
             if c_id == 0:
                 response = conn.execute('SELECT * FROM user')
             else:
-                response = conn.execute('SELECT * FROM user WHERE c_id = ?;', param)
+                response = conn.execute('SELECT * FROM user WHERE c_id = ?;',
+                                        param)
             response = response.fetchall()
         except Exception:
             conn.close()
@@ -134,8 +137,8 @@ class User(object):
         get_all_user_info
         :return: 'Success', <response> or 'Fail', 'error_msg'
         """
+        conn = sqlite3.connect("demo.db")
         try:
-            conn = sqlite3.connect("demo.db")
             response = conn.execute('SELECT * FROM user;')
             response = response.fetchall()
         except Exception:

@@ -111,7 +111,7 @@
         var doc_table;
         var cid = $("#get_c_id").attr("value");
         console.log('document ready');
-        $.post('/order/table', {'c_id': cid},
+        $.post('/order/table',
             function (ret) {
                 doc_table = $('#o_table').dataTable({
                     "aoColumns": [
@@ -156,6 +156,7 @@
                 });
 
                 var orders = ret.data;
+                console.log("order table");
                 for (var i in orders) {
                     console.log(orders[i]);
                     doc_table.fnAddData([
@@ -178,6 +179,7 @@
             }, 'json');
 
         $.post('/product/table', function (ret) {
+            console.log("product table");
             var raw_products = ret.data;
             var products = [];
             var temp = {};
@@ -188,11 +190,13 @@
                 }
             }
             for (var i in products) {
+                console.log(products[i]);
                 $('#o_p_name_table').append('<option value="' + products[i].p_id + '">' + products[i].p_name + '</option>');
             }
         }, 'json');
 
         $.post('/community/table/' + cid, function (ret) {
+            console.log("community table");
             var communities = ret.data;
             for (var i in communities) {
                 console.log(communities[i]);

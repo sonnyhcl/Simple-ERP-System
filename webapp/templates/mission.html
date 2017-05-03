@@ -121,7 +121,7 @@
     $(document).ready(function () {
         var doc_table;
         console.log('document ready');
-        $.post('/mission/table', {"c_id": cid},
+        $.post('/mission/table',
             function (ret) {
                 doc_table = $('#m_table').dataTable({
                     "aoColumns": [
@@ -194,7 +194,7 @@
             }
         }, 'json');
 
-        $.post('/order/table', {'c_id': cid}, function (ret) {
+        $.post('/order/table', function (ret) {
             var orders = ret.data;
             $('#m_order_table').append('<option value="请选择">- 请选择订单 -</option>');
             for (var i in orders) {
@@ -221,7 +221,7 @@
         $.post('/product/table', function (ret) {
             console.log(ret);
             raw_items = ret.data;
-            $.post('/order/table', {'c_id': cid}, function (ret) {
+            $.post('/order/table', function (ret) {
                 orders = ret.data;
                 //根据oid获取pid
                 for (var ri = 0; ri < orders.length; ri++) {
