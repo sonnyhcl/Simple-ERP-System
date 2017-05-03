@@ -106,9 +106,16 @@ class Product(object):
                 origin[2] = i_unit_price
             if i_ref_time is not None:
                 origin[3] = i_ref_time
-            param = tuple(origin[:-1]) + (i_id,)
+            if i_note is not None:
+                origin[4] = i_note
+
+            param = tuple(origin[0:5]) + (i_id,)
+            print param
             conn.execute(
-                'UPDATE item SET i_id = ?, i_name = ?, i_unit_price = ?, i_ref_time = ?, i_note = ? WHERE i_id = ?;',
+                'UPDATE item '
+                'SET i_id = ?, i_name = ?, i_unit_price = ?,'
+                'i_ref_time = ?, i_note = ? '
+                'WHERE i_id = ?;',
                 param)
         except Exception:
             conn.close()

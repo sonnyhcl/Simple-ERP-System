@@ -106,7 +106,7 @@ def modify_product_and_its_one_item():
     ret["status"], ret['msg'] = \
         products.update_product(p_id, i_id, p_name, p_author,
                                 i_name, i_unit_price, i_ref_time, i_note)
-
+    print  ret
     return json.dumps(ret, ensure_ascii=False)
 
 
