@@ -55,18 +55,20 @@ class Order(object):
     def get_order_by_cid(self, c_id):
         conn = sqlite3.connect("demo.db")
         param = (c_id,)
+        print type(c_id)
         try:
             if c_id == 0:
+                print "d"
                 response = conn.execute('SELECT * '
                                         'FROM orders, product, community '
                                         'WHERE orders.p_id = product.p_id '
-                                        'AND orders.c_id = community.c_id')
+                                        'AND orders.c_id = community.c_id;')
             else:
                 response = conn.execute('SELECT * '
                                         'FROM orders, product, community '
                                         'WHERE orders.p_id = product.p_id '
                                         'AND orders.c_id = community.c_id '
-                                        'AND orders.c_id = ?', param)
+                                        'AND orders.c_id = ?;', param)
             response = response.fetchall()
         except Exception:
             conn.close()

@@ -23,7 +23,7 @@ def get_orders_by_cid():
     :return: {"data": [], "status": 'Success', "msg": ""}
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    c_id = request.form.get('c_id')
+    c_id = session.get('c_id')
 
     status, info = order.get_order_by_cid(c_id)
     if ret['status'] == 'Success':
@@ -33,6 +33,7 @@ def get_orders_by_cid():
              'p_name': i[8], 'p_author': i[9], "c_name": i[11]}) for i in info]
     else:
         ret['msg'] = info
+    print ret
     return json.dumps(ret, ensure_ascii=False)
 
 
