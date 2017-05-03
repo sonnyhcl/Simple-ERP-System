@@ -42,7 +42,8 @@ class Transactions(object):
         conn = sqlite3.connect("demo.db")
         param = (t_id,)
         try:
-            response = conn.execute('SELECT * FROM transactions WHERE t_id = ?;', param)
+            response = conn.execute(
+                'SELECT * FROM transactions WHERE t_id = ?;', param)
             origin = response.fetchall()[0]
             origin = list(origin)
             if t_amount is not None:
@@ -55,7 +56,8 @@ class Transactions(object):
             param = tuple(origin) + (t_id,)
             conn.execute(
                 'UPDATE transactions '
-                'SET t_id = ?, t_amount = ?, t_timestamp = ?, t_note = ?, m_id = ?'
+                'SET t_id = ?, t_amount = ?, t_timestamp = ?, '
+                't_note = ?, m_id = ?'
                 'WHERE t_id = ?;',
                 param)
         except Exception:
@@ -67,11 +69,11 @@ class Transactions(object):
 
     def get_transactions(self, t_id):
         conn = sqlite3.connect("demo.db")
-
         param = (t_id,)
         try:
-            response = conn.execute('SELECT * FROM transactions WHERE t_id = ?;',
-                                    param)
+            response = conn.execute(
+                'SELECT * FROM transactions WHERE t_id = ?;',
+                param)
             response = response.fetchall()
         except Exception:
             conn.close()
@@ -80,33 +82,46 @@ class Transactions(object):
         return "Success", response
 
     def get_transactions_by_cid(self, c_id):
-        # TODO
         conn = sqlite3.connect("demo.db")
+        if c_id == 0:
+            try:
+                response = conn.execute('SELECT * '
+                                        'FROM transactions, mission, orders, '
+                                        'product, user, community, item '
+                                        'WHERE transactions.m_id = mission.m_id'
+                                        ' AND mission.o_id = orders.o_id '
+                                        'AND mission.u_id = user.u_id '
+                                        'AND mission.i_id = item.i_id '
+                                        'AND orders.p_id = product.p_id '
+                                        'AND orders.c_id = community.c_id;')
+                response = response.fetchall()
+            except Exception:
+                conn.close()
+                return "Fail", traceback.print_exc()
+        else:
+            param = (c_id,)
+            try:
+                response = conn.execute('SELECT * '
+                                        'FROM transactions, mission, orders, '
+                                        'product, user, community, item '
+                                        'WHERE transactions.m_id = mission.m_id'
+                                        ' AND mission.o_id = orders.o_id '
+                                        'AND mission.u_id = user.u_id '
+                                        'AND mission.i_id = item.i_id '
+                                        'AND orders.p_id = product.p_id '
+                                        'AND orders.c_id = community.c_id '
+                                        'AND orders.c_id = ?;',
+                                        param)
+                response = response.fetchall()
+            except Exception:
+                conn.close()
+                return "Fail", traceback.print_exc()
 
-        param = (c_id,)
-        try:
-            response = conn.execute('SELECT * '
-                                    'FROM transactions, mission, orders, '
-                                    'product, user, community, item '
-                                    'WHERE transactions.m_id = mission.m_id '
-                                    'AND mission.o_id = orders.o_id '
-                                    'AND mission.u_id = user.u_id '
-                                    'AND mission.i_id = item.i_id '
-                                    'AND orders.p_id = product.p_id '
-                                    'AND orders.c_id = community.c_id '
-                                    'AND orders.c_id = ?;',
-                                    param)
-            response = response.fetchall()
-        except Exception:
-            conn.close()
-            return "Fail", traceback.print_exc()
         conn.close()
         return "Success", response
 
     def get_transactions_by_uid(self, u_id):
-        # TODOg
         conn = sqlite3.connect("demo.db")
-
         param = (u_id,)
         try:
             response = conn.execute('SELECT * '

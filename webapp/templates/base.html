@@ -185,6 +185,8 @@
 <script src="http://cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
 
 <!--设置readonly操作-->
+<!--TODO 不能光光用readonly来控制权限，最好还是没有权限的就看不到对应控制按钮-->
+<!--次好的是没有权限的点击按钮弹出一个警告弹窗-->
 <script type="text/javascript">
     function set_readOnly(id) {
         document.getElementById(id).readOnly = true;

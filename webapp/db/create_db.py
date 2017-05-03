@@ -170,7 +170,7 @@ conn.execute(
     INSERT INTO user(u_id, u_name, u_role, u_password, u_phone, c_id)
     VALUES  (0, 'hcl',     'root',     'hcl',  '12345678910',   0),
             (1, 'admin',   'admin',    'admin','12345678910',   1),
-            (2, 'user',    'user',     'uer',  '12345678910',   1),
+            (2, 'user',    'user',     'user',  '12345678910',   1),
             (3, '管理员',   'admin',    'admin','12345678910',   2),
             (4, '用户',     'user',     'user', '12345678910',   2),
             (5, 'root',    'root',     'root', 'rootphone',     0);
@@ -204,7 +204,7 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO orders(o_amount, o_money, p_id, c_id)
-    VALUES (10, 1000, 1, 0),(20, 20000, 2, 0);
+    VALUES (10, 1000, 1, 1),(20, 20000, 2, 2);
 """
 )
 
