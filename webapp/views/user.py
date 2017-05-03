@@ -54,7 +54,9 @@ def get_users_by_cid():
     d = {'root': u"主管理员", 'admin': u"管理员", 'user': u"员工"}
     if status == "Success":
         _ = [ret['data'].append({'u_id': i[0], 'u_name': i[1], "u_role": i[2],
-                                 "u_phone": i[4], 'c_id': i[5]}) for i in info]
+                                 "u_phone": i[4], 'c_id': i[5]})
+             for i in info if i[2] == 'root' or i[2] != 'admin']
+
         for r in ret['data']:
             r['c_name'] = community.get_community_by_cid(r['c_id'])[1][0][1]
             r['u_role'] = d[r['u_role']]
@@ -107,6 +109,6 @@ def delete_user():
     """
     u_id = request.form.get('u_id')
     if u_id == session['u_id']:
-        return "Fail"
+        return "Fail", "can't modify yourself"
     status = user.delete_user(u_id)
     return json.dumps(status)
