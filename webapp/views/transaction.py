@@ -100,9 +100,9 @@ def modify_transaction():
     """
     ret = {"status": "Success", "msg": "error_msg"}
 
-    # TODO: 流水的人员与任务信息不可修改，前端传回的参数只有t_id, t_amount, t_note
+    # TODO: 流水的人员与任务信息不可修改
+    # 前端传回的参数只有t_id, t_amount, t_note
     t_id = request.form.get('t_id')
-    # m_id = request.form.get('m_id')
     t_amount = request.form.get('t_amount')
     t_note = request.form.get('t_note')
     ret['status'], ret['msg'] = \
