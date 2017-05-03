@@ -38,19 +38,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">任务数量</label>
-                            <div class="col-lg-6">
-                                <input size="16" id="t_amount_miss" type="text" value="" placeholder="任务数量"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
-                                       data-toggle="popover" data-trigger="focus"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label class="col-lg-3 control-label">添加数量</label>
                             <div class="col-lg-6">
                                 <input size="16" id="t_amount" type="text" value="" placeholder="添加数量"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
@@ -59,7 +51,8 @@
                             <label class="col-lg-3 control-label">添加备注</label>
                             <div class="col-lg-6">
                                 <input size="16" id="t_note" type="text" value="" placeholder="备注"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
@@ -85,7 +78,8 @@
                 </div>
                 <div class="modal-body">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='confirm-del-button_trans' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
+                    <button id='confirm-del-button_trans' autofocus type="button" class="btn btn-danger" onclick="">确认
+                    </button>
                 </div>
             </div>
         </div>
@@ -180,16 +174,18 @@
                         transactions[i].p_name,
                         transactions[i].i_name,
                         transactions[i].i_note,
-                        transactions[i].m_amount,
+                        transactions[i].t_amount,
                         transactions[i].i_unit_price,
                         transactions[i].t_amount * transactions[i].i_unit_price,
                         transactions[i].t_timestamp.substring(0, 10),
                         transactions[i].c_name,
                         transactions[i].u_name,
                         transactions[i].t_note,
-                        "<button href='#alterTrans' data-toggle='modal' onclick='modify_trans(" +
-                        transactions[i].t_id + ")' class='btn btn-sm btn-default' type='button'> " +
+                        // 修改
+                        "<button href='#alterTrans' data-toggle='modal' " + "id='modify-transaction-btn_"+transactions[i].t_id+"' "+
+                        "onclick='modify_trans(" + transactions[i].t_id + ")' class='btn btn-sm btn-default' type='button'> " +
                         "<i class='fa fa-pencil'></i></button>" + "  " +
+                        // 删除
                         "<button href='#confirmDeleteModal_trans' data-toggle='modal' onclick='delete_trans( " +
                         transactions[i].t_id + ")' class='btn btn-sm btn-danger' type='button'>" +
                         "<i class='fa fa-trash'></i></button>"
@@ -206,21 +202,43 @@
             }
         }, 'json');
 
-        $.post('/mission/table', function (ret) {
-            var missions = ret.data;
-        }, 'json')
     });
 
 
     function getMissions(uid) {
         //clear
-        var target = document.getElementById('t_user_table');
-        target.options.length = 0;
+        var target_miss = document.getElementById('t_miss_table');
+        target_miss.options.length = 0;
         if (uid == '请选择') {
-            target.options.add(new Option('- 请选择 -', '请选择'));
+            target_miss.options.add(new Option('- 请选择 -', '请选择'));
         }
-
-
+        var raw_missions, missions = [];
+        var mids = [];
+        $.post('/mission/table', function (ret) {
+            raw_missions = ret.data;
+            // 根据uid获得mid
+            for (var ui = 0; ui < raw_missions.length; ui++) {
+                if (raw_missions[ui].u_id == uid) {
+                    mids.push(raw_missions[ui].m_id);
+                }
+            }
+            // 根据mid得到条目
+            for (var mi = 0; mi < raw_missions.length; mi++) {
+                for (var mid = 0; mid < mids.length; mid++)
+                    if (raw_missions[mi].m_id == mids[mid]) {
+                        missions.push(raw_missions[mi]);
+                        break;
+                    }
+            }
+            console.log(missions);
+            if (missions.length == 0) {
+                target_miss.options.add(new Option('- 请选择 -', '请选择'));
+            }
+            for (var ki = 0; ki < missions.length; ki++) {
+                target_miss.options.add(new Option(missions[ki].o_id + '-' +
+                    missions[ki].p_name + '-' + missions[ki].i_name, missions[ki].m_id));
+            }
+        }, 'json');
     }
 
 
@@ -245,7 +263,6 @@
         console.log("add transaction");
         $("#t_amount").val("");
         $('#t_note').val("");
-        set_readOnly('t_amount_miss');
         $("#myModalLabel_trans").text("添加流水信息");
         $("#yes_btn_trans").attr('onclick', 'confirm_add_trans()');
     }
@@ -257,45 +274,40 @@
             return;
         }
         $.post("/transaction/add", {
-            't_id': tid,
-            't_amount': $('#t_amount').val(),
-            't_note': $('#t_note').val()
+            'm_id': $('#t_miss_table'),
+            't_amount':$('#t_amount').val(),
+            't_note':$('#t_note').val()
         }, function (ret) {
             console.log(ret);
             location.href = '/transaction';
         });
     }
 
-
     function modify_trans(id) {
         console.log("modify it");
-        set_readOnly('t_amount_miss');
-        $.post("/transaction/" + id, function (ret) {
-            console.log(ret);
-            data = ret.data;
-            $("#t_name").val(data.u_name);
-            $("#t_phone").val(data.u_phone);
-            $("#t_role").val(data.u_role);
-            $("#t_community").val(data.c_id);
-            $("#myModalLabel_trans").text("修改流水信息");
-            $("#yes_btn_trans").attr('onclick', 'confirm_modify_trans(' + id + ')');
-        }, 'json');
+        tamount = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[5].innerText;
+        tnote = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[11].innerText;
+        $("#t_amount").val(tamount);
+        $("#t_note").val(tnote);
+        $("#myModalLabel_trans").text("修改流水信息");
+        $("#yes_btn_trans").attr('onclick', 'confirm_modify_trans(' + id + ')');
     }
 
 
     function confirm_modify_trans(t_id) {
-        console.log("confirm_modify_trans:" + id);
+        console.log("confirm_modify_trans:" + t_id);
         if (!check_value($("#t_user_table").val(), $("#t_miss_table").val(), $('#t_amount').val())) {
             return;
         }
+        console.log('mid: '+ $('#t_miss_table').val());
         $.post("/transaction/modify", {
             't_id': t_id,
-            'm_id': mid,
-            't_amount': tamount,
-            't_note': tnote
+            'm_id': $('#t_miss_table').val(),
+            't_amount': $('#t_amount').val(),
+            't_note': $('#t_note').val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/user';
+            location.href = '/transaction';
         });
     }
 
