@@ -51,6 +51,7 @@ def get_transaction_table():
                  'c_name': i[28],
                  'i_name': i[31],
                  'i_note': i[34],
+                 'i_ref_time': i[33],
                  'i_unit_price': i[32]
                  }) for i in info]
         else:
@@ -65,9 +66,9 @@ def get_transaction_table():
                  'o_timestamp': i[14], 'o_note': i[15], 'p_id': i[16],
                  'p_name': i[19], 'p_author': i[20], 'u_name': i[22],
                  'u_role': i[23], 'c_name': i[28], 'i_name': i[31],
-                 'i_note': i[34],
-                 'i_unit_price': i[32]
+                 'i_note': i[34], 'i_ref_time': i[33], 'i_unit_price': i[32]
                  }) for i in info]
+            print ret
         else:
             ret['msg'] = info
 
