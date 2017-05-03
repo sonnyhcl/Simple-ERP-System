@@ -121,7 +121,7 @@
     $(document).ready(function () {
         var doc_table;
         console.log('document ready');
-        $.post('/mission/table', {"c_id": cid},
+        $.post('/mission/table',
             function (ret) {
                 doc_table = $('#m_table').dataTable({
                     "aoColumns": [

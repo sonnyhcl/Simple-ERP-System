@@ -24,7 +24,8 @@ def get_mission_by_cid():
     :return: 
     """
     ret = {"data": [], "status": 'Success', "msg": ""}
-    c_id = request.form.get('c_id')
+    # c_id = request.form.get('c_id')
+    c_id = session.get('c_id')
     status, info = mission.get_mission_by_cid(c_id)
     if status == "Success":
         _ = [ret['data'].append(
