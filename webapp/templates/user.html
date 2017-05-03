@@ -113,9 +113,12 @@
             function (ret) {
                 doc_table = $('#user_table').dataTable({
                     "aoColumns": [
-                        {"sTitle": "社区"},
+                        {"sTitle": "社区名"},
                         {"sTitle": "姓名"},
-                        {"sTitle": "身份"},
+                        {
+                            "width": "7%",
+                            "sTitle": "身份"
+                        },
                         {"sTitle": "联系方式"},
                         {
                             "width": "12%",

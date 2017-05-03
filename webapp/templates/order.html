@@ -117,15 +117,21 @@
             function (ret) {
                 doc_table = $('#o_table').dataTable({
                     "aoColumns": [
-                        {"sTitle": "开单日期"},
                         {
-                            "sTitle": "订单号",
-                            "width": "10%"
+                            "width": "6%",
+                            "sTitle": "订单号"
+                        },
+                        {
+                            "width": "8%",
+                            "sTitle": "开单日期"
                         },
                         {"sTitle": "产品名称"},
                         {"sTitle": "设计师"},
-                        {"sTitle": "社区"},
-                        {"sTitle": "数量"},
+                        {"sTitle": "社区名"},
+                        {
+                            "width": "6%",
+                            "sTitle": "数量"
+                        },
                         {"sTitle": "备注"},
                         {
                             "width": "12%",
@@ -162,8 +168,8 @@
                 for (var i in orders) {
                     console.log(orders[i]);
                     doc_table.fnAddData([
-                        orders[i].o_timestamp.substring(0, 10),
                         orders[i].o_id,
+                        orders[i].o_timestamp.substring(0, 10),
                         orders[i].p_name,
                         orders[i].p_author,
                         orders[i].c_name,

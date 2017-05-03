@@ -26,11 +26,12 @@ def get_mission_by_cid():
     ret = {"data": [], "status": 'Success', "msg": ""}
     c_id = session.get('c_id')
     status, info = mission.get_mission_by_cid(c_id)
+    print info
     if status == "Success":
         _ = [ret['data'].append(
             {'m_id': i[0], 'm_amount': i[1], 'm_note': i[2],
-             'u_id': i[3], "i_id": i[4], "o_id": i[5], 'u_name': i[23],
-             'p_name': i[14], 'i_name': i[17]}) for i in info]
+             'u_id': i[3], "i_id": i[4], "o_id": i[6], "o_amount": i[7],
+             'u_name': i[23], 'p_name': i[14], 'i_name': i[17]}) for i in info]
     else:
         ret['msg'] = info
 

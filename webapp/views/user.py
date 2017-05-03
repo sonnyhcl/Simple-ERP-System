@@ -55,7 +55,7 @@ def get_users_by_cid():
     if status == "Success":
         _ = [ret['data'].append({'u_id': i[0], 'u_name': i[1], "u_role": i[2],
                                  "u_phone": i[4], 'c_id': i[5]})
-             for i in info if i[2] == 'root' or i[2] != 'admin']
+             for i in info if cid == 0 or i[2] != 'admin']
 
         for r in ret['data']:
             r['c_name'] = community.get_community_by_cid(r['c_id'])[1][0][1]
