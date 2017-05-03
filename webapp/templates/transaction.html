@@ -5,60 +5,69 @@
 {% block content %}
 <div class="container">
     <!-- 增改弹窗模板 -->
-    <div class="modal fade" id="alterUser"
-         role="dialog" aria-labelledby="user_ModalLabel" aria-hidden="true">
+    <div class="modal fade" id="alterTrans"
+         role="dialog" aria-labelledby="trans_ModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel_tran">标题</h4>
+                    <h4 class="modal-title" id="myModalLabel_trans">标题</h4>
                 </div>
 
-                <div class="modal-body" id="myModalBody_user">
+                <div class="modal-body" id="myModalBody_trans">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">名字</label>
+                            <label class="col-lg-3 control-label">选择人员</label>
                             <div class="col-lg-6">
-                                <input size="16" id="t_name" type="text" value="" placeholder="名字"
+                                <!-- 表格 -->
+                                <select id="t_user_table" onchange="getMissions(this.options[this.selectedIndex].value)"
+                                        class="form-control input-sm" style="color:#666666"
+                                        data-content="不能为空"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">选择任务</label>
+                            <div class="col-lg-6">
+                                <!-- 表格 -->
+                                <select id="t_miss_table" class="form-control input-sm"
+                                        style="color:#666666" data-content="不能为空">
+                                    <option value="请选择">- 请选择 -</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">任务数量</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="t_amount_miss" type="text" value="" placeholder="任务数量"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">手机</label>
+                            <label class="col-lg-3 control-label">添加数量</label>
                             <div class="col-lg-6">
-                                <input size="16" id="t_phone" type="text" value="" placeholder="手机号码"
+                                <input size="16" id="t_amount" type="text" value="" placeholder="添加数量"
                                        class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">社区</label>
+                            <label class="col-lg-3 control-label">添加备注</label>
                             <div class="col-lg-6">
-                                <select id="t_community" class="form-control input-sm" style="color:#666666">
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">身份</label>
-                            <div class="col-lg-6">
-                                <select id="t_role" class="form-control input-sm" style="color:#666666">
-                                    {% if session['u_role'] == 'root' %}
-                                    <option value="root">主管理员</option>
-                                    <option value="admin">社区管理员</option>
-                                    {% endif %}
-                                    <option value="user">普通用户</option>
-                                </select>
+                                <input size="16" id="t_note" type="text" value="" placeholder="备注"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                       data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="no_btn_tran" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="yes_btn_tran" class="btn btn-danger" onclick="">确定</button>
+                    <button type="button" id="no_btn_trans" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" id="yes_btn_trans" class="btn btn-danger" onclick="">确定</button>
                 </div>
             </div>
         </div>
@@ -66,17 +75,17 @@
 
     <!-- 删除弹窗模版 -->
     {% if session['u_role'] == 'root' %}
-    <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_user" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel_tran">
+    <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_trans" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel_trans">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">确认删除该人员信息？</h4>
+                    <h4 class="modal-title">确认删除该条流水？</h4>
                 </div>
                 <div class="modal-body">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='confirm-del-button_tran' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
+                    <button id='confirm-del-button_trans' autofocus type="button" class="btn btn-danger" onclick="">确认</button>
                 </div>
             </div>
         </div>
@@ -90,8 +99,8 @@
             <h3 id="transaction_manage_title">流水管理系统</h3>
             <br>
             <!-- 添加按钮 -->
-            <a id="add_user" href="#alterUser" role="button" data-toggle="modal"
-               onclick="add_it()" class="btn btn-sm btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加流水</a>
+            <a id="add_trans" href="#alterTrans" role="button" data-toggle="modal"
+               onclick="add_trans()" class="btn btn-sm btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加流水</a>
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="t_table" width="100%">
@@ -173,110 +182,137 @@
                         transactions[i].i_note,
                         transactions[i].m_amount,
                         transactions[i].i_unit_price,
-                        transactions[i].m_amount * transactions[i].i_unit_price,
+                        transactions[i].t_amount * transactions[i].i_unit_price,
                         transactions[i].t_timestamp.substring(0, 10),
                         transactions[i].c_name,
                         transactions[i].u_name,
                         transactions[i].t_note,
-                        "<button href='#alterUser' data-toggle='modal' onclick='modify_it(" +
-                        transactions[i].u_id + ")' class='btn btn-sm btn-default' type='button'> " +
+                        "<button href='#alterTrans' data-toggle='modal' onclick='modify_trans(" +
+                        transactions[i].t_id + ")' class='btn btn-sm btn-default' type='button'> " +
                         "<i class='fa fa-pencil'></i></button>" + "  " +
-                        "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_it( " +
-                        transactions[i].u_id + ")' class='btn btn-sm btn-danger' type='button'>" +
+                        "<button href='#confirmDeleteModal_trans' data-toggle='modal' onclick='delete_trans( " +
+                        transactions[i].t_id + ")' class='btn btn-sm btn-danger' type='button'>" +
                         "<i class='fa fa-trash'></i></button>"
                     ])
                 }
             }, 'json');
         var cid = $("#get_c_id").attr("value");
-        $.post('/community/table/' + cid, function (ret) {
-            var communities = ret.data;
-            for (var i in communities) {
-                $('#t_community').append('<option value="' + communities[i].c_id + '">' + communities[i].c_name + '</option>');
+
+        $.post('/user/table', function (ret) {
+            var users = ret.data;
+            console.log(users);
+            for (var i in users) {
+                $('#t_user_table').append('<option value="' + users[i].u_id + '">' + users[i].u_name + '</option>');
             }
+        }, 'json');
+
+        $.post('/mission/table', function (ret) {
+            var missions = ret.data;
         }, 'json')
     });
 
-    function check_value(name, phone) {
-        if (name === "") {
-            $('#t_name').popover('show');
+
+    function getMissions(uid) {
+        //clear
+        var target = document.getElementById('t_user_table');
+        target.options.length = 0;
+        if (uid == '请选择') {
+            target.options.add(new Option('- 请选择 -', '请选择'));
+        }
+
+
+    }
+
+
+    function check_value(name, mission, amount) {
+        if (name === "请选择") {
+            $('#t_user_table').popover('show');
             return (false);
         }
-        if (phone === "") {
-            $('#t_phone').popover('show');
+        if (mission === "") {
+            $('#t_miss_table').popover('show');
+            return (false);
+        }
+        if (amount === "") {
+            $('#t_amount').popover('show');
             return (false);
         }
         return (true);
     }
 
-    function add_it() {
-        console.log("add it");
-        $("#t_name").val("");
-        $("#t_community").val("");
-        $("#t_phone").val("");
-        $("#t_role").val("");
-        $("#myModalLabel_tran").text("添加人员信息");
-        $("#yes_btn_tran").attr('onclick', 'confirm_add_member_user()');
+
+    function add_trans() {
+        console.log("add transaction");
+        $("#t_amount").val("");
+        $('#t_note').val("");
+        set_readOnly('t_amount_miss');
+        $("#myModalLabel_trans").text("添加流水信息");
+        $("#yes_btn_trans").attr('onclick', 'confirm_add_trans()');
     }
 
-    function confirm_add_member_user() {
-        console.log('confirm_add_member_user');
-        if (!check_value($("#t_name").val(), $("#t_phone").val())) {
+
+    function confirm_add_trans() {
+        console.log('confirm_add_trans');
+        if (!check_value($("#t_user_table").val(), $("#t_miss_table").val(), $('#t_amount').val())) {
             return;
         }
-        $.post("/user/add", {
-            'u_name': $("#t_name").val(),
-            'u_phone': $("#t_phone").val(),
-            'c_id': $("#t_community").val(),
-            'u_role': $("#t_role").val()
+        $.post("/transaction/add", {
+            't_id': tid,
+            't_amount': $('#t_amount').val(),
+            't_note': $('#t_note').val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/user';
+            location.href = '/transaction';
         });
     }
 
-    function modify_it(id) {
+
+    function modify_trans(id) {
         console.log("modify it");
-        $.post("/user/" + id, function (ret) {
+        set_readOnly('t_amount_miss');
+        $.post("/transaction/" + id, function (ret) {
             console.log(ret);
             data = ret.data;
             $("#t_name").val(data.u_name);
             $("#t_phone").val(data.u_phone);
             $("#t_role").val(data.u_role);
             $("#t_community").val(data.c_id);
-            $("#myModalLabel_user").text("修改人员信息");
-            $("#yes_btn_tran").attr('onclick', 'confirm_modify_member_user(' + id + ')');
+            $("#myModalLabel_trans").text("修改流水信息");
+            $("#yes_btn_trans").attr('onclick', 'confirm_modify_trans(' + id + ')');
         }, 'json');
     }
 
-    function confirm_modify_member_user(id) {
-        console.log("confirm_modify_member_user:" + id);
-        if (!check_value($("#t_name").val(), $("#t_phone").val())) {
+
+    function confirm_modify_trans(t_id) {
+        console.log("confirm_modify_trans:" + id);
+        if (!check_value($("#t_user_table").val(), $("#t_miss_table").val(), $('#t_amount').val())) {
             return;
         }
-        $.post("/user/modify", {
-            'u_id': id,
-            'u_name': $("#t_name").val(),
-            'u_phone': $("#u_phone").val(),
-            'c_id': $("#u_community").val(),
-            'u_role': $("#u_role").val()
+        $.post("/transaction/modify", {
+            't_id': t_id,
+            'm_id': mid,
+            't_amount': tamount,
+            't_note': tnote
         }, function (ret) {
             console.log(ret);
             location.href = '/user';
         });
     }
 
-    function delete_it(id) {
-        console.log("delete it");
-        $('#confirm-del-button_user').attr('onclick', 'confirm_del_member_user(' + id + ')');
+
+    function delete_trans(id) {
+        console.log("delete transaction");
+        $('#confirm-del-button_trans').attr('onclick', 'confirm_del_trans(' + id + ')');
     }
 
-    function confirm_del_member_user(id) {
-        console.log("confirm_del_member_user:" + id);
-        $.post("/user/delete", {
-            'u_id': id
+
+    function confirm_del_trans(id) {
+        console.log("confirm_del_trans:" + id);
+        $.post("/transaction/delete", {
+            't_id': id
         }, function (ret) {
             console.log(ret);
-            location.href = '/user';
+            location.href = '/transaction';
         })
     }
 </script>

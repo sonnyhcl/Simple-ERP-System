@@ -4,6 +4,7 @@ from flask import render_template, request
 from webapp import app
 from auth.login_required import login_required
 from db.db_transaction import transaction
+
 __author__ = 'sonnyhcl'
 
 
@@ -49,10 +50,19 @@ def get_transaction_by_cid():
     ret = {"data": [], "status": 'Success', "msg": ""}
 
     ret['data'] = [
-        {'o_timestamp': '2017-04-25 11:38:35', 'o_id': 1, 'c_name': '社区A',
-         'p_name': "产品A", 'i_name': '产品A的工艺1', 'i_note': '无',
-         'm_amount': 10, 'i_unit_price': 100,
-         't_timestamp': '2017-04-25 11:38:35', 'u_name': 'hcl', 't_note': '无'}
+        {
+            # t_id, u_id, c_id, m_id, etc.
+            'o_timestamp': '2017-04-25 11:38:35',
+            'o_id': 1,
+            'c_name': '社区A',
+            'p_name': "产品A",
+            'i_name': '产品A的工艺1',
+            'i_note': '无',
+            't_amount': 10,
+            'i_unit_price': 100,
+            't_timestamp': '2017-04-25 11:38:35',
+            'u_name': 'hcl',
+            't_note': '无'}
     ]
     # TODO
     # c_id = request.form.get('c_id')
