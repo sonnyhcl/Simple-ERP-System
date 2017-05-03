@@ -66,6 +66,69 @@
         </div>
     </div>
 
+    <!--修改弹窗-->
+    <!--偷懒一波23333-->
+    <div class="modal fade" id="modifyTrans"
+         role="dialog" aria-labelledby="trans_ModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel_trans_modify">标题</h4>
+                </div>
+
+                <div class="modal-body" id="myModalBody_trans_modify">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">当前人员</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="t_user_modify" type="text" value="" placeholder="人员"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0" readonly="readonly"
+                                       data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">当前任务</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="t_mission_modify" type="text" value="" placeholder="任务"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0" readonly="readonly"
+                                       data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">修改数量</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="t_amount_modify" type="text" value="" placeholder="修改数量"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0"
+                                       data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">修改备注</label>
+                            <div class="col-lg-6">
+                                <input size="16" id="t_note_modify" type="text" value="" placeholder="修改备注"
+                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       tabindex="0"
+                                       data-toggle="popover" data-trigger="focus"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="no_btn_trans_modify" class="btn btn-primary" data-dismiss="modal">取消
+                    </button>
+                    <button type="button" id="yes_btn_trans_modify" class="btn btn-danger" onclick="">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 删除弹窗模版 -->
     {% if session['u_role'] == 'root' %}
     <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_trans" tabindex="-1" role="dialog"
@@ -182,7 +245,7 @@
                         transactions[i].u_name,
                         transactions[i].t_note,
                         // 修改
-                        "<button href='#alterTrans' data-toggle='modal' " + "id='modify-transaction-btn_"+transactions[i].t_id+"' "+
+                        "<button href='#modifyTrans' data-toggle='modal' " + "id='modify-transaction-btn_" + transactions[i].t_id + "' " +
                         "onclick='modify_trans(" + transactions[i].t_id + ")' class='btn btn-sm btn-default' type='button'> " +
                         "<i class='fa fa-pencil'></i></button>" + "  " +
                         // 删除
@@ -275,8 +338,8 @@
         }
         $.post("/transaction/add", {
             'm_id': $('#t_miss_table'),
-            't_amount':$('#t_amount').val(),
-            't_note':$('#t_note').val()
+            't_amount': $('#t_amount').val(),
+            't_note': $('#t_note').val()
         }, function (ret) {
             console.log(ret);
             location.href = '/transaction';
@@ -285,26 +348,33 @@
 
     function modify_trans(id) {
         console.log("modify it");
+        // readonly
+        tuser = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[10].innerText;
+        tmission = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[1].innerText + '-' +
+            $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[2].innerText + '-' +
+            $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[3].innerText;
+        // alterable
         tamount = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[5].innerText;
         tnote = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[11].innerText;
-        $("#t_amount").val(tamount);
-        $("#t_note").val(tnote);
-        $("#myModalLabel_trans").text("修改流水信息");
+
+        $("#t_amount_modify").val(tamount);
+        $('#t_mission_modify').val(tmission);
+        $('#t_user_modify').val(tuser);
+        $("#t_note_modify").val(tnote);
+        $("#myModalLabel_trans_modify").text("修改流水信息");
         $("#yes_btn_trans").attr('onclick', 'confirm_modify_trans(' + id + ')');
     }
 
 
     function confirm_modify_trans(t_id) {
         console.log("confirm_modify_trans:" + t_id);
-        if (!check_value($("#t_user_table").val(), $("#t_miss_table").val(), $('#t_amount').val())) {
+        if (!check_value($("#t_user_modify").val(), $("#t_mission_modify").val(), $('#t_amount_modify').val())) {
             return;
         }
-        console.log('mid: '+ $('#t_miss_table').val());
         $.post("/transaction/modify", {
             't_id': t_id,
-            'm_id': $('#t_miss_table').val(),
-            't_amount': $('#t_amount').val(),
-            't_note': $('#t_note').val()
+            't_amount': $('#t_amount_modify').val(),
+            't_note': $('#t_note_modify').val()
         }, function (ret) {
             console.log(ret);
             location.href = '/transaction';
