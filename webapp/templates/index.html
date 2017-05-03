@@ -3,61 +3,60 @@
 {%  set selected_menu = "index" %}
 
 {% block content %}
-<div class="container">
-    <div class="col-md-12 column" style="background-color: white">
+<div class="row clearfix">
+    <div class="col-md-12 row jumbotron" style="margin-bottom: 0;padding-top: 20px;padding-bottom: 20px">
         <div class="col-md-4 column">
             <!--未来这里可以用来放微信头像-->
             {% if session['u_role'] == 'user' %}
-            <i class="fa fa-user fa-5x fa-fw" aria-hidden="true"></i>
+            <i class="fa fa-user fa-4x fa-fw" aria-hidden="true"></i>
             {% elif session['u_role'] == 'admin' %}
-            <i class="fa fa-user-circle fa-5x fa-fw" aria-hidden="true"></i>
+            <i class="fa fa-user-circle fa-4x fa-fw" aria-hidden="true"></i>
             {% elif session['u_role'] == 'root' %}
-            <i class="fa fa-user-md fa-5x fa-fw" aria-hidden="true"></i>
+            <i class="fa fa-user-md fa-4x fa-fw" aria-hidden="true"></i>
             {% endif %}
         </div>
 
-        <div class="col-md-6 row">
-            <div class="col-md-4">
-                <h4 align="left"><i class="fa fa-id-card fa-fw"></i>
-                    {{ user_info.u_name }}</h4>
+        <div class="col-md-8 column">
+            <div class="col-md-12 column">
+                <div class="col-md-5">
+                    <h4 align="left"><i class="fa fa-id-card fa-fw"></i>
+                        {{ user_info.u_name }}</h4>
+                </div>
+                <div class="col-md-5">
+                    <h4 align="left"><i class="fa fa-address-card fa-fw"></i>
+                        {{ user_info.u_role }}</h4>
+                </div>
             </div>
-            <div class="col-md-4">
-                <h4 align="left"><i class="fa fa-address-card fa-fw"></i>
-                    {{ user_info.u_role }}</h4>
-            </div>
-        </div>
-
-        <div class="col-md-6 row">
-            <div class="col-md-4">
-                <h4 align="left"><i class="fa fa-users fa-fw"></i>
-                    {{ user_info.c_name }}</h4>
-            </div>
-            <div class="col-md-4">
-                <h4 align="left"><i class="fa fa-phone fa-fw"></i>
-                    {{ user_info.u_phone }}</h4>
+            <div class="col-md-12 column">
+                <div class="col-md-5">
+                    <h4 align="left"><i class="fa fa-users fa-fw"></i>
+                        {{ user_info.c_name }}</h4>
+                </div>
+                <div class="col-md-5">
+                    <h4 align="left"><i class="fa fa-phone fa-fw"></i>
+                        {{ user_info.u_phone }}</h4>
+                </div>
             </div>
         </div>
     </div>
-
-    <br>
-    <hr>
-    <div class="col-md-12 column">
-        <h1>这一页先不做，后面把流水页的内容迁移过来</h1>
-    </div>
-    <!--&lt;!&ndash; 时间筛选器&ndash;&gt;-->
-    <!--<div align="center">-->
-    <!--从<input type="month" value="2017-01">到<input type="month" value="2017-01">-->
-    <!--</div>-->
-
-    <!-- TODO: 个人流水表格 -->
-    <!--<table class="table table-bordered table-striped table-hover" cellspacing="0"-->
-    <!--id="i_table" width="100%">-->
-    <!--</table>-->
-    <!-- 表格 -->
-    <table class="table table-bordered table-striped table-hover" cellspacing="0"
-           id="index_table" width="100%">
-    </table>
 </div>
+<hr>
+<div class="col-md-12 column">
+    <h1>这一页先不做，后面把流水页的内容迁移过来</h1>
+</div>
+<!--&lt;!&ndash; 时间筛选器&ndash;&gt;-->
+<!--<div align="center">-->
+<!--从<input type="month" value="2017-01">到<input type="month" value="2017-01">-->
+<!--</div>-->
+
+<!-- TODO: 个人流水表格 -->
+<!--<table class="table table-bordered table-striped table-hover" cellspacing="0"-->
+<!--id="i_table" width="100%">-->
+<!--</table>-->
+<!-- 表格 -->
+<table class="table table-bordered table-striped table-hover" cellspacing="0"
+       id="index_table" width="100%">
+</table>
 
 {% endblock content %}
 
