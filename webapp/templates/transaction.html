@@ -352,7 +352,10 @@
             't_note': $('#t_note').val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/transaction';
+            if(ret.status == "Success") {
+                location.href = '/transaction';
+            }
+            alert(ret.msg);
         }, 'json');
     }
 
@@ -387,7 +390,10 @@
             't_note': $('#t_note_modify').val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/transaction';
+            if(ret.status == "Success") {
+                location.href = '/transaction';
+            }
+            alert(ret.msg);
         }, 'json');
     }
 
@@ -404,8 +410,11 @@
             't_id': id
         }, function (ret) {
             console.log(ret);
-            location.href = '/transaction';
-        }, 'json')
+            if(ret.status == "Success") {
+                location.href = '/transaction';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 </script>
 

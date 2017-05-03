@@ -298,8 +298,11 @@
             'm_amount': $('#m_amount').val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/mission';
-        });
+            if(ret.status == "Success") {
+                location.href = '/mission';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 
 
@@ -332,8 +335,11 @@
             'm_amount': $('#m_amount').val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/mission';
-        });
+            if(ret.status == "Success") {
+                location.href = '/mission';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 
 
@@ -349,8 +355,11 @@
             'm_id': id
         }, function (ret) {
             console.log(ret);
-            location.href = '/mission';
-        })
+            if(ret.status == "Success") {
+                location.href = '/mission';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 </script>
 

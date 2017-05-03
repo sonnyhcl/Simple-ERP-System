@@ -210,7 +210,10 @@
             'u_role': $("#u_role").val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/user';
+            if(ret.status == "Success") {
+                location.href = '/user';
+            }
+            alert(ret.msg);
         }, 'json');
     }
 
@@ -241,8 +244,11 @@
             'u_role': $("#u_role").val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/user';
-        });
+            if(ret.status == "Success") {
+                location.href = '/user';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 
     function delete_user(id) {
@@ -256,8 +262,11 @@
             'u_id': id
         }, function (ret) {
             console.log(ret);
-            location.href = '/user';
-        })
+            if(ret.status == "Success") {
+                location.href = '/user';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 </script>
 

@@ -36,6 +36,7 @@ def get_user_by_uid(u_id):
                        'c_id': info[0][5]}
     else:
         ret['msg'] = info
+
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -62,6 +63,7 @@ def get_users_by_cid():
             r['u_role'] = d[r['u_role']]
     else:
         ret['msg'] = info
+
     return json.dumps(ret, ensure_ascii=False)
 
 
@@ -72,13 +74,16 @@ def add_user():
     添加用户{u_name, u_phone, u_role, c_id} 默认密码为'123456'
     :return: {"status": "Success", "msg":"error_msg"}
     """
+    ret = {"status": "Success", "msg": "error_msg"}
     u_name = request.form.get("u_name")
     u_phone = request.form.get("u_phone")
     u_role = request.form.get("u_role")
     c_id = request.form.get("c_id")
     u_password = '123456'
-    status = user.add_user(u_name, u_role, u_password, u_phone, c_id)
-    return json.dumps(status)
+    ret['status'], ret['msg'] = user.add_user(u_name, u_role, u_password,
+                                              u_phone, c_id)
+
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/user/modify', methods=['POST'])
@@ -89,15 +94,17 @@ def modify_user():
     :param cid:
     :return: {"status": "Success", "msg":"error_msg"}
     """
-
+    ret = {"status": "Success", "msg": "error_msg"}
     u_name = request.form.get("u_name")
     u_phone = request.form.get("u_phone")
     u_role = request.form.get("u_role")
     c_id = request.form.get("c_id")
     u_id = request.form.get("u_id")
-    status = user.update_user(u_id=u_id, u_name=u_name, u_role=u_role,
-                              u_phone=u_phone, c_id=c_id)
-    return json.dumps(status)
+    ret['status'], ret['msg'] = user.update_user(u_id=u_id, u_name=u_name,
+                                                 u_role=u_role, u_phone=u_phone,
+                                                 c_id=c_id)
+
+    return json.dumps(ret, ensure_ascii=False)
 
 
 @app.route('/user/delete', methods=['POST'])
@@ -107,8 +114,12 @@ def delete_user():
     删除用户
     :return: {"status": "Success", "msg":"error_msg"}
     """
+    ret = {"status": "Success", "msg": "error_msg"}
     u_id = request.form.get('u_id')
-    if u_id == session['u_id']:
-        return "Fail", "can't modify yourself"
-    status = user.delete_user(u_id)
-    return json.dumps(status)
+
+    if int(u_id) == session['u_id']:
+        ret['status'], ret['msg'] = "Fail", "can't modify yourself"
+    else:
+        ret['status'], ret['msg'] = user.delete_user(u_id)
+
+    return json.dumps(ret, ensure_ascii=False)

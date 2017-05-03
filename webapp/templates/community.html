@@ -180,7 +180,10 @@
             'u_id': $("#c_admin_table").val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/community';
+            if(ret.status == "Success") {
+                location.href = '/community';
+            }
+            alert(ret.msg);
         }, 'json');
     }
 
@@ -208,7 +211,10 @@
             'u_id': $("#c_admin_table").val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/community';
+            if(ret.status == "Success") {
+                location.href = '/community';
+            }
+            alert(ret.msg);
         }, 'json');
     }
 
@@ -223,8 +229,11 @@
             'c_id': id
         }, function (ret) {
             console.log(ret);
-            location.href = '/community';
-        }, 'json')
+            if(ret.status == "Success") {
+                location.href = '/community';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 </script>
 
