@@ -337,7 +337,7 @@
             return;
         }
         $.post("/transaction/add", {
-            'm_id': $('#t_miss_table'),
+            'm_id': $('#t_miss_table').val(),
             't_amount': $('#t_amount').val(),
             't_note': $('#t_note').val()
         }, function (ret) {
