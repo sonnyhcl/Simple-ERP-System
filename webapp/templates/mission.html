@@ -31,7 +31,6 @@
                                 <!-- 表格 -->
                                 <select id="m_item_table" class="form-control input-sm"
                                         style="color:#666666" data-content="不能为空">
-                                    <option value="请选择">- 请选择 -</option>
                                 </select>
                             </div>
                         </div>
@@ -64,7 +63,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" id="no-btn-prod" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" id="no_btn_miss" class="btn btn-primary" data-dismiss="modal">取消</button>
                     <button type="button" id="yes_btn_miss" class="btn btn-danger" onclick="">确定</button>
                 </div>
             </div>
@@ -134,7 +133,15 @@
                             "sTitle": "订单总数"
                         },
                         {"sTitle": "产品名"},
+                        {
+                            "sTitle": 'iid',
+                            "visible": false
+                        },
                         {"sTitle": "工艺名"},
+                        {
+                            "sTitle": "uid",
+                            "visible": false
+                        },
                         {"sTitle": "用户名"},
                         {
                             "width": "7%",
@@ -178,7 +185,9 @@
                         missions[i].o_id,
                         missions[i].o_amount,
                         missions[i].p_name,
+                        missions[i].i_id,
                         missions[i].i_name,
+                        missions[i].u_id,
                         missions[i].u_name,
                         missions[i].m_amount,
                         missions[i].m_note,
@@ -204,7 +213,6 @@
 
         $.post('/order/table', function (ret) {
             var orders = ret.data;
-            $('#m_order_table').append('<option value="请选择">- 请选择订单 -</option>');
             for (var i in orders) {
                 console.log(orders[i]);
                 $('#m_order_table').append('<option value="' + orders[i].o_id + '">订单号' +
@@ -218,12 +226,9 @@
         //clear
         var target = document.getElementById('m_item_table');
         target.options.length = 0;
-        if (oid == '请选择') {
-            target.options.add(new Option('- 请选择 -', '请选择'));
-        }
         var raw_items, items = [];
         var orders;
-        var cid = $("#get_c_id").attr("value");
+//        var cid = $("#get_c_id").attr("value");
         var pid = 0;
 
         $.post('/product/table', function (ret) {
@@ -254,11 +259,11 @@
 
 
     function check_value(order, item, user, amount) {
-        if (order === "请选择") {
+        if (order === "") {
             $('#m_order_table').popover('show');
             return (false);
         }
-        if (item === "请选择") {
+        if (item === "") {
             $('#m_item_table').popover('show');
             return (false);
         }
@@ -298,7 +303,7 @@
             'm_amount': $('#m_amount').val()
         }, function (ret) {
             console.log(ret);
-            if(ret.status == "Success") {
+            if (ret.status == "Success") {
                 location.href = '/mission';
             }
             alert(ret.msg);
@@ -308,14 +313,28 @@
 
     function modify_miss(id) {
         console.log("modify mission:" + id);
-        var muser, mnote, mamount;
-        muser = $('#modify-mission-btn_' + id).parents("tr")[0].getElementsByTagName('td')[3].innerText;
-        mamount = $('#modify-mission-btn_' + id).parents('tr')[0].getElementsByTagName('td')[4].innerText;
-        mnote = $('#modify-mission-btn_' + id).parents('tr')[0].getElementsByTagName('td')[5].innerText;
+//        var muser, mnote, mamount;
+//        muser = $('#modify-mission-btn_' + id).parents("tr")[0].getElementsByTagName('td')[3].innerText;
+//        mamount = $('#modify-mission-btn_' + id).parents('tr')[0].getElementsByTagName('td')[4].innerText;
+//        mnote = $('#modify-mission-btn_' + id).parents('tr')[0].getElementsByTagName('td')[5].innerText;
+
+        var t = $('#modify-mission-btn_' + id).parents('tr')[0];
+        var data = $('#m_table').dataTable().fnGetData(t);
+//        console.log(data);
+        muser = data[5];
+        mamount = data[7];
+        mnote = data[8];
+        miid = data[3];
+        miname = data[4];
+        morder = data[0];
+
         $("#myModalLabel_miss").text("修改订单信息");
+        $('#m_user_table').val(muser);
         $('#m_amount').val(mamount);
         $('#m_note').val(mnote);
-        $('#m_user_table').value = muser;
+        $('#m_order_table').val(morder);
+        getItems(morder);
+
         $('#yes_btn_miss').attr('onclick', 'confirm_modify_miss(' + id + ')');
     }
 
@@ -335,7 +354,7 @@
             'm_amount': $('#m_amount').val()
         }, function (ret) {
             console.log(ret);
-            if(ret.status == "Success") {
+            if (ret.status == "Success") {
                 location.href = '/mission';
             }
             alert(ret.msg);
@@ -355,7 +374,7 @@
             'm_id': id
         }, function (ret) {
             console.log(ret);
-            if(ret.status == "Success") {
+            if (ret.status == "Success") {
                 location.href = '/mission';
             }
             alert(ret.msg);

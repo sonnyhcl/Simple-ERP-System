@@ -18,7 +18,7 @@
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="col-lg-3 control-label">选择人员</label>
-                            <div class="col-lg-6" >
+                            <div class="col-lg-6">
                                 <!-- 表格 -->
                                 <select id="t_user_table" onchange="getMissions(this.options[this.selectedIndex].value)"
                                         onfocus="getMissions(this.options[this.selectedIndex].value)" autofocus
@@ -199,16 +199,20 @@
                         },
                         {
                             "width": "7%",
-                            "sTitle": "制作人"},
+                            "sTitle": "制作人"
+                        },
                         {
                             "width": "8%",
-                            "sTitle": "制作日期"},
+                            "sTitle": "制作日期"
+                        },
                         {
                             "width": "7%",
-                            "sTitle": "制作数量"},
+                            "sTitle": "制作数量"
+                        },
                         {
                             "width": "7%",
-                            "sTitle": "总价"},
+                            "sTitle": "总价"
+                        },
                         {"sTitle": "备注"},
                         {
                             "width": "7%",
@@ -352,7 +356,7 @@
             't_note': $('#t_note').val()
         }, function (ret) {
             console.log(ret);
-            if(ret.status == "Success") {
+            if (ret.status == "Success") {
                 location.href = '/transaction';
             }
             alert(ret.msg);
@@ -360,15 +364,15 @@
     }
 
     function modify_trans(id) {
-        console.log("modify it");
+        console.log("modify transaction");
         // readonly
-        tuser = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[10].innerText;
-        tmission = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[1].innerText + '-' +
-            $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[2].innerText + '-' +
-            $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[3].innerText;
+        tuser = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[6].innerText;
+        tmission = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[0].innerText + '-' +
+            $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[1].innerText + '-' +
+            $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[2].innerText;
         // alterable
         tamount = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[5].innerText;
-        tnote = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[11].innerText;
+        tnote = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[10].innerText;
 
         $("#t_amount_modify").val(tamount);
         $('#t_mission_modify').val(tmission);
@@ -390,7 +394,7 @@
             't_note': $('#t_note_modify').val()
         }, function (ret) {
             console.log(ret);
-            if(ret.status == "Success") {
+            if (ret.status == "Success") {
                 location.href = '/transaction';
             }
             alert(ret.msg);
@@ -410,7 +414,7 @@
             't_id': id
         }, function (ret) {
             console.log(ret);
-            if(ret.status == "Success") {
+            if (ret.status == "Success") {
                 location.href = '/transaction';
             }
             alert(ret.msg);
