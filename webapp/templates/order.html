@@ -284,16 +284,10 @@
 
     function modify_order(id) {
         console.log("modify product:" + id);
-//        oid = $('#modify-order-btn_' + id).parents("tr")[0].getElementsByTagName('td')[1].innerText;
-//        oamount = $('#modify-order-btn_' + id).parents("tr")[0].getElementsByTagName('td')[5].innerText;
-//        onote = $('#modify-order-btn_' + id).parents('tr')[0].getElementsByTagName('td')[6].innerText;
-
         $("#myModalLabel_order").text("修改订单信息");
-
         var t = $('#modify-order-btn_' + id).parents('tr')[0];
         var data = $('#o_table').dataTable().fnGetData(t);
         console.log(data);
-
         oid = data[0];
         oamount = data[7];
         onote = data[8];

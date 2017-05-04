@@ -222,7 +222,7 @@
     });
 
 
-    function getItems(oid) {
+    function getItems(oid, miid) {
         //clear
         var target = document.getElementById('m_item_table');
         target.options.length = 0;
@@ -252,6 +252,8 @@
                 for (var ki = 0; ki < items.length; ki++) {
                     target.options.add(new Option(items[ki].i_name, items[ki].i_id));
                 }
+                //设置为修改前的信息
+                $("#m_item_table").val(miid);
             }, 'json');
         }, 'json');
 
@@ -320,7 +322,7 @@
 
         var t = $('#modify-mission-btn_' + id).parents('tr')[0];
         var data = $('#m_table').dataTable().fnGetData(t);
-//        console.log(data);
+        console.log(data);
         muser = data[5];
         mamount = data[7];
         mnote = data[8];
@@ -333,7 +335,8 @@
         $('#m_amount').val(mamount);
         $('#m_note').val(mnote);
         $('#m_order_table').val(morder);
-        getItems(morder);
+        getItems(morder, miid);
+        $("#m_item_table").val(miid);
 
         $('#yes_btn_miss').attr('onclick', 'confirm_modify_miss(' + id + ')');
     }
