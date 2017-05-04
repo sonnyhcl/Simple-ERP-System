@@ -101,20 +101,26 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="index"><font color="{% if selected_menu == 'index' %}orange{% endif %}">首页</font></a></li>
-                <li><a href="product"><font color="{% if selected_menu == 'product' %}orange{% endif %}">产品</font></a>
-                </li>
 
                 {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
-                <li><a href="order"><font color="{% if selected_menu == 'order' %}orange{% endif %}">订单</font></a></li>
-                <li><a href="mission"><font color="{% if selected_menu == 'mission' %}orange{% endif %}">任务</font></a>
+                <li><a href="mission">
+                    <font color="{% if selected_menu == 'mission' %}orange{% endif %}">任务</font></a>
                 </li>
-                <li><a href="transaction">
-                    <font color="{% if selected_menu == 'transaction' %}orange{% endif %}">流水</font></a></li>
-                <li><a href="user"><font color="{% if selected_menu == 'user' %}orange{% endif %}">人员</font></a></li>
+                <li><a href="order">
+                    <font color="{% if selected_menu == 'order' %}orange{% endif %}">订单</font></a>
+                </li>
+                <li><a href="product">
+                    <font color="{% if selected_menu == 'product' %}orange{% endif %}">产品</font></a>
+                </li>
+                <!--<li><a href="transaction">-->
+                    <!--<font color="{% if selected_menu == 'transaction' %}orange{% endif %}">流水</font></a></li>-->
+                <li><a href="user">
+                    <font color="{% if selected_menu == 'user' %}orange{% endif %}">人员</font></a></li>
                 {% endif %}
+
                 {% if session['u_role'] == 'root' %}
-                <li><a href="community"><font
-                        color="{% if selected_menu == 'community' %}orange{% endif %}">社区</font></a></li>
+                <li><a href="community">
+                    <font color="{% if selected_menu == 'community' %}orange{% endif %}">社区</font></a></li>
                 {% endif %}
             </ul>
 
@@ -184,9 +190,6 @@
 <!-- jquery.datatables -->
 <script src="http://cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>
 
-<!--设置readonly操作-->
-<!--TODO 不能光光用readonly来控制权限，最好还是没有权限的就看不到对应控制按钮-->
-<!--次好的是没有权限的点击按钮弹出一个警告弹窗-->
 <script type="text/javascript">
     function set_readOnly(id) {
         document.getElementById(id).readOnly = true;
