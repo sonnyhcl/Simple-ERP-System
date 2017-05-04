@@ -228,7 +228,6 @@
         target.options.length = 0;
         var raw_items, items = [];
         var orders;
-//        var cid = $("#get_c_id").attr("value");
         var pid = 0;
 
         $.post('/product/table', function (ret) {
@@ -315,11 +314,6 @@
 
     function modify_miss(id) {
         console.log("modify mission:" + id);
-//        var muser, mnote, mamount;
-//        muser = $('#modify-mission-btn_' + id).parents("tr")[0].getElementsByTagName('td')[3].innerText;
-//        mamount = $('#modify-mission-btn_' + id).parents('tr')[0].getElementsByTagName('td')[4].innerText;
-//        mnote = $('#modify-mission-btn_' + id).parents('tr')[0].getElementsByTagName('td')[5].innerText;
-
         var t = $('#modify-mission-btn_' + id).parents('tr')[0];
         var data = $('#m_table').dataTable().fnGetData(t);
         console.log(data);
@@ -336,7 +330,6 @@
         $('#m_note').val(mnote);
         $('#m_order_table').val(morder);
         getItems(morder, miid);
-        $("#m_item_table").val(miid);
 
         $('#yes_btn_miss').attr('onclick', 'confirm_modify_miss(' + id + ')');
     }
