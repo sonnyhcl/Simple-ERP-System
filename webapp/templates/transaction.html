@@ -182,23 +182,33 @@
             function (ret) {
                 doc_table = $('#t_table').dataTable({
                     "aoColumns": [
-                        {"sTitle": "开单日期"},
-                        {"sTitle": "单号"},
                         {
-                            "width": "10%",
-                            "sTitle": "产品"
+                            "width": "6%",
+                            "sTitle": "订单号"
+                        },
+                        {"sTitle": "产品名"},
+                        {"sTitle": "工艺名"},
+                        {
+                            "width": "6%",
+                            "sTitle": "单价"
+                        },
+                        {"sTitle": "社区名"},
+                        {
+                            "width": "7%",
+                            "sTitle": "任务总数"
                         },
                         {
-                            "width": "10%",
-                            "sTitle": "工艺"
-                        },
-                        {"sTitle": "规格"}, // 工艺备注
-                        {"sTitle": "数量"},
-                        {"sTitle": "单价"},
-                        {"sTitle": "总价"},
-                        {"sTitle": "制作日期"},
-                        {"sTitle": "社区"}, // 社区名称
-                        {"sTitle": "制作人"},
+                            "width": "7%",
+                            "sTitle": "制作人"},
+                        {
+                            "width": "8%",
+                            "sTitle": "制作日期"},
+                        {
+                            "width": "7%",
+                            "sTitle": "制作数量"},
+                        {
+                            "width": "7%",
+                            "sTitle": "总价"},
                         {"sTitle": "备注"},
                         {
                             "width": "7%",
@@ -233,17 +243,16 @@
                 for (var i in transactions) {
                     console.log(transactions[i]);
                     doc_table.fnAddData([
-                        transactions[i].o_timestamp.substring(0, 10),
                         transactions[i].o_id,
                         transactions[i].p_name,
                         transactions[i].i_name,
-                        transactions[i].i_note,
-                        transactions[i].t_amount,
                         transactions[i].i_unit_price * transactions[i].i_ref_time,
-                        transactions[i].t_amount * transactions[i].i_unit_price * transactions[i].i_ref_time,
-                        transactions[i].t_timestamp.substring(0, 10),
                         transactions[i].c_name,
+                        transactions[i].m_amount,
                         transactions[i].u_name,
+                        transactions[i].t_timestamp.substring(0, 10),
+                        transactions[i].t_amount,
+                        transactions[i].t_amount * transactions[i].i_unit_price * transactions[i].i_ref_time,
                         transactions[i].t_note,
                         // 修改
                         "<button href='#modifyTrans' data-toggle='modal' " + "id='modify-transaction-btn_" + transactions[i].t_id + "' " +

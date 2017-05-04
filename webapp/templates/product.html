@@ -130,12 +130,15 @@
         <div class="col-md-12 column">
             <!-- 标题 -->
             <h3 id="product_manage_title">产品管理系统</h3>
-            <br><!-- 添加按钮 -->
+            <br>
+            {% if session['u_role'] == 'root' %}
+            <!-- 添加按钮 -->
             <a id="add_product" href="#alterProduct" role="button" data-toggle="modal"
                onclick="add_prod()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加产品</a>
             <!-- 删除按钮 -->
             <a id="del_product" href="#confirmDeleteModal_prod" role="button" data-toggle="modal"
                onclick="delete_prod()" class="btn  btn-sm btn-danger"><i class="fa fa-trash fa-fw"></i>删除产品</a>
+            {% endif %}
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="product_table" width="100%">
@@ -203,6 +206,7 @@
                         items[i].i_ref_time,
                         items[i].i_note,
                         //修改按钮
+                        "{% if session['u_role'] == 'root' %}" +
                         "<button href='#alterProduct' data-toggle='modal' id='modify-item-btn_" + items[i].i_id + "' " +
                         "onclick='modify_prod(" + items[i].p_id + ", " + items[i].i_id + ")' class='btn btn-sm btn-default' " +
                         "type='button'><i class='fa fa-pencil fa-fw'></i>修改</button>" + " " +
@@ -213,7 +217,10 @@
                         //删除按钮
                         "<button href='#confirmDeleteModal' data-toggle='modal' onclick='delete_item( " +
                         items[i].i_id + ")' class='btn btn-sm btn-danger' type='button'>" +
-                        "<i class='fa fa-trash fa-fw'></i>删除</button>"
+                        "<i class='fa fa-trash fa-fw'></i>删除</button>" +
+                        "{% else %}" +
+                        "<i class='fa fa-check' aria-hidden='true'></i>" +
+                        "{% endif %}"
                     ])
                 }
             }, 'json');

@@ -86,9 +86,11 @@
             <!-- 标题 -->
             <h3 id="product_manage_title">订单管理系统</h3>
             <br>
+            {% if session['u_role'] == 'root' %}
             <!-- 添加按钮 -->
             <a id="add_order" href="#alterOrder" role="button" data-toggle="modal"
                onclick="add_order()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加订单</a>
+            {% endif %}
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="o_table" width="100%">
@@ -115,10 +117,13 @@
             function (ret) {
                 doc_table = $('#o_table').dataTable({
                     "aoColumns": [
-                        {"sTitle": "开单日期"},
                         {
-                            "sTitle": "订单号",
-                            "width": "10%"
+                            "width": "6%",
+                            "sTitle": "订单号"
+                        },
+                        {
+                            "width": "8%",
+                            "sTitle": "开单日期"
                         },
                         {"sTitle": "产品名称"},
                         {
@@ -126,12 +131,15 @@
                             "visible": false
                         },
                         {"sTitle": "设计师"},
-                        {"sTitle": "社区"},
                         {
                             "sTitle": "cid",
                             "visible": false
                         },
-                        {"sTitle": "数量"},
+                        {"sTitle": "社区名"},
+                        {
+                            "width": "6%",
+                            "sTitle": "数量"
+                        },
                         {"sTitle": "备注"},
                         {
                             "width": "12%",
@@ -168,22 +176,26 @@
                 for (var i in orders) {
                     console.log(orders[i]);
                     doc_table.fnAddData([
-                        orders[i].o_timestamp.substring(0, 10),
                         orders[i].o_id,
+                        orders[i].o_timestamp.substring(0, 10),
                         orders[i].p_name,
                         orders[i].p_id,
                         orders[i].p_author,
-                        orders[i].c_name,
                         orders[i].c_id,
+                        orders[i].c_name,
                         orders[i].o_amount,
                         orders[i].o_note,
                         //修改按钮
+                        "{% if session['u_role'] == 'root' %}" +
                         "<button href='#alterOrder' data-toggle='modal' " + "id='modify-order-btn_" + orders[i].o_id + "' " +
                         "onclick='modify_order(" + orders[i].o_id + ")' class='btn  btn-sm btn-default' type='button'>" +
                         "<i class='fa fa-pencil fa-fw'></i>修改</button>" +
                         //删除按钮
                         " <button href='#confirmDeleteModal_order' data-toggle='modal' onclick='delete_order( " +
-                        orders[i].o_id + ")' class='btn  btn-sm btn-danger' type='button'><i class='fa fa-trash fa-fw'></i>删除</button>"
+                        orders[i].o_id + ")' class='btn  btn-sm btn-danger' type='button'><i class='fa fa-trash fa-fw'></i>删除</button>" +
+                        "{% else %}" +
+                        "<i class='fa fa-check' aria-hidden='true'></i>" +
+                        "{% endif %}"
                     ])
                 }
             }, 'json');
@@ -266,6 +278,7 @@
 
 
     function modify_order(id) {
+//        var table = $('#o_table').DataTable();
         console.log("modify product:" + id);
         oid = $('#modify-order-btn_' + id).parents("tr")[0].getElementsByTagName('td')[1].innerText;
 //        pid = $('#modify-order-btn_' + id).parents('tr')[0].getElementsByTagName('td')[3].innerText;
@@ -275,11 +288,14 @@
 
         $("#myModalLabel_order").text("修改订单信息");
 
-        $('#o_p_name_table').find('.p_id').each(function () {
-           var data = $(this).val();
-           var s = data.split(',');
-           console.log('pid: '+s[3]);
-        });
+//        var d = table.row(this).data();
+//        console.log(d);
+
+//        $('#o_p_name_table').find('.').each(function () {
+//           var data = $(this).val();
+//           var s = data.split(',');
+//           console.log('pid: '+s[3]);
+//        });
 
         $('#o_amount').val(oamount);
         $('#o_note').val(onote);

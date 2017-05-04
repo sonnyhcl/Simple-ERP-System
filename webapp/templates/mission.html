@@ -126,13 +126,20 @@
                 doc_table = $('#m_table').dataTable({
                     "aoColumns": [
                         {
-                            "sTitle": "订单号",
-                            "width": "10%"
+                            "width": "6%",
+                            "sTitle": "订单号"
+                        },
+                        {
+                            "width": "7%",
+                            "sTitle": "订单总数"
                         },
                         {"sTitle": "产品名"},
                         {"sTitle": "工艺名"},
                         {"sTitle": "用户名"},
-                        {"sTitle": "数量"},
+                        {
+                            "width": "7%",
+                            "sTitle": "数量"
+                        },
                         {"sTitle": "备注"},//其实就是备注
                         {
                             "width": "12%",
@@ -169,6 +176,7 @@
                     console.log(missions[i]);
                     doc_table.fnAddData([
                         missions[i].o_id,
+                        missions[i].o_amount,
                         missions[i].p_name,
                         missions[i].i_name,
                         missions[i].u_name,

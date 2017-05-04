@@ -113,9 +113,12 @@
             function (ret) {
                 doc_table = $('#user_table').dataTable({
                     "aoColumns": [
-                        {"sTitle": "社区"},
+                        {"sTitle": "社区名"},
                         {"sTitle": "姓名"},
-                        {"sTitle": "身份"},
+                        {
+                            "width": "7%",
+                            "sTitle": "身份"
+                        },
                         {"sTitle": "联系方式"},
                         {
                             "width": "12%",
@@ -148,7 +151,7 @@
                 });
                 var members = ret.data;
                 for (var i in members) {
-                console.log(members[i]);
+                    console.log(members[i]);
                     doc_table.fnAddData([
                         members[i].c_name,
                         members[i].u_name,
