@@ -305,7 +305,10 @@
             'i_note': $("#i_note").val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/product';
+            if(ret.status == "Success") {
+                location.href = '/product';
+            }
+            alert(ret.msg);
         }, 'json');
     }
 
@@ -339,7 +342,10 @@
             'i_note': $('#i_note').val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/product';
+            if(ret.status == "Success") {
+                location.href = '/product';
+            }
+            alert(ret.msg);
         }, 'json');
     }
 
@@ -359,8 +365,11 @@
             'p_id': p_id
         }, function (ret) {
             console.log(ret);
-            location.href = '/product';
-        }, 'json')
+            if(ret.status == "Success") {
+                location.href = '/product';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 
 
@@ -399,7 +408,10 @@
             'i_note': $('#i_note').val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/product';
+            if(ret.status == "Success") {
+                location.href = '/product';
+            }
+            alert(ret.msg);
         }, 'json');
     }
 
@@ -418,8 +430,11 @@
             'i_id': id
         }, function (ret) {
             console.log(ret);
-            location.href = '/product';
-        })
+            if(ret.status == "Success") {
+                location.href = '/product';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 </script>
 

@@ -272,7 +272,10 @@
             'o_note': $("#o_note").val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/order';
+            if(ret.status == "Success") {
+                location.href = '/order';
+            }
+            alert(ret.msg);
         }, 'json');
     }
 
@@ -317,8 +320,11 @@
             'o_note': $('#o_note').val()
         }, function (ret) {
             console.log(ret);
-            location.href = '/order';
-        });
+            if(ret.status == "Success") {
+                location.href = '/order';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 
 
@@ -335,8 +341,11 @@
             'o_id': id
         }, function (ret) {
             console.log(ret);
-            location.href = '/order';
-        })
+            if(ret.status == "Success") {
+                location.href = '/order';
+            }
+            alert(ret.msg);
+        }, 'json');
     }
 </script>
 
