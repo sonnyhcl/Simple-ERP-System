@@ -16,6 +16,9 @@ __author__ = 'sonnyhcl'
 # TODO 流水的数量选择应该跟任务数量挂钩
 # TODO check_value
 # TODO 给数据库操作加log()
+# TODO 离线js
+# TODO 更换login页面为知乎js
+# TODO 普通用户看到的流水页面应该跟管理员看到的类似报表不一样
 
 
 @app.route('/')
