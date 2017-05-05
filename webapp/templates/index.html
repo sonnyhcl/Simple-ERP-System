@@ -295,7 +295,7 @@
                         transactions[i].t_amount * transactions[i].i_unit_price * transactions[i].i_ref_time,
                         transactions[i].t_note,
                         // 修改
-                        "{% if session['u_role'] == 'root' %}" +
+                        "{% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}" +
                         "<button href='#modifyTrans' data-toggle='modal' " + "id='modify-transaction-btn_" + transactions[i].t_id + "' " +
                         "onclick='modify_trans(" + transactions[i].t_id + ")' class='btn btn-sm btn-default' type='button'> " +
                         "<i class='fa fa-pencil'></i></button>" + "  " +

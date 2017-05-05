@@ -10,7 +10,7 @@ __author__ = 'sonnyhcl'
 
 
 @app.route('/order', methods=['GET'])
-@permission_required('root')
+@permission_required('admin')
 @login_required
 def order_index():
     return render_template('order.html')
