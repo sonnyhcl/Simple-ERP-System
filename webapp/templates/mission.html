@@ -20,7 +20,8 @@
                             <label class="col-lg-3 control-label">选择订单</label>
                             <div class="col-lg-6">
                                 <!-- 表格 -->
-                                <select id="m_order_table" onchange="get_items_by_order(this.options[this.selectedIndex].value)"
+                                <select id="m_order_table"
+                                        onchange="get_items_by_order(this.options[this.selectedIndex].value)"
                                         onfocus="get_items_by_order(this.options[this.selectedIndex].value)" autofocus
                                         class="form-control input-sm" style="color:#666666"
                                         data-content="不能为空"></select>
@@ -46,7 +47,7 @@
                             <label class="col-lg-3 control-label">填写数量</label>
                             <div class="col-lg-6">
                                 <input size="16" id="m_amount" type="text" value="" placeholder="数量"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       class="form-control input-sm c6" data-content="须为整数" data-placement="bottom"
                                        tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
@@ -312,7 +313,7 @@
             $('#m_user_table').popover('show');
             return (false);
         }
-        if (amount === "") {
+        if (amount === "" || isNaN(amount)) {
             $('#m_amount').popover('show');
             return (false);
         }

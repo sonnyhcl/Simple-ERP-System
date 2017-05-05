@@ -42,7 +42,7 @@
                             <label class="col-lg-3 control-label">添加数量</label>
                             <div class="col-lg-6">
                                 <input size="16" id="t_amount" type="text" value="" placeholder="添加数量"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       class="form-control input-sm c6" data-content="须为数字" data-placement="bottom"
                                        tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
@@ -333,7 +333,7 @@
             $('#t_miss_table').popover('show');
             return (false);
         }
-        if (amount === "") {
+        if (amount === "" || isNaN(amount)) {
             $('#t_amount').popover('show');
             return (false);
         }
