@@ -51,6 +51,7 @@ def get_transaction_table():
 
 
 @app.route('/transaction/add', methods=['POST'])
+@permission_required('admin')
 @login_required
 def add_transaction():
     """
@@ -68,6 +69,7 @@ def add_transaction():
 
 
 @app.route('/transaction/modify', methods=['POST'])
+@permission_required('admin')
 @login_required
 def modify_transaction():
     """
@@ -76,7 +78,6 @@ def modify_transaction():
     """
     ret = {"status": "Success", "msg": "error_msg"}
 
-    # TODO: 流水的人员与任务信息不可修改
     # 前端传回的参数只有t_id, t_amount, t_note
     t_id = request.form.get('t_id')
     t_amount = request.form.get('t_amount')
@@ -88,6 +89,7 @@ def modify_transaction():
 
 
 @app.route('/transaction/delete', methods=['POST'])
+@permission_required('admin')
 @login_required
 def delete_transaction():
     """

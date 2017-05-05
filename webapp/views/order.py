@@ -41,6 +41,7 @@ def get_orders_by_cid():
 
 
 @app.route('/order/add', methods=['POST'])
+@permission_required('root')
 @login_required
 def add_order_for_cid():
     """
@@ -60,6 +61,7 @@ def add_order_for_cid():
 
 
 @app.route('/order/modify', methods=['POST'])
+@permission_required('root')
 @login_required
 def modify_order():
     """
@@ -80,6 +82,7 @@ def modify_order():
 
 
 @app.route('/order/delete', methods=['POST'])
+@permission_required('root')
 @login_required
 def delete_order():
     """

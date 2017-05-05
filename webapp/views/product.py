@@ -33,6 +33,7 @@ def get_all_products_detail():
 
 
 @app.route('/product/add', methods=['POST'])
+@permission_required('root')
 @login_required
 def add_product():
     """
@@ -55,6 +56,8 @@ def add_product():
 
 
 @app.route('/product/add_item', methods=['POST'])
+@permission_required('root')
+@login_required
 def add_item_for_product():
     """
     给指定某个产品添加一个工艺
@@ -74,6 +77,8 @@ def add_item_for_product():
 
 
 @app.route('/product/delete_item', methods=['POST'])
+@permission_required('root')
+@login_required
 def delete_item_for_product():
     """
     删除指定产品中的某一项工艺
@@ -90,6 +95,7 @@ def delete_item_for_product():
 
 
 @app.route('/product/modify', methods=['POST'])
+@permission_required('root')
 @login_required
 def modify_product_and_its_one_item():
     """
@@ -113,6 +119,7 @@ def modify_product_and_its_one_item():
 
 
 @app.route('/product/delete', methods=['POST'])
+@permission_required('root')
 @login_required
 def delete_product():
     """

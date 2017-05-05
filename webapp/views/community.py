@@ -42,6 +42,7 @@ def get_community_by_cid(c_id):
 
 
 @app.route('/community/get_all_admin', methods=['POST'])
+@permission_required('root')
 @login_required
 def get_all_admin():
     """
@@ -60,6 +61,7 @@ def get_all_admin():
 
 
 @app.route('/community/add', methods=['POST'])
+@permission_required('root')
 @login_required
 def add_community():
     """
@@ -75,6 +77,7 @@ def add_community():
 
 
 @app.route('/community/modify', methods=['POST'])
+@permission_required('root')
 @login_required
 def modify_community():
     """
@@ -91,6 +94,7 @@ def modify_community():
 
 
 @app.route('/community/delete', methods=['POST'])
+@permission_required('root')
 @login_required
 def delete_community():
     """
