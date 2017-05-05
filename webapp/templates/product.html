@@ -47,7 +47,7 @@
                             <label class="col-lg-4 control-label">分钟单价</label>
                             <div class="col-lg-6">
                                 <input size="16" id="i_unit_price" type="text" value="" placeholder="分钟单价（元）"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       class="form-control input-sm c6" data-content="须为数字" data-placement="bottom"
                                        tabindex="0" data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                             <label class="col-lg-4 control-label">参考用时</label>
                             <div class="col-lg-6">
                                 <input size="16" id="i_ref_time" type="text" value="" placeholder="参考用时（分钟）"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom"
+                                       class="form-control input-sm c6" data-content="须为整数" data-placement="bottom"
                                        tabindex="0" data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
@@ -101,7 +101,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                    <button id='confirm-del-button_prod' autofocus type="submit" class="btn btn-danger" onclick="">确认</button>
+                    <button id='confirm-del-button_prod' autofocus type="submit" class="btn btn-danger" onclick="">确认
+                    </button>
                 </div>
             </div>
         </div>
@@ -255,11 +256,11 @@
             $('#i_name').popover('show');
             return (false);
         }
-        if (i_unit_price === "") {
+        if (i_unit_price === "" || isNaN(i_unit_price)) {
             $('#i_unit_price').popover('show');
             return (false);
         }
-        if (i_ref_time === "") {
+        if (i_ref_time === "" || isNaN(i_ref_time)) {
             $('#i_ref_time').popover('show');
             return (false);
         }
