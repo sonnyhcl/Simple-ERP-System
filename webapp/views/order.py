@@ -10,7 +10,7 @@ __author__ = 'sonnyhcl'
 
 
 @app.route('/order', methods=['GET'])
-@permission_required('root')
+@permission_required('admin')
 @login_required
 def order_index():
     return render_template('order.html')
@@ -41,6 +41,7 @@ def get_orders_by_cid():
 
 
 @app.route('/order/add', methods=['POST'])
+@permission_required('root')
 @login_required
 def add_order_for_cid():
     """
@@ -60,6 +61,7 @@ def add_order_for_cid():
 
 
 @app.route('/order/modify', methods=['POST'])
+@permission_required('root')
 @login_required
 def modify_order():
     """
@@ -72,7 +74,7 @@ def modify_order():
     p_id = request.form.get('p_id')
     c_id = request.form.get('c_id')
     o_note = request.form.get('o_note')
-    print o_id, o_amount, p_id, c_id, o_note
+
     ret['status'], ret['msg'] = \
         order.update_order(o_id, o_amount, o_note, p_id, c_id)
 
@@ -80,6 +82,7 @@ def modify_order():
 
 
 @app.route('/order/delete', methods=['POST'])
+@permission_required('root')
 @login_required
 def delete_order():
     """

@@ -43,7 +43,8 @@ def test():
     # prod.add_product(p_name='fuck')
     # flag, response = prod.get_all()
     # item = Item()
-    # item.add_item(i_name='fuck', i_minutes=1, i_prices=1, i_unitprices=1, p_id=1)
+    # item.add_item(i_name='fuck', i_minutes=1,
+    # i_prices=1, i_unitprices=1, p_id=1)
     # flag, response = item.get_all()
     # print flag, response
     #

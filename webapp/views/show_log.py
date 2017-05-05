@@ -20,7 +20,7 @@ def show_web_log():
     log_dir = os.path.join(app.config['PROJECT_PATH'], "logs")
     log_file = os.path.join(log_dir, "webapp.log")
     resp = make_response(open(log_file).read())
-    resp.headers["Content-type"] = "application/txt:charset=UTF-8"
+    # resp.headers["Content-type"] = "application/txt:charset=UTF-8"
     return resp
 
 
@@ -35,5 +35,5 @@ def show_db_log():
     log_dir = os.path.join(app.config['PROJECT_PATH'], "logs")
     log_file = os.path.join(log_dir, "db_operator.log")
     resp = make_response(open(log_file).read())
-    resp.headers["Content-type"] = "application/txt:charset=UTF-8"
+    # resp.headers["Content-type"] = "application/txt:charset=UTF-8"
     return resp

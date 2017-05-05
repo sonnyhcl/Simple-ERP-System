@@ -40,6 +40,7 @@ def get_mission_by_cid():
 
 
 @app.route('/mission/add', methods=['POST'])
+@permission_required('admin')
 @login_required
 def add_mission():
     """
@@ -59,6 +60,7 @@ def add_mission():
 
 
 @app.route('/mission/modify', methods=['POST'])
+@permission_required('admin')
 @login_required
 def modify_mission():
     """
@@ -80,6 +82,7 @@ def modify_mission():
 
 
 @app.route('/mission/delete', methods=['POST'])
+@permission_required('admin')
 @login_required
 def delete_mission():
     """

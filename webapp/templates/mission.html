@@ -196,7 +196,7 @@
                         missions[i].m_amount,
                         missions[i].m_note,
                         //修改按钮
-                        "{% if session['u_role'] == 'root' %}" +
+                        "{% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}" +
                         "<button href='#alterMission' data-toggle='modal' " + "id='modify-mission-btn_" + missions[i].m_id + "' " +
                         "onclick='modify_miss(" + missions[i].m_id + ")' class='btn  btn-sm btn-default' type='button'>" +
                         "<i class='fa fa-pencil fa-fw'></i>修改</button>" +

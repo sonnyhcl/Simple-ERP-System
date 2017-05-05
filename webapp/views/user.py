@@ -70,6 +70,7 @@ def get_users_by_cid():
 
 
 @app.route('/user/add', methods=['POST'])
+@permission_required('admin')
 @login_required
 def add_user():
     """
@@ -89,6 +90,7 @@ def add_user():
 
 
 @app.route('/user/modify', methods=['POST'])
+@permission_required('admin')
 @login_required
 def modify_user():
     """
@@ -110,6 +112,7 @@ def modify_user():
 
 
 @app.route('/user/delete', methods=['POST'])
+@permission_required('admin')
 @login_required
 def delete_user():
     """

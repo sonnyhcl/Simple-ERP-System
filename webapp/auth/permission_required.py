@@ -12,7 +12,7 @@ def permission_required(permission):
         def decorated_function(*args, **kwargs):
             role = session.get('u_role', 'guest')
             if level[role] < level[permission]:
-                abort(404)
+                abort(403)
             return f(*args, **kwargs)
         return decorated_function
     return decorator
