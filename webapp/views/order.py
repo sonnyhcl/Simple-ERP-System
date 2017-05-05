@@ -72,7 +72,7 @@ def modify_order():
     p_id = request.form.get('p_id')
     c_id = request.form.get('c_id')
     o_note = request.form.get('o_note')
-    print o_id, o_amount, p_id, c_id, o_note
+
     ret['status'], ret['msg'] = \
         order.update_order(o_id, o_amount, o_note, p_id, c_id)
 
