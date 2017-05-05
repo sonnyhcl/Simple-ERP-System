@@ -20,7 +20,8 @@
                             <label class="col-lg-3 control-label">选择订单</label>
                             <div class="col-lg-6">
                                 <!-- 表格 -->
-                                <select id="m_order_table" onchange="getItems(this.options[this.selectedIndex].value)"
+                                <select id="m_order_table" onchange="get_items_by_order(this.options[this.selectedIndex].value)"
+                                        onfocus="get_items_by_order(this.options[this.selectedIndex].value)" autofocus
                                         class="form-control input-sm" style="color:#666666"
                                         data-content="不能为空"></select>
                             </div>
@@ -222,6 +223,40 @@
     });
 
 
+    function get_items_by_order(oid) {
+        //clear
+        console.log(oid);
+        var target = document.getElementById('m_item_table');
+        target.options.length = 0;
+        var raw_items, items = [];
+        var orders;
+        var pid = 0;
+
+        $.post('/product/table', function (ret) {
+            console.log(ret);
+            raw_items = ret.data;
+            $.post('/order/table', function (ret) {
+                orders = ret.data;
+                //根据oid获取pid
+                for (var ri = 0; ri < orders.length; ri++) {
+                    if (orders[ri].o_id == oid) {
+                        pid = orders[ri].p_id;
+                    }
+                }
+                //根据pid获取工艺信息
+                for (var ii = 0; ii < raw_items.length; ii++) {
+                    if (pid == raw_items[ii].p_id) {
+                        items.push(raw_items[ii]);
+                    }
+                }
+                //动态加载工艺
+                for (var ki = 0; ki < items.length; ki++) {
+                    target.options.add(new Option(items[ki].i_name, items[ki].i_id));
+                }
+            }, 'json');
+        }, 'json');
+    }
+
     function getItems(oid, miid) {
         //clear
         var target = document.getElementById('m_item_table');
@@ -255,7 +290,6 @@
                 $("#m_item_table").val(miid);
             }, 'json');
         }, 'json');
-
     }
 
 
