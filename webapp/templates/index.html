@@ -375,6 +375,22 @@
         return (true);
     }
 
+    function check_value_modify(name, mission, amount) {
+        if (name === "请选择") {
+            $('#t_user_modify').popover('show');
+            return (false);
+        }
+        if (mission === "") {
+            $('#t_miss_modify').popover('show');
+            return (false);
+        }
+        if (isNaN(amount) || amount === "") {
+            $('#t_amount_modify').popover('show');
+            return (false);
+        }
+        return (true);
+    }
+
 
     function add_trans() {
         console.log("add transaction");
@@ -407,6 +423,7 @@
 
     function modify_trans(id) {
         console.log("modify transaction");
+        // TODO: data
         // readonly
         tuser = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[6].innerText;
         tmission = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[0].innerText + '-' +
@@ -427,7 +444,7 @@
 
     function confirm_modify_trans(t_id) {
         console.log("confirm_modify_trans:" + t_id);
-        if (!check_value($("#t_user_modify").val(), $("#t_mission_modify").val(), $('#t_amount_modify').val())) {
+        if (!check_value_modify($("#t_user_modify").val(), $("#t_mission_modify").val(), $('#t_amount_modify').val())) {
             return;
         }
         $.post("/transaction/modify", {

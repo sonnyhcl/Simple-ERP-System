@@ -385,6 +385,7 @@
     function add_item(p_id, i_id) {
         $("#myModalLabel_prod").text("添加工艺信息");
         console.log("add item");
+        // TODO: data
         pname = $('#add-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[0].innerText;
         pauthor = $('#add-item-btn_' + i_id).parents("tr")[0].getElementsByTagName('td')[1].innerText;
         $("#p_name").val(pname);
