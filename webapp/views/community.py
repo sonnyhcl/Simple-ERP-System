@@ -7,11 +7,13 @@ from flask import render_template, session, request
 from webapp import app
 from db.db_community import *
 from auth.login_required import login_required
+from auth.permission_required import permission_required
 
 __author__ = 'sonnyhcl'
 
 
 @app.route('/community', methods=['GET'])
+@permission_required('root')
 @login_required
 def community_index():
     return render_template('community.html')

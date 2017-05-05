@@ -3,11 +3,14 @@ import os
 from flask import render_template, request, session, \
     url_for, redirect, make_response
 from auth.login_required import login_required
+from auth.permission_required import permission_required
 from webapp import app
+
 __author__ = 'sonnyhcl'
 
 
 @app.route('/show_web_log', methods=['GET'])
+@permission_required('root')
 @login_required
 def show_web_log():
     """
@@ -22,6 +25,7 @@ def show_web_log():
 
 
 @app.route('/show_db_log', methods=['GET'])
+@permission_required('root')
 @login_required
 def show_db_log():
     """

@@ -13,6 +13,7 @@ __author__ = 'sonnyhcl'
 
 
 @app.route('/')
+@login_required
 def index_():
     return redirect('index')
 

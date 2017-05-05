@@ -99,8 +99,10 @@
             <h3 id="product_manage_title">任务管理系统</h3>
             <br>
             <!-- 添加按钮 -->
+            {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
             <a id="add_mission" href="#alterMission" role="button" data-toggle="modal"
                onclick="add_miss()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa-fw"></i>添加任务</a>
+            {% endif %}
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="m_table" width="100%">

@@ -3,12 +3,14 @@ import json
 from flask import render_template, request, session
 from webapp import app
 from auth.login_required import login_required
+from auth.permission_required import permission_required
 from db.db_transaction import transaction
 
 __author__ = 'sonnyhcl'
 
 
 @app.route('/transaction', methods=['GET'])
+@permission_required('user')
 @login_required
 def transaction_index():
     return render_template('transaction.html')

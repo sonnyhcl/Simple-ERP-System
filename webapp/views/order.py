@@ -3,12 +3,14 @@ import json
 from flask import render_template, request
 from webapp import app
 from auth.login_required import login_required
+from auth.permission_required import permission_required
 from db.db_order import *
 
 __author__ = 'sonnyhcl'
 
 
 @app.route('/order', methods=['GET'])
+@permission_required('root')
 @login_required
 def order_index():
     return render_template('order.html')

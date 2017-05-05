@@ -3,12 +3,14 @@ import json
 from flask import render_template, request
 from webapp import app
 from auth.login_required import login_required
+from auth.permission_required import permission_required
 from db.db_product import products
 
 __author_name__ = 'sonnyhcl'
 
 
 @app.route('/product', methods=['GET'])
+@permission_required('user')
 @login_required
 def product():
     return render_template('product.html')

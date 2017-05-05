@@ -2,6 +2,7 @@
 import json
 from flask import render_template, session, request
 from auth.login_required import login_required
+from auth.permission_required import permission_required
 from webapp import app
 from webapp.mylog import log
 from db.db_mission import *
@@ -10,6 +11,7 @@ __author__ = 'sonnyhcl'
 
 
 @app.route('/mission', methods=['GET'])
+@permission_required('admin')
 @login_required
 def mission_index():
     return render_template('mission.html')

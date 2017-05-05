@@ -8,11 +8,13 @@ from webapp import app
 from db.db_user import *
 from db.db_community import *
 from auth.login_required import login_required
+from auth.permission_required import permission_required
 
 __author__ = 'sonnyhcl'
 
 
 @app.route('/user', methods=['GET'])
+@permission_required('admin')
 @login_required
 def user_index():
     return render_template('user.html')
@@ -52,7 +54,7 @@ def get_users_by_cid():
     cid = session['c_id']
     status, info = user.get_user_by_cid(cid)
     ret = {"data": [], "status": status, "msg": ""}
-    d = {'root': u"主管理员", 'admin': u"管理员", 'user': u"员工"}
+    d = {'root': u"主管理员", 'admin': u"社区管理员", 'user': u"员工"}
     if status == "Success":
         _ = [ret['data'].append({'u_id': i[0], 'u_name': i[1], "u_role": i[2],
                                  "u_phone": i[4], 'c_id': i[5]})
