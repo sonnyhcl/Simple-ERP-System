@@ -156,9 +156,10 @@
             <!-- 标题 -->
             <h3 id="transaction_manage_title">流水管理系统</h3>
             <br>
-            <!-- 添加按钮 -->
+            {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
             <a id="add_trans" href="#alterTrans" role="button" data-toggle="modal"
                onclick="add_trans()" class="btn btn-sm btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加流水</a>
+            {% endif %}
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="t_table" width="100%">
@@ -259,13 +260,17 @@
                         transactions[i].t_amount * transactions[i].i_unit_price * transactions[i].i_ref_time,
                         transactions[i].t_note,
                         // 修改
+                        "{% if session['u_role'] == 'root' %}" +
                         "<button href='#modifyTrans' data-toggle='modal' " + "id='modify-transaction-btn_" + transactions[i].t_id + "' " +
                         "onclick='modify_trans(" + transactions[i].t_id + ")' class='btn btn-sm btn-default' type='button'> " +
                         "<i class='fa fa-pencil'></i></button>" + "  " +
                         // 删除
                         "<button href='#confirmDeleteModal_trans' data-toggle='modal' onclick='delete_trans( " +
                         transactions[i].t_id + ")' class='btn btn-sm btn-danger' type='button'>" +
-                        "<i class='fa fa-trash'></i></button>"
+                        "<i class='fa fa-trash'></i></button>" +
+                        "{% else %}" +
+                        "<i class='fa fa-check' aria-hidden='true'></i>" +
+                        "{% endif %}"
                     ])
                 }
             }, 'json');

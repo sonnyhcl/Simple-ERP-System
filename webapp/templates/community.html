@@ -66,9 +66,11 @@
             <!-- 标题 -->
             <h3 id="community_manage_title">社区管理系统</h3>
             <br>
-            <!-- 添加按钮 -->
+            <!-- 添加按钮 -->>
+            {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
             <a id="add_community" href="#alterCommunity" role="button" data-toggle="modal"
                onclick="add_comm()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加社区</a>
+            {% endif %}
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="community_table" width="100%">
@@ -136,12 +138,16 @@
                         communities[i].c_name,
                         communities[i].u_name,
                         communities[i].u_phone,
+                        "{% if session['u_role'] == 'root' %}" +
                         "<button href='#alterCommunity' data-toggle='modal' onclick='modify_comm(" +
                         communities[i].c_id + ")' class='btn  btn-sm btn-default' type='button'>" +
                         "<i class='fa fa-pencil fa-fw'></i>修改</button>" + "  " +
                         "<button href='#confirmDeleteModal_comm' data-toggle='modal' onclick='delete_comm( " +
                         communities[i].c_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
-                        "<i class='fa fa-trash fa-fw'></i>删除</button>"
+                        "<i class='fa fa-trash fa-fw'></i>删除</button>" +
+                        "{% else %}" +
+                        "<i class='fa fa-check' aria-hidden='true'></i>" +
+                        "{% endif %}"
                     ])
                 }
             }, 'json');

@@ -193,13 +193,17 @@
                         missions[i].m_amount,
                         missions[i].m_note,
                         //修改按钮
+                        "{% if session['u_role'] == 'root' %}" +
                         "<button href='#alterMission' data-toggle='modal' " + "id='modify-mission-btn_" + missions[i].m_id + "' " +
                         "onclick='modify_miss(" + missions[i].m_id + ")' class='btn  btn-sm btn-default' type='button'>" +
                         "<i class='fa fa-pencil fa-fw'></i>修改</button>" +
                         //删除按钮
                         "<button href='#confirmDeleteModal_miss' data-toggle='modal' onclick='delete_miss( " +
                         missions[i].m_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
-                        "<i class='fa fa-trash fa-fw'></i>删除</button>"
+                        "<i class='fa fa-trash fa-fw'></i>删除</button>" +
+                        "{% else %}" +
+                        "<i class='fa fa-check' aria-hidden='true'></i>" +
+                        "{% endif %}"
                     ])
                 }
             }, 'json');

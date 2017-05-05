@@ -90,8 +90,10 @@
             <h3 id="user_manage_title">人员管理系统</h3>
             <br>
             <!-- 添加按钮 -->
+            {% if session['u_role'] == 'root' %}
             <a id="add_user" href="#alterUser" role="button" data-toggle="modal"
                onclick="add_user()" class="btn  btn-sm btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加人员</a>
+            {% endif %}
             <!-- 表格 -->
             <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="user_table" width="100%">
@@ -157,12 +159,16 @@
                         members[i].u_name,
                         members[i].u_role,
                         members[i].u_phone,
+                        "{% if session['u_role'] == 'root' %}" +
                         "<button href='#alterUser' data-toggle='modal' onclick='modify_user(" +
                         members[i].u_id + ")' class='btn  btn-sm btn-default' type='button'>" +
                         "<i class='fa fa-pencil fa-fw'></i>修改</button>" + "  " +
                         "<button href='#confirmDeleteModal_user' data-toggle='modal' onclick='delete_user( " +
                         members[i].u_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
-                        "<i class='fa fa-trash fa-fw'></i>删除</button>"
+                        "<i class='fa fa-trash fa-fw'></i>删除</button>" +
+                        "{% else %}" +
+                        "<i class='fa fa-check' aria-hidden='true'></i>" +
+                        "{% endif %}"
                     ])
                 }
             }, 'json');
