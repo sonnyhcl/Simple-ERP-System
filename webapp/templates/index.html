@@ -168,7 +168,7 @@
     </div>
 
     <!-- 删除弹窗模版 -->
-    {% if session['u_role'] == 'root' %}
+    {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
     <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_trans" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel_trans">
         <div class="modal-dialog" role="document">
@@ -397,7 +397,7 @@
         }, function (ret) {
             console.log(ret);
             if (ret.status == "Success") {
-                location.href = '/transaction';
+                location.href = '/index';
             }
             else {
                 alert(ret.msg);
@@ -437,7 +437,7 @@
         }, function (ret) {
             console.log(ret);
             if (ret.status == "Success") {
-                location.href = '/transaction';
+                location.href = '/index';
             }
             else {
                 alert(ret.msg);
@@ -459,7 +459,7 @@
         }, function (ret) {
             console.log(ret);
             if (ret.status == "Success") {
-                location.href = '/transaction';
+                location.href = '/index';
             }
             else {
                 alert(ret.msg);
