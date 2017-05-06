@@ -11,7 +11,7 @@ __author__ = 'sonnyhcl'
 
 
 @app.route('/mission', methods=['GET'])
-@permission_required('admin')
+@permission_required('user')
 @login_required
 def mission_index():
     return render_template('mission.html')
@@ -29,10 +29,14 @@ def get_mission_by_cid():
     c_id = session.get('c_id')
     status, info = mission.get_mission_by_cid(c_id)
     if status == "Success":
-        _ = [ret['data'].append(
-            {'m_id': i[0], 'm_amount': i[1], 'm_note': i[2],
-             'u_id': i[3], "i_id": i[4], "o_id": i[6], "o_amount": i[7],
-             'u_name': i[23], 'p_name': i[14], 'i_name': i[17]}) for i in info]
+        _ = [ret['data'].append({'m_id': i[0], 'm_amount': i[1], 'm_note': i[2],
+                                 'u_id': i[3], "i_id": i[4], "o_id": i[6],
+                                 "o_amount": i[7], 'u_name': i[23],
+                                 'p_name': i[14], 'i_name': i[17]})
+             for i in info
+             if session['u_role'] == 'root' or session['u_role'] == 'admin'
+             or (session['u_role'] == 'user' and session['u_id'] == i[3])
+             ]
     else:
         ret['msg'] = info
 

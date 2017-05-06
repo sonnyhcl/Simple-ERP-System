@@ -29,7 +29,7 @@
                             <label class="col-lg-3 control-label">手机</label>
                             <div class="col-lg-6">
                                 <input size="16" id="u_phone" type="text" value="" placeholder="手机号码"
-                                       class="form-control input-sm c6" data-content="不能为空" data-placement="bottom" tabindex="0"
+                                       class="form-control input-sm c6" data-content="请输入正确格式的手机号码" data-placement="bottom" tabindex="0"
                                        data-toggle="popover" data-trigger="focus"/>
                             </div>
                         </div>
@@ -187,7 +187,7 @@
             $('#u_name').popover('show');
             return (false);
         }
-        if (phone === "") {
+        if (phone === "" || isNaN(phone)) {
             $('#u_phone').popover('show');
             return (false);
         }

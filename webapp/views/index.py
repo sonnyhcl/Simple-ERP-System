@@ -19,6 +19,8 @@ __author__ = 'sonnyhcl'
 # TODO 离线js
 # TODO 更换login页面为知乎js
 # TODO 普通用户看到的流水页面应该跟管理员看到的类似报表不一样
+# TODO 之前实现datatable.fnGetData()的方式太丑了
+# TODO 时间选择筛选器
 
 
 @app.route('/')

@@ -110,7 +110,6 @@ class Product(object):
                 origin[4] = i_note
 
             param = tuple(origin[0:5]) + (i_id,)
-            print param
             conn.execute(
                 'UPDATE item '
                 'SET i_id = ?, i_name = ?, i_unit_price = ?,'
