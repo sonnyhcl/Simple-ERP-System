@@ -33,7 +33,7 @@ def test():
     print flag
     flag, response = community.get_community_by_cid(c_id=1)
     print flag, response
-    flag, response = user.update_user(u_id = 2, c_id = 1)
+    flag, response = user.update_user(u_id=2, c_id=1)
     print flag, response
     # user = User()
     # user.add_user(u_name='a', u_password='b', u_phone='c', u_role='d', c_id=1)

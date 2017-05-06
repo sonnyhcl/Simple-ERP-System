@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 import os
+
+__author__ = 'sonnyhcl'
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 

@@ -33,8 +33,8 @@ def get_community_by_cid(c_id):
     ret = {"data": [], "status": status, "msg": ""}
     if status == "Success":
         _ = [ret['data'].append({'c_id': i[0], 'c_name': i[1], 'u_id': i[4],
-                                 'u_name': i[2], 'u_phone': i[3]}) for i in
-             info]
+                                 'u_name': i[2], 'u_phone': i[3]})
+             for i in info]
     else:
         ret['msg'] = info
 
