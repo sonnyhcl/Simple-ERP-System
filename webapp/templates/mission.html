@@ -73,7 +73,7 @@
     </div>
 
     <!--删除弹窗模板-->
-    {% if session['u_role'] == 'root' %}
+    {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
     <!-- 删除任务 -->
     <div class="modal fade bs-example-modal-sm" id="confirmDeleteModal_miss" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel_miss">
@@ -199,7 +199,7 @@
                         "{% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}" +
                         "<button href='#alterMission' data-toggle='modal' " + "id='modify-mission-btn_" + missions[i].m_id + "' " +
                         "onclick='modify_miss(" + missions[i].m_id + ")' class='btn  btn-sm btn-default' type='button'>" +
-                        "<i class='fa fa-pencil fa-fw'></i>修改</button>" +
+                        "<i class='fa fa-pencil fa-fw'></i>修改</button> " +
                         //删除按钮
                         "<button href='#confirmDeleteModal_miss' data-toggle='modal' onclick='delete_miss( " +
                         missions[i].m_id + ")' class='btn  btn-sm btn-danger' type='button'>" +
@@ -367,7 +367,7 @@
         miname = data[4];
         morder = data[0];
 
-        $("#myModalLabel_miss").text("修改订单信息");
+        $("#myModalLabel_miss").text("修改任务信息");
         $('#m_user_table').val(muser);
         $('#m_amount').val(mamount);
         $('#m_note').val(mnote);
