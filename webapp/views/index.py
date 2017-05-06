@@ -23,13 +23,13 @@ __author__ = 'sonnyhcl'
 # TODO 时间选择筛选器
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 @login_required
 def index_():
     return redirect('index')
 
 
-@app.route('/index')
+@app.route('/index', methods=['GET'])
 @login_required
 def index_index():
     """
@@ -47,7 +47,7 @@ def index_index():
     return render_template('index.html', user_info=user_info)
 
 
-@app.route('/error')
+@app.route('/error', methods=['GET'])
 @login_required
 def error():
     """

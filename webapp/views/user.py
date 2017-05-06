@@ -43,6 +43,7 @@ def get_user_by_uid(u_id):
 
 
 @app.route('/user/table', methods=['POST'])
+@permission_required('admin')
 @login_required
 def get_users_by_cid():
     """

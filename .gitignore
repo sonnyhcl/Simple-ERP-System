@@ -88,8 +88,6 @@ ENV/
 # Rope project settings
 .ropeproject
 sample_src
-bootstrap.*
-bootstrap-*
 tree.txt
 *.ipynb
 test.db

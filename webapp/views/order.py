@@ -17,6 +17,7 @@ def order_index():
 
 
 @app.route('/order/table', methods=['POST'])
+@permission_required('admin')
 @login_required
 def get_orders_by_cid():
     """
