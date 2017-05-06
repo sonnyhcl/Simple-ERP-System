@@ -426,11 +426,12 @@
         // TODO: data
         // readonly
         tuser = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[6].innerText;
-        tmission = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[0].innerText + '-' +
+        tmission = '订单' +
+            $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[0].innerText + '-' +
             $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[1].innerText + '-' +
             $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[2].innerText;
         // alterable
-        tamount = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[5].innerText;
+        tamount = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[8].innerText;
         tnote = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[10].innerText;
 
         $("#t_amount_modify").val(tamount);

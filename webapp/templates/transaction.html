@@ -260,7 +260,7 @@
                         transactions[i].t_amount * transactions[i].i_unit_price * transactions[i].i_ref_time,
                         transactions[i].t_note,
                         // 修改
-                        "{% if session['u_role'] == 'root' %}" +
+                        "{% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}" +
                         "<button href='#modifyTrans' data-toggle='modal' " + "id='modify-transaction-btn_" + transactions[i].t_id + "' " +
                         "onclick='modify_trans(" + transactions[i].t_id + ")' class='btn btn-sm btn-default' type='button'> " +
                         "<i class='fa fa-pencil'></i></button>" + "  " +
@@ -378,7 +378,7 @@
             $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[1].innerText + '-' +
             $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[2].innerText;
         // alterable
-        tamount = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[5].innerText;
+        tamount = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[8].innerText;
         tnote = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[10].innerText;
 
         $("#t_amount_modify").val(tamount);
