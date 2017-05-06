@@ -10,7 +10,6 @@ __author_name__ = 'sonnyhcl'
 
 
 @app.route('/product', methods=['GET'])
-@permission_required('user')
 @login_required
 def product():
     return render_template('product.html')

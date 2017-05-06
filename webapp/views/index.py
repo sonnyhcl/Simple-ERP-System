@@ -14,13 +14,14 @@ __author__ = 'sonnyhcl'
 # TODO 生成报表
 # TODO 任务的数量选择应该跟订单数量挂钩
 # TODO 流水的数量选择应该跟任务数量挂钩
-# TODO check_value
+# TODO check_value √
 # TODO 给数据库操作加log()
-# TODO 离线js
+# TODO 离线js √
 # TODO 更换login页面为知乎js
 # TODO 普通用户看到的流水页面应该跟管理员看到的类似报表不一样
 # TODO 之前实现datatable.fnGetData()的方式太丑了
 # TODO 时间选择筛选器
+# TODO 解决datatable有点偏右的问题
 
 
 @app.route('/', methods=['GET'])

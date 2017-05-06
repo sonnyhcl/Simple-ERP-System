@@ -11,7 +11,6 @@ __author__ = 'sonnyhcl'
 
 
 @app.route('/mission', methods=['GET'])
-@permission_required('user')
 @login_required
 def mission_index():
     return render_template('mission.html')

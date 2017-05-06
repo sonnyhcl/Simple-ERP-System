@@ -7,22 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <!-- Bootstrap -->
-    <!--<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- datatables -->
-    <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">-->
-    <!--<link href="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.css"-->
-          <!--rel="stylesheet">-->
     <link href="/static/css/dataTables.bootstrap.css" rel="stylesheet">
-    <!--<link href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">-->
     <link href="/static/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <!-- font awesome -->
     <link href="/static/fontawesome-4.7/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/static/fontawesome-4.7/css/font-awesome.css" rel="stylesheet"/>
     {% endblock head%}
-
 </head>
 
 <body>
@@ -104,9 +98,13 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="index"><font color="{% if selected_menu == 'index' %}orange{% endif %}">首页</font></a></li>
+
+                {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
                 <li><a href="transaction">
                     <font color="{% if selected_menu == 'transaction' %}orange{% endif %}">流水</font></a>
                 </li>
+                {% endif %}
+
                 <li><a href="mission">
                     <font color="{% if selected_menu == 'mission' %}orange{% endif %}">任务</font></a>
                 </li>
@@ -133,7 +131,6 @@
             </ul>
 
             <ul id="navbar-right" class="nav navbar-nav navbar-right">
-                <!--<i class="fa fa-user" aria-hidden="true"></i>-->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {% if session['u_role'] == 'user' %}
@@ -148,9 +145,13 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#resetPassword" data-toggle="modal"><i class="fa fa-pencil fa-fw"
-                                                                            aria-hidden="true"></i> 修改密码</a></li>
-                        <li><a href="/log_out"><i class="fa fa-times-circle-o fa-fw" aria-hidden="true"></i> 退出登录</a>
+                        <li>
+                            <a href="#resetPassword" data-toggle="modal">
+                                <i class="fa fa-pencil fa-fw" aria-hidden="true"></i> 修改密码</a>
+                        </li>
+                        <li>
+                            <a href="/log_out">
+                                <i class="fa fa-times-circle-o fa-fw" aria-hidden="true"></i> 退出登录</a>
                         </li>
                     </ul>
                 </li>
@@ -184,23 +185,16 @@
 
 {% block script %}
 <!-- jquery -->
-<!--<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
 <script src="/static/js/jquery.min.js"></script>
-<!--<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.js"></script>-->
 <script src="/static/js/jquery.js"></script>
-<!-- bootstrap -->
-<!--<script src="http://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.js"></script>-->
 <script src="/static/js/bootstrap-table.js"></script>
-<!--<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 <script src="/static/js/bootstrap.min.js"></script>
 
 <!-- 动态线条 -->
-<!--<script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>-->
 <script src="/static/js/canvas-nest.min.js"></script>
 <script src="/static/js/dynamicbg.js"></script>
 
 <!-- jquery.datatables -->
-<!--<script src="http://cdn.datatables.net/1.10-dev/js/jquery.dataTables.min.js"></script>-->
 <script src="/static/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">

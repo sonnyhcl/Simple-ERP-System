@@ -10,7 +10,7 @@ __author__ = 'sonnyhcl'
 
 
 @app.route('/transaction', methods=['GET'])
-@permission_required('user')
+@permission_required('admin')
 @login_required
 def transaction_index():
     return render_template('transaction.html')
