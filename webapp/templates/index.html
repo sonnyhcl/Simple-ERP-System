@@ -38,6 +38,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -196,9 +197,13 @@
             <!-- 添加按钮 -->
             <!--{% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}-->
             <!--<a id="add_trans" href="#alterTrans" role="button" data-toggle="modal"-->
-               <!--onclick="add_trans()" class="btn btn-sm btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加流水</a>-->
+            <!--onclick="add_trans()" class="btn btn-sm btn-primary"><i class="fa fa-plus-square fa fw"></i> 添加流水</a>-->
             <!--{% endif %}-->
             <!-- 表格 -->
+            {% if session['u_role'] == 'root' or session['u_role'] == 'admin' %}
+            <a id="get_xls" role="button" data-toggle="modal"
+               onclick="get_xls('index_table')" class="btn  btn-sm btn-primary"><i class="fa fa-newspaper-o fa fw"></i> 生成报表</a>
+            {% endif %}
             <table class="table table-bordered table-striped table-hover display compact" cellspacing="0"
                    id="index_table" width="100%">
             </table>
@@ -210,6 +215,7 @@
 
 {% block script %}
 {{ super() }}
+<script src="/static/js/generate-xls.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         console.log('document ready');
@@ -323,8 +329,8 @@
         }, 'json');
 
     });
-
-
+    
+    
     function getMissions(uid) {
         //clear
         var target_miss = document.getElementById('t_miss_table');
