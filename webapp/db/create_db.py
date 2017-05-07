@@ -157,7 +157,7 @@ print "transactions info table created Successfully!"
 conn.execute(
     """
     INSERT INTO community(c_id, c_name)
-    VALUES  (0, '彩虹桥'), (1, '社区A'), ( 2, '社区B');
+    VALUES  (0, '彩虹桥'), (1, '社区A'), (2, '社区B'), (3, '社区C') ;
     """
 )
 
@@ -168,12 +168,14 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO user(u_id, u_name, u_role, u_password, u_phone, c_id)
-    VALUES  (0, 'hcl',     'root',     'hcl',  '12345678910',   0),
-            (1, 'admin',   'admin',    'admin','12345678910',   1),
-            (2, 'user',    'user',     'user',  '12345678910',   1),
-            (3, '管理员',   'admin',    'admin','12345678910',   2),
-            (4, '用户',     'user',     'user', '12345678910',   2),
-            (5, 'root',    'root',     'root', 'rootphone',     0);
+    VALUES  (0, 'hcl',     'root',     'hcl',   '12345678910',    0),
+            (1, 'root',    'root',     'root',  '12345678911',    0),
+            (2, 'admin',   'admin',    'admin', '12345678912',    1),
+            (3, 'user',    'user',     'user',  '12345678913',    1),
+            (4, '管理员B',  'admin',    '123456','12345678914',    2),
+            (5, '用户B',    'user',     '123456','12345678915',    2),
+            (6, '管理员C',  'admin',    '123456','12345678916',    3),
+            (7, '用户C',    'user',     '123456','12345678917',    3);
     """
 )
 
@@ -183,7 +185,7 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO product(p_name, p_author)
-    VALUES  ('产品A',  '设计师A'), ('产品B',  '设计师B');
+    VALUES  ('产品A',  '设计师A'), ('产品B',  '设计师B'), ('产品C', '设计师C');
     """
 )
 
@@ -194,7 +196,8 @@ conn.execute(
     """
     INSERT INTO item(i_name, i_unit_price, i_ref_time, p_id)
     VALUES  ('产品A的工艺1',  10,  100, 1), ('产品A的工艺2',  20, 200, 1),
-            ('产品B的工艺1',  30,  300, 2), ('产品B的工艺2',  40, 400, 2);
+            ('产品B的工艺1',  30,  300, 2), ('产品B的工艺2',  40, 400, 2),
+            ('产品C的工艺1',  50,  500, 3), ('产品C的工艺2',  60, 600, 3);
     """
 )
 
@@ -204,7 +207,7 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO orders(o_amount, o_money, p_id, c_id)
-    VALUES (10, 1000, 1, 1),(20, 20000, 2, 2);
+    VALUES (10, 100, 1, 1),(20, 2000, 2, 2), (30, 30000, 3, 3);
 """
 )
 
@@ -214,8 +217,10 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO mission(m_amount, u_id, i_id, o_id)
-    VALUES  (10, 1, 1, 1), (20, 2, 2, 1), (30, 3, 3, 2), (40, 4, 4, 2),
-            (11, 1, 2, 1), (22, 2, 1, 1), (33, 3, 4, 2), (44, 4, 3, 2);
+    VALUES  (10, 1, 1, 1), (20, 2, 2, 1), (30, 3, 3, 2), 
+            (40, 4, 4, 2), (50, 5, 5, 3), (60, 6, 6, 3),
+            (11, 1, 2, 1), (22, 2, 1, 1), (33, 3, 4, 2), 
+            (44, 4, 3, 2), (55, 5, 6, 3), (66, 6, 5, 3);
 """
 )
 
@@ -225,8 +230,8 @@ conn.execute(
 conn.execute(
     """
     INSERT INTO transactions(t_amount, m_id)
-    VALUES  (10, 1), (20, 2), (30, 3), (40, 4),
-            (11, 5), (22, 6), (33, 7), (44, 8);
+    VALUES  (10, 1), (20, 2), (30, 3), (40, 4), (50, 5), (60, 6),
+            (11, 7), (22, 8), (33, 9), (44,10), (55,11), (66,12);
     """
 )
 
