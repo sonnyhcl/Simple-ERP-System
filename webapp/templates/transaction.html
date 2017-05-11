@@ -188,6 +188,7 @@
                             "sTitle": "订单号"
                         },
                         {"sTitle": "产品名"},
+                        {"sTitle": "设计师"},
                         {"sTitle": "工艺名"},
                         {
                             "width": "6%",
@@ -242,7 +243,8 @@
                     "sPageButton": "",
                     "bAutoWidth": true,
                     "bScrollCollapse": true,
-                    "bStateSave": true
+                    "bStateSave": true,
+                    "lengthMenu": [ 10, 25, 50, 100, 1000, 10000 ]
                 });
                 var transactions = ret.data;
                 for (var i in transactions) {
@@ -250,6 +252,7 @@
                     doc_table.fnAddData([
                         transactions[i].o_id,
                         transactions[i].p_name,
+                        transactions[i].p_author,
                         transactions[i].i_name,
                         transactions[i].i_unit_price * transactions[i].i_ref_time,
                         transactions[i].c_name,
@@ -373,13 +376,13 @@
     function modify_trans(id) {
         console.log("modify transaction");
         // readonly
-        tuser = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[6].innerText;
+        tuser = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[7].innerText;
         tmission = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[0].innerText + '-' +
             $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[1].innerText + '-' +
             $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[2].innerText;
         // alterable
-        tamount = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[8].innerText;
-        tnote = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[10].innerText;
+        tamount = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[9].innerText;
+        tnote = $('#modify-transaction-btn_' + id).parents('tr')[0].getElementsByTagName('td')[11].innerText;
 
         $("#t_amount_modify").val(tamount);
         $('#t_mission_modify').val(tmission);

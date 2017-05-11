@@ -229,6 +229,7 @@
                             "sTitle": "订单号"
                         },
                         {"sTitle": "产品名"},
+                        {"sTitle": "设计师"},
                         {"sTitle": "工艺名"},
                         {
                             "width": "6%",
@@ -287,7 +288,7 @@
                     "bAutoWidth": true,
                     "bScrollCollapse": true,
                     "bStateSave": true,
-                    "lengthMenu": [ 10, 25, 50, 100, 1000 ]
+                    "lengthMenu": [ 10, 25, 50, 100, 1000, 10000 ]
                 });
                 var transactions = ret.data;
                 for (var i in transactions) {
@@ -295,6 +296,7 @@
                     doc_table.fnAddData([
                         transactions[i].o_id,
                         transactions[i].p_name,
+                        transactions[i].p_author,
                         transactions[i].i_name,
                         transactions[i].i_unit_price * transactions[i].i_ref_time,
                         transactions[i].c_name,
